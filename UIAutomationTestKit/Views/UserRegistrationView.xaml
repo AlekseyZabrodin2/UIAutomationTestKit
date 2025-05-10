@@ -1,0 +1,221 @@
+﻿<UserControl
+    x:Class="UIAutomationTestKit.Views.UserRegistrationView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:UIAutomationTestKit.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:UIAutomationTestKit.ViewModels"
+    d:DataContext="{d:DesignInstance viewModels:UserRegistrationViewModel}"
+    AutomationProperties.AutomationId="UserRegistrationView"
+    mc:Ignorable="d">
+
+    <Grid IsEnabled="{Binding IsEnabled}" Opacity="{Binding OpacityProperty}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="60" />
+            <RowDefinition Height="60" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Grid
+            Name="AddUsersBlock"
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Grid.Column="0"
+            Grid.ColumnSpan="4"
+            Margin="5,5,5,5">
+
+            <Border Grid.Row="0" BorderThickness="5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Row="0" Grid.Column="0">
+                        <StackPanel>
+                            <TextBlock
+                                Margin="5,5,0,0"
+                                FontWeight="DemiBold"
+                                Text="ID" />
+                            <TextBox
+                                Height="25"
+                                Margin="5"
+                                VerticalContentAlignment="Center"
+                                AutomationProperties.AutomationId="UserIdTextBox"
+                                Text="{Binding CreateUserId, Mode=TwoWay}" />
+
+                            <TextBlock
+                                Margin="5,3,0,0"
+                                FontWeight="DemiBold"
+                                Text="Middle name:" />
+                            <TextBox
+                                Height="25"
+                                Margin="5"
+                                VerticalContentAlignment="Center"
+                                AutomationProperties.AutomationId="UserMiddleNameTextBox"
+                                Text="{Binding CreateUserMiddleName, Mode=TwoWay}" />
+
+                            <CheckBox
+                                Margin="5,3,0,0"
+                                AutomationProperties.AutomationId="BirthDateUserCheckBox"
+                                Content="Birthdate:"
+                                FontWeight="DemiBold"
+                                IsChecked="{Binding UseBirthDateUser}" />
+                            <DatePicker
+                                Height="25"
+                                Margin="5"
+                                AutomationProperties.AutomationId="UserBirthDateDatePicker"
+                                IsEnabled="{Binding UseBirthDateUser}"
+                                SelectedDate="{Binding CreateUserBirthDate, Mode=TwoWay}"
+                                SelectedDateFormat="Short" />
+
+                            <TextBlock
+                                Margin="5,3,0,0"
+                                FontWeight="DemiBold"
+                                Text="Address:" />
+                            <TextBox
+                                Height="25"
+                                Margin="5"
+                                VerticalContentAlignment="Center"
+                                AutomationProperties.AutomationId="AdressUserTextBox"
+                                Text="{Binding CreateAdressUser, Mode=TwoWay}" />
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Grid.Row="0" Grid.Column="1">
+                        <StackPanel>
+                            <TextBlock
+                                Margin="5,5,0,0"
+                                FontWeight="DemiBold"
+                                Text="Last name:" />
+                            <TextBox
+                                Height="25"
+                                Margin="5"
+                                VerticalContentAlignment="Center"
+                                AutomationProperties.AutomationId="UserLastNameTextBox"
+                                Text="{Binding CreateUserLastName, Mode=TwoWay}" />
+
+                            <TextBlock
+                                Margin="5,3,0,0"
+                                FontWeight="DemiBold"
+                                Text="First name:" />
+                            <TextBox
+                                Height="25"
+                                Margin="5"
+                                VerticalContentAlignment="Center"
+                                AutomationProperties.AutomationId="UserNameTextBox"
+                                Text="{Binding CreateUserName, Mode=TwoWay}" />
+
+                            <TextBlock
+                                Margin="5,3,0,0"
+                                FontWeight="DemiBold"
+                                Text="Gender:" />
+                            <ComboBox
+                                Height="25"
+                                Margin="5"
+                                VerticalContentAlignment="Center"
+                                AutomationProperties.AutomationId="GenderUserComboBox"
+                                ItemsSource="{Binding CreateGenderUser}"
+                                SelectedItem="{Binding SelectedGender}" />
+
+                            <TextBlock
+                                Margin="5,3,0,0"
+                                FontWeight="DemiBold"
+                                Text="Phone:" />
+                            <TextBox
+                                Height="25"
+                                Margin="5"
+                                VerticalContentAlignment="Center"
+                                AutomationProperties.AutomationId="PhoneUserTextBox"
+                                Text="{Binding CreatePhoneUser, Mode=TwoWay}" />
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="70" />
+                        </Grid.RowDefinitions>
+                        <TextBlock
+                            Margin="5,0,0,0"
+                            FontWeight="DemiBold"
+                            Text="Additional information:" />
+                        <TextBox
+                            Grid.Row="1"
+                            Margin="5"
+                            AutomationProperties.AutomationId="InfoUserTextBox"
+                            Text="{Binding CreateInfoUser, Mode=TwoWay}" />
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <Grid
+            Grid.Row="5"
+            Grid.Column="0"
+            Grid.ColumnSpan="4"
+            Margin="15,0">
+            <Border
+                Grid.Row="0"
+                BorderBrush="Black"
+                BorderThickness="2">
+                <TextBox
+                    Name="UpdateText"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    AutomationProperties.AutomationId="UpdateTextTextBox"
+                    BorderThickness="0"
+                    FontSize="20"
+                    IsReadOnly="True"
+                    Text="{Binding UpdateText, UpdateSourceTrigger=PropertyChanged}" />
+            </Border>
+        </Grid>
+
+        <Grid
+            Grid.Row="6"
+            Grid.Column="1"
+            Grid.ColumnSpan="2">
+            <Button
+                Name="CleanUpButton"
+                Grid.Row="6"
+                Grid.Column="1"
+                Width="80"
+                Height="40"
+                Margin="0,0,90,0"
+                HorizontalAlignment="Center"
+                AutomationProperties.AutomationId="CleanUpFieldsButton"
+                Command="{Binding CleanUpFieldsCommand}"
+                Content="Clear fields" />
+
+            <Button
+                Name="GenerateButton"
+                Width="80"
+                Height="40"
+                Margin="90,0,0,0"
+                HorizontalAlignment="Center"
+                AutomationProperties.AutomationId="RegistrationUserButton"
+                Command="{Binding RegistrationUserCommand}"
+                Content="Registration" />
+        </Grid>
+
+    </Grid>
+
+</UserControl>
