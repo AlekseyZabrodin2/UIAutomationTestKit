@@ -1,10 +1,10 @@
 ﻿using NLog;
 using UiAutoTests.Core;
-using UiAutoTests.Services;
+using UiAutoTests.Helpers;
 
 namespace UiAutoTests.Services
 {
-    public class TestsInitializeManager
+    public class TestsInitializeService
     {
         private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
         private LoggerHelper _loggerHelper = new();
@@ -24,7 +24,7 @@ namespace UiAutoTests.Services
             return testName;
         }
 
-        public IClientState SetUpBeforeTest(string testName, string testClass, HtmlReport reportCore, ITestClient testClient)
+        public IClientState SetUpBeforeTest(string testName, string testClass, HtmlReportService reportCore, ITestClient testClient)
         {
             _loggerHelper.LogEnteringTheMethod();
 
@@ -60,7 +60,7 @@ namespace UiAutoTests.Services
             return mainState;
         }
 
-        public void InitializeReportingTests(string testName, string testClass, HtmlReport reportCore)
+        public void InitializeReportingTests(string testName, string testClass, HtmlReportService reportCore)
         {
             _loggerHelper.LogEnteringTheMethod();
 
@@ -68,7 +68,7 @@ namespace UiAutoTests.Services
             _logger.Info($"Entering in Test [{testName}]");
         }
 
-        public void CleanupAfterTest(ITestClient testClient, HtmlReport reportCore)
+        public void CleanupAfterTest(ITestClient testClient, HtmlReportService reportCore)
         {
             _logger.Trace("\r\n=========================== Test Result ===========================");
 

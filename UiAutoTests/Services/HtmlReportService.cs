@@ -5,10 +5,11 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using NLog;
 using NUnit.Framework.Interfaces;
 using UiAutoTests.Core;
+using UiAutoTests.Helpers;
 
 namespace UiAutoTests.Services
 {
-    public partial class HtmlReport : ObservableObject, IReporter
+    public partial class HtmlReportService : ObservableObject, IReporter
     {
         public static ExtentSparkReporter _sparkReporter;
         public static TestContext _testContext;

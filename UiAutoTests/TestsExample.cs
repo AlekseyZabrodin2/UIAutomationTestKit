@@ -1,4 +1,6 @@
-﻿using UiAutoTests.Core;
+﻿using UiAutoTests.Clients;
+using UiAutoTests.Controllers;
+using UiAutoTests.Core;
 using UiAutoTests.Services;
 
 namespace UiAutoTests
@@ -12,8 +14,8 @@ namespace UiAutoTests
         private IClientState _mainWindow;
         public string _testName;
         public string _testClass;
-        public HtmlReport _reportCore = new();
-        private TestsInitializeManager _initializeManager = new();
+        public HtmlReportService _reportService = new();
+        private TestsInitializeService _initializeService = new();
 
 
         public TestsExample()
@@ -27,11 +29,11 @@ namespace UiAutoTests
         public void Setup()
         {
             _testClass = GetType().Name;
-            _testName = _initializeManager.CreateTestName();
+            _testName = _initializeService.CreateTestName();
 
             _logger.Trace($"\r\n=========================== New Test {_testName} ===========================");
 
-            _mainWindow = _initializeManager.SetUpBeforeTest(_testName, _testClass, _reportCore, _testClient);
+            _mainWindow = _initializeService.SetUpBeforeTest(_testName, _testClass, _reportService, _testClient);
         }
 
 
@@ -52,23 +54,23 @@ namespace UiAutoTests
         //{
         //    try
         //    {
-        //        if (_mainWindow is MainWindowState mainWindowState)
+        //        if (_mainWindow is mainWindowControlle mainWindowControlle)
         //        {
-        //            mainWindowState.SelectDepositItem(depositIndex);
-        //            mainWindowState.SelectLeverages(leveragesIndex);
-        //            mainWindowState.SelectCurrencies(currenciesIndex);
-        //            mainWindowState.SelectAccountType(accountTypeIndex);
+        //            mainWindowControlle.SelectDepositItem(depositIndex);
+        //            mainWindowControlle.SelectLeverages(leveragesIndex);
+        //            mainWindowControlle.SelectCurrencies(currenciesIndex);
+        //            mainWindowControlle.SelectAccountType(accountTypeIndex);
 
-        //            var resultValidation = mainWindowState.ValidationDeposits();
+        //            var resultValidation = mainWindowControlle.ValidationDeposits();
         //            Assert.That(resultValidation, Is.True, $"ComboBox is Valid - [{resultValidation}]");
 
-        //            var buttonIsEnabled = mainWindowState.CheckingCreateAccountButtonIsEnabled();
+        //            var buttonIsEnabled = mainWindowControlle.CheckingCreateAccountButtonIsEnabled();
         //            Assert.That(buttonIsEnabled, Is.True, $"CreateAccount Button IsEnabled - [{buttonIsEnabled}]");
 
-        //            mainWindowState.CreateAccounte();
+        //            mainWindowControlle.CreateAccounte();
 
         //            // Pause for demonstration
-        //            mainWindowState.WaitingBetweenCommand(1000);
+        //            mainWindowControlle.WaitingBetweenCommand(1000);
 
         //            _logger.Debug($"{_testName} Completed");
         //            _reportCore.LogStatusPass(_testName + " Completed");
@@ -87,40 +89,40 @@ namespace UiAutoTests
         //}
 
 
-        [Repeat(3)]
+
         [Test]
         public void Test()
         {
             try
             {
-                if (_mainWindow is MainWindowState mainWindowState)
+                if (_mainWindow is MainWindowController mainWindowControlle)
                 {
                     
-                   // mainWindowState.SelectDepositItem(depositIndex);
-                   // mainWindowState.SelectLeverages(leveragesIndex);
-                   // mainWindowState.SelectCurrencies(currenciesIndex);
-                   // mainWindowState.SelectAccountType(accountTypeIndex);
+                   // mainWindowControlle.SelectDepositItem(depositIndex);
+                   // mainWindowControlle.SelectLeverages(leveragesIndex);
+                   // mainWindowControlle.SelectCurrencies(currenciesIndex);
+                   // mainWindowControlle.SelectAccountType(accountTypeIndex);
 
-                   // var resultValidation = mainWindowState.ValidationDeposits();
+                   // var resultValidation = mainWindowControlle.ValidationDeposits();
                    // Assert.That(resultValidation, Is.True, $"ComboBox is Valid - [{resultValidation}]");
 
-                   // var buttonIsEnabled = mainWindowState.CheckingCreateAccountButtonIsEnabled();
+                   // var buttonIsEnabled = mainWindowControlle.CheckingCreateAccountButtonIsEnabled();
                    // Assert.That(buttonIsEnabled, Is.True, $"CreateAccount Button IsEnabled - [{buttonIsEnabled}]");
 
-                   // mainWindowState.CreateAccounte();
+                   // mainWindowControlle.CreateAccounte();
 
                    // Pause for demonstration
 
-                   //mainWindowState.WaitingBetweenCommand(1000);
-
-                   _logger.Debug($"{_testName} Completed");
-                    _reportCore.LogStatusPass(_testName + " Completed");
+                   //mainWindowControlle.WaitingBetweenCommand(1000);
+                   
+                    _logger.Debug($"{_testName} Completed");
+                    _reportService.LogStatusPass(_testName + " Completed");
                 }
             }
             catch (Exception exception)
             {
                 _logger.Error(exception, $"{_testName} Failed");
-                _reportCore.LogStatusFail(exception, _testName + " Failed");
+                _reportService.LogStatusFail(exception, _testName + " Failed");
                 throw;
             }
             finally
@@ -134,7 +136,7 @@ namespace UiAutoTests
         [TearDown]
         public void AfterTest()
         {
-            _initializeManager.CleanupAfterTest(_testClient, _reportCore);
+            _initializeService.CleanupAfterTest(_testClient, _reportService);
         }
 
     }
