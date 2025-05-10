@@ -87,8 +87,9 @@ namespace UiAutoTests
         //}
 
 
+        [Repeat(3)]
         [Test]
-        public void Test1()
+        public void Test()
         {
             try
             {
