@@ -2,7 +2,7 @@
 using UiAutoTests.Helpers;
 using UiAutoTests.Services;
 
-namespace UiAutoTests
+namespace UiAutoTests.Tests
 {
     [SetUpFixture]
     public class AssemblyInitializeTests

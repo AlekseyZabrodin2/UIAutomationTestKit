@@ -3,7 +3,7 @@ using UiAutoTests.Controllers;
 using UiAutoTests.Core;
 using UiAutoTests.Services;
 
-namespace UiAutoTests
+namespace UiAutoTests.Tests.UIAutomationTests
 {
 
     public class TestsExample
