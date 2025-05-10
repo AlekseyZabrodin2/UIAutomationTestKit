@@ -1,0 +1,28 @@
+﻿using FlaUI.Core.AutomationElements;
+using FlaUI.Core.Conditions;
+
+namespace UiAutoTests.Locators
+{
+    internal class MainWindowLocators
+    {
+        static Window _window;
+        static ConditionFactory _conditionFactory;
+
+
+        public MainWindowLocators(Window window, ConditionFactory conditionFactory)
+        {
+            _window = window;
+            _conditionFactory = conditionFactory;
+        }
+
+
+
+        public AutomationElement MainWindowsLocator => _window.FindFirstDescendant(_conditionFactory.ByAutomationId("UserRegistrationView")).AsWindow();
+
+        public AutomationElement DepositsCombobox => _window.FindFirstDescendant(_conditionFactory.ByAutomationId("DepositsCombobox_AId")).AsComboBox();
+        public AutomationElement CurrenciesCombobox => _window.FindFirstDescendant(_conditionFactory.ByAutomationId("CurrenciesCombobox_AId")).AsComboBox();
+        public AutomationElement LeveragesCombobox => _window.FindFirstDescendant(_conditionFactory.ByAutomationId("LeveragesCombobox_AId")).AsComboBox();
+        public AutomationElement AccountTypesCombobox => _window.FindFirstDescendant(_conditionFactory.ByAutomationId("AccountTypesCombobox_AId")).AsComboBox();
+        public AutomationElement RegistrationUserButton => _window.FindFirstDescendant(_conditionFactory.ByAutomationId("RegistrationUserButton")).AsButton();
+    }
+}
