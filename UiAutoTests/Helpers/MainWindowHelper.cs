@@ -3,9 +3,9 @@ using FlaUI.Core.Conditions;
 using NLog;
 using UiAutoTests.Locators;
 
-namespace UiAutoTests.Services
+namespace UiAutoTests.Helpers
 {
-    internal class MainWindowManager
+    internal class MainWindowHelper
     {
 
         private readonly Window _window;
@@ -15,7 +15,7 @@ namespace UiAutoTests.Services
         private MainWindowLocators _mainWindowLocators;
 
 
-        public MainWindowManager(Window window, ConditionFactory conditionFactory)
+        public MainWindowHelper(Window window, ConditionFactory conditionFactory)
         {
             _window = window;
             _conditionFactory = conditionFactory;

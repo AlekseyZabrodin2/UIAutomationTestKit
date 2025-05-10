@@ -2,23 +2,24 @@
 using FlaUI.Core.Conditions;
 using NLog;
 using UiAutoTests.Core;
+using UiAutoTests.Helpers;
 using UiAutoTests.Locators;
 
-namespace UiAutoTests.Services
+namespace UiAutoTests.Controllers
 {
-    internal class MainWindowState : IClientState
+    internal class MainWindowController : IClientState
     {
         private readonly Window _window;
         private readonly ConditionFactory _conditionFactory;
         private MainWindowLocators _mainWindowStateLocators;
         private LoggerHelper _loggerHelper = new();
-        private MainWindowManager _mainWindowManager;
+        private MainWindowHelper _mainWindowManager;
         private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
         public string Name { get; } = "MainWindowState";
 
 
-        public MainWindowState(Window window, ConditionFactory conditionFactory)
+        public MainWindowController(Window window, ConditionFactory conditionFactory)
         {
             _window = window;
             _conditionFactory = conditionFactory;

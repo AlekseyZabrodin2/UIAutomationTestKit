@@ -1,4 +1,5 @@
 ﻿using NLog;
+using UiAutoTests.Helpers;
 using UiAutoTests.Services;
 
 namespace UiAutoTests
@@ -8,7 +9,7 @@ namespace UiAutoTests
     {
         private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
         private static LoggerHelper _loggerHelper = new();
-        public static HtmlReport _reportCore;
+        public static HtmlReportService _reportService;
 
         public static string? _oldNameFullPath;
         public static string? _newNameFullPath;
@@ -21,8 +22,8 @@ namespace UiAutoTests
 
             _loggerHelper.LogEnteringTheMethod();
 
-            _reportCore = new();
-            _reportCore.ReportLogger("UI Test");
+            _reportService = new();
+            _reportService.ReportLogger("UI Test");
 
             _oldNameFullPath = ".\\Report.html";
             _newNameFullPath = ".\\logs\\ReportResults\\TestReport" + DateTime.Now.ToString("_dd.MM.yyyy_HH.mm.ss") + ".html";
@@ -33,7 +34,7 @@ namespace UiAutoTests
                 Directory.CreateDirectory(directoryPath);
             }
 
-            _reportCore.ReplaceCssStyleDir();
+            _reportService.ReplaceCssStyleDir();
         }
 
 
@@ -43,9 +44,9 @@ namespace UiAutoTests
         {
             _loggerHelper.LogEnteringTheMethod();
 
-            if (_reportCore != null)
+            if (_reportService != null)
             {
-                _reportCore.CreateReport();
+                _reportService.CreateReport();
 
                 File.Move(_oldNameFullPath!, _newNameFullPath!);
             }

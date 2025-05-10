@@ -5,10 +5,12 @@ using FlaUI.UIA3;
 using NLog;
 using Polly;
 using System.Diagnostics;
+using UiAutoTests.Controllers;
 using UiAutoTests.Core;
+using UiAutoTests.Helpers;
 using UiAutoTests.Locators;
 
-namespace UiAutoTests.Services
+namespace UiAutoTests.Clients
 {
     internal class AutomationTestClient : ITestClient
     {
@@ -85,7 +87,7 @@ namespace UiAutoTests.Services
             });
 
             _logger.Debug("CreateAccountTestClient Started");
-            return new MainWindowState(_window, _conditionFactory);
+            return new MainWindowController(_window, _conditionFactory);
         }
 
         public void Kill()

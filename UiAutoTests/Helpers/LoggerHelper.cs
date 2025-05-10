@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using UiAutoTests.Core;
 
-namespace UiAutoTests.Services
+namespace UiAutoTests.Helpers
 {
     public class LoggerHelper : ILoggerHelper
     {
