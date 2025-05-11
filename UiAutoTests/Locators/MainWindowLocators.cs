@@ -17,12 +17,15 @@ namespace UiAutoTests.Locators
 
 
 
-        public AutomationElement MainWindowsLocator => _window.FindFirstDescendant(_conditionFactory.ByAutomationId("UserRegistrationView")).AsWindow();
+        public AutomationElement MainWindowsLocator => _window.FindFirstDescendant(_conditionFactory.ByAutomationId("UserRegistrationView"));
 
-        public AutomationElement DepositsCombobox => _window.FindFirstDescendant(_conditionFactory.ByAutomationId("DepositsCombobox_AId")).AsComboBox();
+        public AutomationElement UserIdTextBox => _window.FindFirstDescendant(_conditionFactory.ByAutomationId("UserIdTextBox")).AsTextBox();
+
         public AutomationElement CurrenciesCombobox => _window.FindFirstDescendant(_conditionFactory.ByAutomationId("CurrenciesCombobox_AId")).AsComboBox();
         public AutomationElement LeveragesCombobox => _window.FindFirstDescendant(_conditionFactory.ByAutomationId("LeveragesCombobox_AId")).AsComboBox();
         public AutomationElement AccountTypesCombobox => _window.FindFirstDescendant(_conditionFactory.ByAutomationId("AccountTypesCombobox_AId")).AsComboBox();
-        public AutomationElement RegistrationUserButton => _window.FindFirstDescendant(_conditionFactory.ByAutomationId("RegistrationUserButton")).AsButton();
+
+        public Button CleanUpFieldsButton => _window.FindFirstDescendant(_conditionFactory.ByAutomationId("CleanUpFieldsButton")).AsButton();
+        public Button RegistrationUserButton => _window.FindFirstDescendant(_conditionFactory.ByAutomationId("RegistrationUserButton")).AsButton();
     }
 }
