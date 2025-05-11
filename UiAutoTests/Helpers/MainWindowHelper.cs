@@ -1,6 +1,7 @@
 ﻿using FlaUI.Core.AutomationElements;
 using FlaUI.Core.Conditions;
 using NLog;
+using UiAutoTests.Extensions;
 using UiAutoTests.Locators;
 
 namespace UiAutoTests.Helpers
@@ -21,6 +22,30 @@ namespace UiAutoTests.Helpers
             _conditionFactory = conditionFactory;
             _mainWindowLocators = new(_window, _conditionFactory);
         }
+
+
+        public void SetUserId()
+        {
+            _loggerHelper.LogEnteringTheMethod();
+
+            var userIdTextBox = _mainWindowLocators.UserIdTextBox;
+
+            userIdTextBox.FocusTextBoxAndSetCursor();
+            userIdTextBox.EnterText("Test ID");
+
+            //userIdTextBox.ClickButton();
+
+
+            var cleanUpButton = _mainWindowLocators.CleanUpFieldsButton;
+            cleanUpButton.ClickButton();
+
+            Thread.Sleep(1500);
+        }
+
+
+
+
+
 
 
 

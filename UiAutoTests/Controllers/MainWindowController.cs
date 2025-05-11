@@ -13,7 +13,7 @@ namespace UiAutoTests.Controllers
         private readonly ConditionFactory _conditionFactory;
         private MainWindowLocators _mainWindowStateLocators;
         private LoggerHelper _loggerHelper = new();
-        private MainWindowHelper _mainWindowManager;
+        private MainWindowHelper _mainWindowHelper;
         private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
         public string Name { get; } = "MainWindowState";
@@ -24,7 +24,7 @@ namespace UiAutoTests.Controllers
             _window = window;
             _conditionFactory = conditionFactory;
             _mainWindowStateLocators = new(_window, _conditionFactory);
-            _mainWindowManager = new(_window, _conditionFactory);
+            _mainWindowHelper = new(_window, _conditionFactory);
         }
 
 
@@ -78,46 +78,46 @@ namespace UiAutoTests.Controllers
         }
 
 
-        //public void CreateAccounte()
-        //{
-        //    _mainWindowManager.CreateAccounte();
-        //}
+        public void SetUserId()
+        {
+            _mainWindowHelper.SetUserId();
+        }
 
         //public void SelectDepositItem(object? index)
         //{
-        //    _mainWindowManager.SelectDepositItem(index);
+        //    _mainWindowHelper.SelectDepositItem(index);
         //}
 
         //public void SelectAccountType(int index)
         //{
-        //    _mainWindowManager.SelectAccountType(index);
+        //    _mainWindowHelper.SelectAccountType(index);
         //}
 
         //public void SelectLeverages(int index)
         //{
-        //    _mainWindowManager.SelectLeverages(index);
+        //    _mainWindowHelper.SelectLeverages(index);
         //}
 
         //public void SelectCurrencies(int index)
         //{
-        //    _mainWindowManager.SelectCurrencies(index);
+        //    _mainWindowHelper.SelectCurrencies(index);
         //}
 
         //public bool ValidationDeposits()
         //{
-        //    return _mainWindowManager.ValidationDepositsCombobox();
+        //    return _mainWindowHelper.ValidationDepositsCombobox();
         //}
 
         //public bool CheckingCreateAccountButtonIsEnabled()
         //{
-        //    return _mainWindowManager.CheckingCreateAccountButtonIsEnabled();
+        //    return _mainWindowHelper.CheckingCreateAccountButtonIsEnabled();
         //}
 
 
 
         //public void WaitingBetweenCommand(int waitingTime)
         //{
-        //    _mainWindowManager.WaitingBetweenCommand(waitingTime);
+        //    _mainWindowHelper.WaitingBetweenCommand(waitingTime);
         //}
 
 
