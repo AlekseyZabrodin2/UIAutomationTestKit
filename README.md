@@ -22,8 +22,9 @@ AutomationTestKit/
 │   ├── MainWindowController.cs
 │   └── NextWindowController.cs
 │
-├── 📁 Pages/                     ← Page Object слои, если экранов много
-│   ├── RegistrationPage.cs
+├── 📁 Pages/                     ← Page Object слои (локаторы), если экранов много
+│   ├── RegistrationPageLocators.cs
+│   ├── Locators.cs
 │   └── ...
 │
 ├── 📁 Extensions/                ← методы расширения для элементов
@@ -46,8 +47,7 @@ AutomationTestKit/
 │   ├── ExampleTests.cs
 │   └── SmokeTests.cs
 │
-├── 📁 Resources/                 ← локаторы, константы
-│   ├── Locators.cs
+├── 📁 Resources/                 ← константы
 │   └── Constants.cs
 │
 └── App.config / appsettings.json ← настройки путей, таймаутов
@@ -229,7 +229,7 @@ public class ExampleTests : BaseUiTest
     }
 }
 
-📁 Resources/}
+📁 Resources/
 
 📄 App.config / appsettings.json
 
