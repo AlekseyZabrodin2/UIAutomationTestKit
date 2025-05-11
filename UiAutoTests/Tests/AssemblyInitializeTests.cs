@@ -46,9 +46,9 @@ namespace UiAutoTests.Tests
 
             if (_reportService != null)
             {
-                _reportService.CreateReport();
+                //_reportService.CreateReport();
 
-                File.Move(_oldNameFullPath!, _newNameFullPath!);
+                //File.Move(_oldNameFullPath!, _newNameFullPath!);
             }
             else
             {
