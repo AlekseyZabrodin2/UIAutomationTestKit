@@ -97,6 +97,8 @@ namespace UiAutoTests.Tests.UIAutomationTests
             {
                 if (_mainWindow is MainWindowController mainWindowControlle)
                 {
+
+                    mainWindowControlle.SetUserId();
                     
                    // mainWindowControlle.SelectDepositItem(depositIndex);
                    // mainWindowControlle.SelectLeverages(leveragesIndex);
