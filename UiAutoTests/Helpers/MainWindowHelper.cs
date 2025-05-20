@@ -6,7 +6,7 @@ using UiAutoTests.Locators;
 
 namespace UiAutoTests.Helpers
 {
-    internal class MainWindowHelper
+    public class MainWindowHelper
     {
 
         private readonly Window _window;
@@ -24,27 +24,43 @@ namespace UiAutoTests.Helpers
         }
 
 
-        public void SetUserId()
+        public void SetUserId(string inputText)
+        {
+            _loggerHelper.LogEnteringTheMethod();
+
+            var userIdTextBox = _mainWindowLocators.UserIdTextBox;
+            userIdTextBox.FocusTextBoxAndSetCursor();
+            userIdTextBox.EnterText(inputText);
+        }
+
+        public void ClickCleanButton()
+        {
+            _loggerHelper.LogEnteringTheMethod();
+
+            var cleanUpButton = _mainWindowLocators.CleanUpFieldsButton;
+            cleanUpButton.ClickButton();
+        }
+
+        public string GetTextFromUserIdTextBox()
         {
             _loggerHelper.LogEnteringTheMethod();
 
             var userIdTextBox = _mainWindowLocators.UserIdTextBox;
 
-            userIdTextBox.FocusTextBoxAndSetCursor();
-            userIdTextBox.EnterText("Test ID");
-
-            //userIdTextBox.ClickButton();
-
-
-            var cleanUpButton = _mainWindowLocators.CleanUpFieldsButton;
-            cleanUpButton.ClickButton();
-
-            Thread.Sleep(1500);
+            return userIdTextBox.GetText();
         }
 
 
 
 
+        public void Pause(int timeInSecond)
+        {
+            _loggerHelper.LogEnteringTheMethod();
+
+            WaitExtensions.Pause(timeInSecond);
+        }
+
+        
 
 
 
