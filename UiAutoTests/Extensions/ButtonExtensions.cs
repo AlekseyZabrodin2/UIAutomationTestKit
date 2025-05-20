@@ -1,4 +1,5 @@
 ﻿using FlaUI.Core.AutomationElements;
+using NLog;
 using UiAutoTests.Helpers;
 
 namespace UiAutoTests.Extensions
@@ -7,7 +8,7 @@ namespace UiAutoTests.Extensions
     {
 
         private static LoggerHelper _loggerHelper = new();
-
+        private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
 
 
@@ -27,6 +28,7 @@ namespace UiAutoTests.Extensions
             var button = automationElement.EnsureButton();
 
             button.Invoke();
+            _logger.Info($"[{button.AutomationId}] is Invoked");
         }
 
 
