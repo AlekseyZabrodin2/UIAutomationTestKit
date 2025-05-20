@@ -1,19 +1,21 @@
 ﻿using FlaUI.Core.AutomationElements;
 using FlaUI.Core.Conditions;
 using NLog;
+using RazorEngine.Compilation.ImpromptuInterface.Dynamic;
+using UiAutoTests.ControllerAssertions;
 using UiAutoTests.Core;
 using UiAutoTests.Helpers;
 using UiAutoTests.Locators;
 
 namespace UiAutoTests.Controllers
 {
-    internal class MainWindowController : IClientState
+    public class MainWindowController : IClientState
     {
         private readonly Window _window;
         private readonly ConditionFactory _conditionFactory;
         private MainWindowLocators _mainWindowStateLocators;
         private LoggerHelper _loggerHelper = new();
-        private MainWindowHelper _mainWindowHelper;
+        private static MainWindowHelper _mainWindowHelper;
         private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
         public string Name { get; } = "MainWindowState";
@@ -78,47 +80,34 @@ namespace UiAutoTests.Controllers
         }
 
 
-        public void SetUserId()
+        public MainWindowController SetUserId(string inputText)
         {
-            _mainWindowHelper.SetUserId();
+            _mainWindowHelper.SetUserId(inputText);
+            return this;
         }
 
-        //public void SelectDepositItem(object? index)
-        //{
-        //    _mainWindowHelper.SelectDepositItem(index);
-        //}
+        public MainWindowController Pause(int time)
+        {
+            _mainWindowHelper.Pause(time);
+            return this;
+        }
 
-        //public void SelectAccountType(int index)
-        //{
-        //    _mainWindowHelper.SelectAccountType(index);
-        //}
+        public MainWindowController ClickCleanButton()
+        {
+            _mainWindowHelper.ClickCleanButton();
+            return this;
+        }
 
-        //public void SelectLeverages(int index)
-        //{
-        //    _mainWindowHelper.SelectLeverages(index);
-        //}
+        public MainWindowController GetTextFromUserIdTextBox()
+        {
+            _mainWindowHelper.GetTextFromUserIdTextBox();
+            return this;
+        }
 
-        //public void SelectCurrencies(int index)
-        //{
-        //    _mainWindowHelper.SelectCurrencies(index);
-        //}
-
-        //public bool ValidationDeposits()
-        //{
-        //    return _mainWindowHelper.ValidationDepositsCombobox();
-        //}
-
-        //public bool CheckingCreateAccountButtonIsEnabled()
-        //{
-        //    return _mainWindowHelper.CheckingCreateAccountButtonIsEnabled();
-        //}
-
-
-
-        //public void WaitingBetweenCommand(int waitingTime)
-        //{
-        //    _mainWindowHelper.WaitingBetweenCommand(waitingTime);
-        //}
+        public string GetUserIdText()
+        {            
+            return _mainWindowHelper.GetTextFromUserIdTextBox();
+        }
 
 
     }
