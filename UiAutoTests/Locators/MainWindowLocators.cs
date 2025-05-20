@@ -19,7 +19,7 @@ namespace UiAutoTests.Locators
 
         public AutomationElement MainWindowsLocator => _window.FindFirstDescendant(_conditionFactory.ByAutomationId("UserRegistrationView"));
 
-        public AutomationElement UserIdTextBox => _window.FindFirstDescendant(_conditionFactory.ByAutomationId("UserIdTextBox")).AsTextBox();
+        public TextBox UserIdTextBox => _window.FindFirstDescendant(_conditionFactory.ByAutomationId("UserIdTextBox")).AsTextBox();
 
         public AutomationElement CurrenciesCombobox => _window.FindFirstDescendant(_conditionFactory.ByAutomationId("CurrenciesCombobox_AId")).AsComboBox();
         public AutomationElement LeveragesCombobox => _window.FindFirstDescendant(_conditionFactory.ByAutomationId("LeveragesCombobox_AId")).AsComboBox();
