@@ -1,6 +1,8 @@
 ﻿using UiAutoTests.Clients;
+using UiAutoTests.ControllerAssertions;
 using UiAutoTests.Controllers;
 using UiAutoTests.Core;
+using UiAutoTests.Helpers;
 using UiAutoTests.Services;
 
 namespace UiAutoTests.Tests.UIAutomationTests
@@ -14,6 +16,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
         private IClientState _mainWindow;
         public string _testName;
         public string _testClass;
+        private LoggerHelper _loggerHelper = new();
         public HtmlReportService _reportService = new();
         private TestsInitializeService _initializeService = new();
 
@@ -91,32 +94,30 @@ namespace UiAutoTests.Tests.UIAutomationTests
 
 
         [Test]
-        public void Test()
+        public void Test01_Before()
         {
             try
             {
                 if (_mainWindow is MainWindowController mainWindowControlle)
                 {
+                    var inputText = "test Id";
 
-                    mainWindowControlle.SetUserId();
-                    
-                   // mainWindowControlle.SelectDepositItem(depositIndex);
-                   // mainWindowControlle.SelectLeverages(leveragesIndex);
-                   // mainWindowControlle.SelectCurrencies(currenciesIndex);
-                   // mainWindowControlle.SelectAccountType(accountTypeIndex);
+                    mainWindowControlle.SetUserId(inputText);
+                    mainWindowControlle.Pause(500);
 
-                   // var resultValidation = mainWindowControlle.ValidationDeposits();
-                   // Assert.That(resultValidation, Is.True, $"ComboBox is Valid - [{resultValidation}]");
+                    var actual = mainWindowControlle.GetUserIdText();
+                    Assert.That(actual, Is.EqualTo(inputText), "Text is not equal");
 
-                   // var buttonIsEnabled = mainWindowControlle.CheckingCreateAccountButtonIsEnabled();
-                   // Assert.That(buttonIsEnabled, Is.True, $"CreateAccount Button IsEnabled - [{buttonIsEnabled}]");
+                    mainWindowControlle.ClickCleanButton();
 
-                   // mainWindowControlle.CreateAccounte();
+                    mainWindowControlle.Pause(1500);
 
-                   // Pause for demonstration
+                    var resultTest = mainWindowControlle.GetUserIdText();
+                    Assert.That(resultTest, Is.Empty, "Text is not empty");
 
-                   //mainWindowControlle.WaitingBetweenCommand(1000);
-                   
+                    // Pause for demonstration
+                    mainWindowControlle.Pause(1000);
+
                     _logger.Debug($"{_testName} Completed");
                     _reportService.LogStatusPass(_testName + " Completed");
                 }
@@ -125,6 +126,37 @@ namespace UiAutoTests.Tests.UIAutomationTests
             {
                 _logger.Error(exception, $"{_testName} Failed");
                 _reportService.LogStatusFail(exception, _testName + " Failed");
+                throw;
+            }
+            finally
+            {
+                _testClient.Kill();
+            }
+        }
+
+        [Test]
+        public void Test02_After()
+        {
+            try
+            {
+                if (_mainWindow is MainWindowController mainWindowControlle)
+                {
+                    var inputText = "test Id";
+
+                    mainWindowControlle
+                        .SetUserId(inputText)
+                        .Pause(500)
+                        .AssertUserIdEquals(inputText)
+                        .ClickCleanButton()
+                        .Pause(1500)
+                        .AssertUserIdIsEmpty();
+
+                    _loggerHelper.LogCompletedResult(_testName, _reportService);
+                }
+            }
+            catch (Exception exception)
+            {
+                _loggerHelper.LogFailedResult(_testName, exception, _reportService);
                 throw;
             }
             finally
