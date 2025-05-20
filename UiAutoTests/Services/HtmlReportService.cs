@@ -120,7 +120,7 @@ namespace UiAutoTests.Services
         {
             _loggerHelper.LogEnteringTheMethod();
 
-            _logger.Error(exception, $"{testName} - [Failed], with Exeption:");
+            //_logger.Error(exception, $"{testName} - [Failed], with Exeption:");
 
             string faild = "Failed";
             _parentTest.Log(Status.Fail, MarkupHelper.CreateLabel(faild.ToUpperInvariant(), ExtentColor.Red));
