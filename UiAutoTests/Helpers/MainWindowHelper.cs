@@ -60,7 +60,13 @@ namespace UiAutoTests.Helpers
             WaitExtensions.Pause(timeInSecond);
         }
 
-        
+        public void WaitUntilTextIsEmpty(int timeInSecond)
+        {
+            _loggerHelper.LogEnteringTheMethod();
+
+            var userIdTextBox = _mainWindowLocators.UserIdTextBox;
+            userIdTextBox.WaitUntilTextIsEmpty(timeInSecond);
+        }
 
 
 

@@ -158,5 +158,12 @@ namespace UiAutoTests.Extensions
                 throw new TimeoutException("TextBox was not ready for input.");
             }
         }
+
+        public static bool WaitUntilTextIsEmpty(this TextBox element, int timeoutInSeconds)
+        {
+            return Retry.WhileFalse(
+                () => element?.Text == string.Empty,
+                TimeSpan.FromMilliseconds(timeoutInSeconds)).Success;
+        }
     }
 }
