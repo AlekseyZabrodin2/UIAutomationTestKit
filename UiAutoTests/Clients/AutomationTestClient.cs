@@ -92,8 +92,11 @@ namespace UiAutoTests.Clients
 
         public void Kill()
         {
-            _logger.Trace($"CreateAccountTestClient is Kill");
-            _application.Kill();
+            if (!_application.HasExited)
+            {
+                _logger.Trace($"CreateAccountTestClient is Kill");
+                _application.Kill();
+            }                
         }
     }
 }

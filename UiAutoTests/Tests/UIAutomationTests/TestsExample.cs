@@ -145,6 +145,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
                         .Pause(500)
                         .AssertUserIdEquals(inputText,$"Expected Text to be [{inputText}]")
                         .ClickCleanButton()
+                        .Pause(1000)
                         .WaitUntilTextIsEmpty(500)
                         .AssertUserIdIsEmpty("Expected TextBox to be Empty")
                         .Pause(1000);
