@@ -67,7 +67,6 @@ namespace UiAutoTests.Services
             _loggerHelper.LogEnteringTheMethod();
 
             reportCore.InitializeTests(testName, testClass);
-            //_logger.Info($"Entering in Test [{testName}]");
         }
 
         public void DisposeClientAndReportResults(ITestClient testClient, HtmlReportService reportCore)
