@@ -36,7 +36,7 @@ namespace UiAutoTests.Services
             _sparkReporter = new ExtentSparkReporter(reportPath);
 
             var fileDire = Path.GetDirectoryName(reportPath);
-            _logger.Trace($"CreateDirectory {fileDire}");
+            _logger.Trace($"Create Directory for report - [{fileDire}]");
             if (!Directory.Exists(fileDire))
             {
                 Directory.CreateDirectory(fileDire!);
@@ -59,8 +59,7 @@ namespace UiAutoTests.Services
             TimeTestStart = DateTime.Now;
             _report.AddSystemInfo("Start Time Project", TimeTestStart.ToString());
 
-            _logger.Trace("Exit from ReportLogger\r\n");
-
+            _loggerHelper.LogExitingTheMethod();
         }
 
 

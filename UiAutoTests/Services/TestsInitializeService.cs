@@ -20,7 +20,7 @@ namespace UiAutoTests.Services
                 testName += " [" + string.Join("_", parameters.Select(p => p?.ToString())) + "]";
             }
 
-            _logger.Trace($"\r\n=========================== Start Test {testName} ===========================");
+            _logger.Trace($"\r\n=========================== Start Test - [{testName}] ===========================");
 
             return testName;
         }
@@ -72,18 +72,12 @@ namespace UiAutoTests.Services
 
         public void DisposeClientAndReportResults(ITestClient testClient, HtmlReportService reportCore)
         {
-            _logger.Trace("\r\n=========================== Test Result ===========================");
-
             _loggerHelper.LogEnteringTheMethod();
 
-            if (testClient != null)
-            {
-                testClient.Kill();
-            }
-            
+            testClient.Kill();
             reportCore.GetTestsStatus();
 
-            _logger.Trace("\r\n=========================== END TestCase ===========================\r\n");
+            _logger.Trace("\r\n=========================== Finish TestCase ===========================\r\n");
         }
 
 

@@ -18,7 +18,7 @@ namespace UiAutoTests.Tests
         [OneTimeSetUp]
         public void BeforeTestSuites()
         {
-            _logger.Trace($"\r\n=========================== New Test Suite  ===========================");
+            _logger.Trace($"\r\n=========================== New Test Suite start  ===========================");
 
             _loggerHelper.LogEnteringTheMethod();
 

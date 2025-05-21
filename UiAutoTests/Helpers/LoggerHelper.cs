@@ -24,12 +24,16 @@ namespace UiAutoTests.Helpers
 
         public void LogCompletedResult(string testName, HtmlReportService reportService)
         {
+            _logger.Trace("\r\n=========================== Test Result ===========================");
+
             _logger.Debug($"{testName} Completed");
             reportService.LogStatusPass(testName + " Completed");
         }
 
         public void LogFailedResult(string testName, Exception exception, HtmlReportService reportService)
         {
+            _logger.Trace("\r\n=========================== Test Result ===========================");
+
             _logger.Error(exception, $"{testName} Failed");
             reportService.LogStatusFail(exception, testName + " Failed");
         }
