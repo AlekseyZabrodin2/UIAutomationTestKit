@@ -92,6 +92,12 @@ namespace UiAutoTests.Controllers
             return this;
         }
 
+        public MainWindowController WaitUntilTextIsEmpty(int time)
+        {
+            _mainWindowHelper.WaitUntilTextIsEmpty(time);
+            return this;
+        }
+
         public MainWindowController ClickCleanButton()
         {
             _mainWindowHelper.ClickCleanButton();
@@ -100,7 +106,7 @@ namespace UiAutoTests.Controllers
 
         public MainWindowController GetTextFromUserIdTextBox()
         {
-            _mainWindowHelper.GetTextFromUserIdTextBox();
+            GetUserIdText();
             return this;
         }
 
