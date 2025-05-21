@@ -31,7 +31,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
         [SetUp]
         public void Setup()
         {
-            _testClass = _initializeService.GetTestClassName();
+            _testClass = GetType().Name;
             _testName = _initializeService.GetTestMethodName();
             _mainWindow = _initializeService.StartClientWithReportInitialization(_testName, _testClass, _reportService, _testClient);
         }
@@ -143,10 +143,10 @@ namespace UiAutoTests.Tests.UIAutomationTests
                     mainWindowControlle
                         .SetUserId(inputText)
                         .Pause(500)
-                        .AssertUserIdEquals(inputText,"Text must be Equal")
+                        .AssertUserIdEquals(inputText,$"Expected Text to be [{inputText}]")
                         .ClickCleanButton()
                         .WaitUntilTextIsEmpty(500)
-                        .AssertUserIdIsEmpty("TextBox must be Empty")
+                        .AssertUserIdIsEmpty("Expected TextBox to be Empty")
                         .Pause(1000);
 
                     _loggerHelper.LogCompletedResult(_testName, _reportService);
