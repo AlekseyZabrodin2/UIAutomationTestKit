@@ -17,19 +17,13 @@ namespace UiAutoTests.ControllerAssertions
 
         public static MainWindowController AssertUserIdEquals(this MainWindowController controller, string expected, string message = null)
         {
-            var actual = controller.GetUserIdText();
-
-            AssertHelpers.AreEqual(expected, actual, message);
-
+            AssertHelpers.AreEqual(expected, controller.GetUserIdText(), message);
             return controller;
         }
 
         public static MainWindowController AssertUserIdIsEmpty(this MainWindowController controller, string message = null)
         {
-            var actual = controller.GetUserIdText();
-
-            AssertHelpers.IsEmpty(actual, message);
-
+            AssertHelpers.IsEmpty(controller.GetUserIdText(), message);
             return controller;
         }
     }
