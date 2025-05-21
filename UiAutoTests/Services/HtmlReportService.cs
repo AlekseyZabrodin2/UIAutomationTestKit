@@ -105,7 +105,7 @@ namespace UiAutoTests.Services
         {
             _loggerHelper.LogEnteringTheMethod();
 
-            _logger.Debug($"{testName} - [Completed]");
+            //_logger.Debug($"{testName} - [Completed]");
 
             string pass = "Pass";
             _parentTest.Log(Status.Pass, MarkupHelper.CreateLabel(pass.ToUpperInvariant(), ExtentColor.Green));
