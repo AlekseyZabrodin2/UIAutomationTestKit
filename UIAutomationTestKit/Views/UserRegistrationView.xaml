@@ -118,7 +118,7 @@
                                 Height="25"
                                 Margin="5"
                                 VerticalContentAlignment="Center"
-                                AutomationProperties.AutomationId="UserNameTextBox"
+                                AutomationProperties.AutomationId="UserFirstNameTextBox"
                                 Text="{Binding CreateUserName, Mode=TwoWay}" />
 
                             <TextBlock
