@@ -31,12 +31,9 @@ namespace UiAutoTests.Tests.UIAutomationTests
         [SetUp]
         public void Setup()
         {
-            _testClass = GetType().Name;
-            _testName = _initializeService.CreateTestName();
-
-            _logger.Trace($"\r\n=========================== New Test {_testName} ===========================");
-
-            _mainWindow = _initializeService.SetUpBeforeTest(_testName, _testClass, _reportService, _testClient);
+            _testClass = _initializeService.GetTestClassName();
+            _testName = _initializeService.GetTestMethodName();
+            _mainWindow = _initializeService.StartClientWithReportInitialization(_testName, _testClass, _reportService, _testClient);
         }
 
 
@@ -146,10 +143,11 @@ namespace UiAutoTests.Tests.UIAutomationTests
                     mainWindowControlle
                         .SetUserId(inputText)
                         .Pause(500)
-                        .AssertUserIdEquals(inputText)
+                        .AssertUserIdEquals(inputText,"Text must be Equal")
                         .ClickCleanButton()
-                        .Pause(1500)
-                        .AssertUserIdIsEmpty();
+                        .WaitUntilTextIsEmpty(500)
+                        .AssertUserIdIsEmpty("TextBox must be Empty")
+                        .Pause(1000);
 
                     _loggerHelper.LogCompletedResult(_testName, _reportService);
                 }
@@ -170,7 +168,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
         [TearDown]
         public void AfterTest()
         {
-            _initializeService.CleanupAfterTest(_testClient, _reportService);
+            _initializeService.DisposeClientAndReportResults(_testClient, _reportService);
         }
 
     }
