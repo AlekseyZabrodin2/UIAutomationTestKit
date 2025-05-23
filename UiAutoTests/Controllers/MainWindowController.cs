@@ -86,6 +86,66 @@ namespace UiAutoTests.Controllers
             return this;
         }
 
+        public MainWindowController SetLastName(string inputText)
+        {
+            _mainWindowHelper.SetLastName(inputText);
+            return this;
+        }
+
+        public MainWindowController SetMiddleName(string inputText)
+        {
+            _mainWindowHelper.SetMiddleName(inputText);
+            return this;
+        }
+
+        public MainWindowController SetFirstName(string inputText)
+        {
+            _mainWindowHelper.SetFirstName(inputText);
+            return this;
+        }
+
+        public MainWindowController CheckedBirthdate()
+        {
+            _mainWindowHelper.CheckedBirthdate();
+            return this;
+        }
+
+        public MainWindowController UncheckedBirthdate()
+        {
+            _mainWindowHelper.UncheckedBirthdate();
+            return this;
+        }
+
+        public MainWindowController SetBirthdateText(string inputText)
+        {
+            _mainWindowHelper.SetBirthdateText(inputText);
+            return this;
+        }
+
+        public MainWindowController SelectGender(int genderIndex)
+        {
+            _mainWindowHelper.SelectGender(genderIndex);
+            return this;
+        }
+
+        public MainWindowController SetAdressUser(string inputText)
+        {
+            _mainWindowHelper.SetAdressUser(inputText);
+            return this;
+        }
+
+        public MainWindowController SetPhoneUser(string inputText)
+        {
+            _mainWindowHelper.SetPhoneUser(inputText);
+            return this;
+        }
+
+        public MainWindowController SetInfoUser(string inputText)
+        {
+            _mainWindowHelper.SetInfoUser(inputText);
+            return this;
+        }
+
         public MainWindowController Pause(int time)
         {
             _mainWindowHelper.Pause(time);
@@ -104,6 +164,12 @@ namespace UiAutoTests.Controllers
             return this;
         }
 
+        public MainWindowController ClickRegistrationButton()
+        {
+            _mainWindowHelper.ClickRegistrationButton();
+            return this;
+        }
+
         public MainWindowController GetTextFromUserIdTextBox()
         {
             GetUserIdText();
@@ -115,6 +181,9 @@ namespace UiAutoTests.Controllers
             return _mainWindowHelper.GetTextFromUserIdTextBox();
         }
 
-
+        public bool IsRegistrationButtonEnabled()
+        {
+            return _mainWindowHelper.IsRegistrationButtonEnabled();
+        }
     }
 }
