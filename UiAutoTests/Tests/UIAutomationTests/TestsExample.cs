@@ -4,6 +4,7 @@ using UiAutoTests.Controllers;
 using UiAutoTests.Core;
 using UiAutoTests.Helpers;
 using UiAutoTests.Services;
+using UiAutoTests.TestCasesData;
 
 namespace UiAutoTests.Tests.UIAutomationTests
 {
@@ -107,7 +108,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
 
                     mainWindowControlle.ClickCleanButton();
 
-                    mainWindowControlle.Pause(1500);
+                    mainWindowControlle.Pause(1000);
 
                     var resultTest = mainWindowControlle.GetUserIdText();
                     Assert.That(resultTest, Is.Empty, "Text is not empty");
@@ -145,9 +146,130 @@ namespace UiAutoTests.Tests.UIAutomationTests
                         .Pause(500)
                         .AssertUserIdEquals(inputText,$"Expected Text to be [{inputText}]")
                         .ClickCleanButton()
-                        .Pause(1000)
                         .WaitUntilTextIsEmpty(500)
                         .AssertUserIdIsEmpty("Expected TextBox to be Empty")
+                        .Pause(500);
+
+                    _loggerHelper.LogCompletedResult(_testName, _reportService);
+                }
+            }
+            catch (Exception exception)
+            {
+                _loggerHelper.LogFailedResult(_testName, exception, _reportService);
+                throw;
+            }
+            finally
+            {
+                _testClient.Kill();
+            }
+        }
+
+        [TestCaseSource(typeof(MainWindowTestCases), nameof(MainWindowTestCases.ValidRegistrationFieldCases))]
+        [Test]
+        public void Test03_ParametersFromProperties(RegistrationCaseDto registrDto)
+        {
+            try
+            {
+                if (_mainWindow is MainWindowController mainWindowControlle)
+                {
+                    mainWindowControlle
+                        .SetUserId(registrDto.Id)
+                        .SetLastName(registrDto.LastName)
+                        .SetMiddleName(registrDto.MiddleName)
+                        .SetFirstName(registrDto.FirstName)
+
+                        .CheckedBirthdate()
+
+                        .AssertUserIdEquals(registrDto.Id, $"Expected Text to be [{registrDto.Id}]")
+
+                        .ClickCleanButton()
+                        .WaitUntilTextIsEmpty(500)
+                        .AssertUserIdIsEmpty("Expected TextBox to be Empty")
+                        .Pause(500);
+
+                    _loggerHelper.LogCompletedResult(_testName, _reportService);
+                }
+            }
+            catch (Exception exception)
+            {
+                _loggerHelper.LogFailedResult(_testName, exception, _reportService);
+                throw;
+            }
+            finally
+            {
+                _testClient.Kill();
+            }
+        }
+
+        [TestCase("001", "Smith", "James", "John")]
+        [TestCase("002", "Johnson", "Lee", "Michael")]
+        [TestCase("003", "Williams", "Anne", "Emily")]
+        [TestCase("004", "Brown", "Marie", "Sophia")]
+        [TestCase("005", "Davis", "Alan", "Robert")]
+        [Test]
+        public void Test04_WithParametersInTestCase(string id, string lastName, string middleName, string firstName)
+        {
+            try
+            {
+                if (_mainWindow is MainWindowController mainWindowControlle)
+                {
+                    mainWindowControlle
+                        .SetUserId(id)
+                        .SetLastName(lastName)
+                        .SetMiddleName(middleName)
+                        .SetFirstName(firstName)
+
+                        .CheckedBirthdate()
+
+                        .AssertUserIdEquals(id, $"Expected Text to be [{id}]")
+
+                        .ClickCleanButton()
+                        .WaitUntilTextIsEmpty(500)
+                        .AssertUserIdIsEmpty("Expected TextBox to be Empty")
+                        .Pause(500);
+
+                    _loggerHelper.LogCompletedResult(_testName, _reportService);
+                }
+            }
+            catch (Exception exception)
+            {
+                _loggerHelper.LogFailedResult(_testName, exception, _reportService);
+                throw;
+            }
+            finally
+            {
+                _testClient.Kill();
+            }
+        }
+
+        [TestCaseSource(typeof(MainWindowTestCases), nameof(MainWindowTestCases.ValidRegistrationCases))]
+        [Test]
+        public void Test05_ParametersFromClass(RegistrationCaseDto registrDto)
+        {
+            try
+            {
+                if (_mainWindow is MainWindowController mainWindowControlle)
+                {
+                    mainWindowControlle
+                        .SetUserId(registrDto.Id)
+                        .SetLastName(registrDto.LastName)
+                        .SetMiddleName(registrDto.MiddleName)
+                        .SetFirstName(registrDto.FirstName)
+
+                        .CheckedBirthdate()
+                        .SetBirthdateText(registrDto.BirthdateText)
+
+                        .SetAdressUser(registrDto.Address)
+                        .SetPhoneUser(registrDto.Phone)
+                        .SetInfoUser(registrDto.Info)
+
+                        .SelectGender(registrDto.SelectedGender)
+
+                        .AssertUserIdEquals(registrDto.Id, $"Expected Text to be [{registrDto.Id}]")
+
+                        .AssertIsRegistrationButtonEnabled()
+
+                        .ClickRegistrationButton()
                         .Pause(1000);
 
                     _loggerHelper.LogCompletedResult(_testName, _reportService);
@@ -163,6 +285,51 @@ namespace UiAutoTests.Tests.UIAutomationTests
                 _testClient.Kill();
             }
         }
+
+        [TestCaseSource(typeof(MainWindowTestCases), nameof(MainWindowTestCases.ValidRegistrationCasesFromJson))]
+        [Test]
+        public void Test06_ParametersFromJson(RegistrationCaseFromJson dataFromJson)
+        {
+            try
+            {
+                if (_mainWindow is MainWindowController mainWindowControlle)
+                {
+                    mainWindowControlle
+                        .SetUserId(dataFromJson.Id)
+                        .SetLastName(dataFromJson.LastName)
+                        .SetMiddleName(dataFromJson.MiddleName)
+                        .SetFirstName(dataFromJson.FirstName)
+
+                        .CheckedBirthdate()
+                        .SetBirthdateText(dataFromJson.BirthdateText)
+
+                        .SetAdressUser(dataFromJson.Address)
+                        .SetPhoneUser(dataFromJson.Phone)
+                        .SetInfoUser(dataFromJson.Info)
+
+                        .SelectGender(dataFromJson.SelectedGender)
+
+                        .AssertUserIdEquals(dataFromJson.Id, $"Expected Text to be [{dataFromJson.Id}]")
+
+                        .AssertIsRegistrationButtonEnabled()
+
+                        .ClickRegistrationButton()
+                        .Pause(1000);
+
+                    _loggerHelper.LogCompletedResult(_testName, _reportService);
+                }
+            }
+            catch (Exception exception)
+            {
+                _loggerHelper.LogFailedResult(_testName, exception, _reportService);
+                throw;
+            }
+            finally
+            {
+                _testClient.Kill();
+            }
+        }
+
 
 
 
