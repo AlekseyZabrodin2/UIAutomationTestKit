@@ -19,10 +19,13 @@
     <PackageReference Include="ExtentReports" Version="5.0.4" />
     <PackageReference Include="FlaUI.Core" Version="5.0.0" />
     <PackageReference Include="FlaUI.UIA3" Version="5.0.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.5" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.5" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.5" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.0" />
     <PackageReference Include="NLog" Version="5.4.0" />
     <PackageReference Include="NUnit" Version="4.3.2" />
-    <PackageReference Include="NUnit.Analyzers" Version="4.7.0">
+    <PackageReference Include="NUnit.Analyzers" Version="4.8.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -38,10 +41,9 @@
     <None Update="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Extensions\" />
+    <None Update="TestDataJson\registrationCase.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

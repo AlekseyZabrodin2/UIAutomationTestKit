@@ -2,7 +2,7 @@
 using UiAutoTests.Helpers;
 using UiAutoTests.Services;
 
-namespace UiAutoTests
+namespace UiAutoTests.Tests
 {
     [SetUpFixture]
     public class AssemblyInitializeTests
@@ -18,7 +18,7 @@ namespace UiAutoTests
         [OneTimeSetUp]
         public void BeforeTestSuites()
         {
-            _logger.Trace($"\r\n=========================== New Test Suite  ===========================");
+            _logger.Trace($"\r\n=========================== New Test Suite start  ===========================");
 
             _loggerHelper.LogEnteringTheMethod();
 
@@ -46,9 +46,9 @@ namespace UiAutoTests
 
             if (_reportService != null)
             {
-                _reportService.CreateReport();
+                //_reportService.CreateReport();
 
-                File.Move(_oldNameFullPath!, _newNameFullPath!);
+                //File.Move(_oldNameFullPath!, _newNameFullPath!);
             }
             else
             {

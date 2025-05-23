@@ -1,19 +1,21 @@
 ﻿using FlaUI.Core.AutomationElements;
 using FlaUI.Core.Conditions;
 using NLog;
+using RazorEngine.Compilation.ImpromptuInterface.Dynamic;
+using UiAutoTests.ControllerAssertions;
 using UiAutoTests.Core;
 using UiAutoTests.Helpers;
 using UiAutoTests.Locators;
 
 namespace UiAutoTests.Controllers
 {
-    internal class MainWindowController : IClientState
+    public class MainWindowController : IClientState
     {
         private readonly Window _window;
         private readonly ConditionFactory _conditionFactory;
         private MainWindowLocators _mainWindowStateLocators;
         private LoggerHelper _loggerHelper = new();
-        private MainWindowHelper _mainWindowManager;
+        private static MainWindowHelper _mainWindowHelper;
         private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
         public string Name { get; } = "MainWindowState";
@@ -24,7 +26,7 @@ namespace UiAutoTests.Controllers
             _window = window;
             _conditionFactory = conditionFactory;
             _mainWindowStateLocators = new(_window, _conditionFactory);
-            _mainWindowManager = new(_window, _conditionFactory);
+            _mainWindowHelper = new(_window, _conditionFactory);
         }
 
 
@@ -78,48 +80,110 @@ namespace UiAutoTests.Controllers
         }
 
 
-        //public void CreateAccounte()
-        //{
-        //    _mainWindowManager.CreateAccounte();
-        //}
+        public MainWindowController SetUserId(string inputText)
+        {
+            _mainWindowHelper.SetUserId(inputText);
+            return this;
+        }
 
-        //public void SelectDepositItem(object? index)
-        //{
-        //    _mainWindowManager.SelectDepositItem(index);
-        //}
+        public MainWindowController SetLastName(string inputText)
+        {
+            _mainWindowHelper.SetLastName(inputText);
+            return this;
+        }
 
-        //public void SelectAccountType(int index)
-        //{
-        //    _mainWindowManager.SelectAccountType(index);
-        //}
+        public MainWindowController SetMiddleName(string inputText)
+        {
+            _mainWindowHelper.SetMiddleName(inputText);
+            return this;
+        }
 
-        //public void SelectLeverages(int index)
-        //{
-        //    _mainWindowManager.SelectLeverages(index);
-        //}
+        public MainWindowController SetFirstName(string inputText)
+        {
+            _mainWindowHelper.SetFirstName(inputText);
+            return this;
+        }
 
-        //public void SelectCurrencies(int index)
-        //{
-        //    _mainWindowManager.SelectCurrencies(index);
-        //}
+        public MainWindowController CheckedBirthdate()
+        {
+            _mainWindowHelper.CheckedBirthdate();
+            return this;
+        }
 
-        //public bool ValidationDeposits()
-        //{
-        //    return _mainWindowManager.ValidationDepositsCombobox();
-        //}
+        public MainWindowController UncheckedBirthdate()
+        {
+            _mainWindowHelper.UncheckedBirthdate();
+            return this;
+        }
 
-        //public bool CheckingCreateAccountButtonIsEnabled()
-        //{
-        //    return _mainWindowManager.CheckingCreateAccountButtonIsEnabled();
-        //}
+        public MainWindowController SetBirthdateText(string inputText)
+        {
+            _mainWindowHelper.SetBirthdateText(inputText);
+            return this;
+        }
 
+        public MainWindowController SelectGender(int genderIndex)
+        {
+            _mainWindowHelper.SelectGender(genderIndex);
+            return this;
+        }
 
+        public MainWindowController SetAdressUser(string inputText)
+        {
+            _mainWindowHelper.SetAdressUser(inputText);
+            return this;
+        }
 
-        //public void WaitingBetweenCommand(int waitingTime)
-        //{
-        //    _mainWindowManager.WaitingBetweenCommand(waitingTime);
-        //}
+        public MainWindowController SetPhoneUser(string inputText)
+        {
+            _mainWindowHelper.SetPhoneUser(inputText);
+            return this;
+        }
 
+        public MainWindowController SetInfoUser(string inputText)
+        {
+            _mainWindowHelper.SetInfoUser(inputText);
+            return this;
+        }
 
+        public MainWindowController Pause(int time)
+        {
+            _mainWindowHelper.Pause(time);
+            return this;
+        }
+
+        public MainWindowController WaitUntilTextIsEmpty(int time)
+        {
+            _mainWindowHelper.WaitUntilTextIsEmpty(time);
+            return this;
+        }
+
+        public MainWindowController ClickCleanButton()
+        {
+            _mainWindowHelper.ClickCleanButton();
+            return this;
+        }
+
+        public MainWindowController ClickRegistrationButton()
+        {
+            _mainWindowHelper.ClickRegistrationButton();
+            return this;
+        }
+
+        public MainWindowController GetTextFromUserIdTextBox()
+        {
+            GetUserIdText();
+            return this;
+        }
+
+        public string GetUserIdText()
+        {            
+            return _mainWindowHelper.GetTextFromUserIdTextBox();
+        }
+
+        public bool IsRegistrationButtonEnabled()
+        {
+            return _mainWindowHelper.IsRegistrationButtonEnabled();
+        }
     }
 }

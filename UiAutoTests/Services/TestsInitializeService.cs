@@ -9,9 +9,8 @@ namespace UiAutoTests.Services
         private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
         private LoggerHelper _loggerHelper = new();
 
-
-
-        public string CreateTestName()
+                
+        public string GetTestMethodName()
         {
             var testName = TestContext.CurrentContext.Test.MethodName!;
 
@@ -21,10 +20,13 @@ namespace UiAutoTests.Services
                 testName += " [" + string.Join("_", parameters.Select(p => p?.ToString())) + "]";
             }
 
+            _logger.Trace($"\r\n=========================== Start Test - [{testName}] ===========================");
+
             return testName;
         }
 
-        public IClientState SetUpBeforeTest(string testName, string testClass, HtmlReportService reportCore, ITestClient testClient)
+        public IClientState StartClientWithReportInitialization(string testName, string testClass, 
+            HtmlReportService reportCore, ITestClient testClient)
         {
             _loggerHelper.LogEnteringTheMethod();
 
@@ -65,23 +67,16 @@ namespace UiAutoTests.Services
             _loggerHelper.LogEnteringTheMethod();
 
             reportCore.InitializeTests(testName, testClass);
-            _logger.Info($"Entering in Test [{testName}]");
         }
 
-        public void CleanupAfterTest(ITestClient testClient, HtmlReportService reportCore)
+        public void DisposeClientAndReportResults(ITestClient testClient, HtmlReportService reportCore)
         {
-            _logger.Trace("\r\n=========================== Test Result ===========================");
-
             _loggerHelper.LogEnteringTheMethod();
 
-            if (testClient != null)
-            {
-                testClient.Kill();
-            }
-            
+            testClient.Kill();
             reportCore.GetTestsStatus();
 
-            _logger.Trace("\r\n=========================== END TestCase ===========================\r\n");
+            _logger.Trace("\r\n=========================== Finish TestCase ===========================\r\n");
         }
 
 

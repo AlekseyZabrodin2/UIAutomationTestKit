@@ -1,0 +1,30 @@
+﻿{
+  "TestDataFromJson": {
+
+    "TestValidRegistration": {
+      "Id": "01",
+      "LastName": "FedoroF",
+      "FirstName": "Json",
+      "MiddleName": "Glebovich",
+      "BirthdateUse": true,
+      "BirthdateText": "19.01.2021",
+      "SelectedGender": 1,
+      "Address": "Boston",
+      "Phone": "6456433",
+      "Info": "Test text"
+    },
+
+    "TestInvalidRegistration": {
+      "Id": "02",
+      "LastName": "Jsonov",
+      "FirstName": "Json",
+      "MiddleName": "Jsonovich",
+      "BirthdateUse": true,
+      "BirthdateText": "01.12.2023",
+      "SelectedGender": 1,
+      "Address": "Meriland",
+      "Phone": "89754256",
+      "Info": "Some text"
+    }
+  }
+}

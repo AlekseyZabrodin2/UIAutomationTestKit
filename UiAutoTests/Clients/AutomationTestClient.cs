@@ -73,7 +73,7 @@ namespace UiAutoTests.Clients
             {
                 _logger.Trace("Try to find CreateAccountWindows");
 
-                var createAccountWindows = _mainWindowLocators.MainWindowsLocator.AsWindow();
+                var createAccountWindows = _mainWindowLocators.MainWindowsLocator;
                 createAccountWindows.DrawHighlight(); // For demonstrations
 
                 if (createAccountWindows == null)
@@ -92,8 +92,11 @@ namespace UiAutoTests.Clients
 
         public void Kill()
         {
-            _logger.Trace($"CreateAccountTestClient is Kill");
-            _application.Kill();
+            if (!_application.HasExited)
+            {
+                _logger.Trace($"CreateAccountTestClient is Kill");
+                _application.Kill();
+            }                
         }
     }
 }

@@ -71,7 +71,7 @@
                                 Text="{Binding CreateUserMiddleName, Mode=TwoWay}" />
 
                             <CheckBox
-                                Margin="5,3,0,0"
+                                Margin="5,4,0,0"
                                 AutomationProperties.AutomationId="BirthDateUserCheckBox"
                                 Content="Birthdate:"
                                 FontWeight="DemiBold"
@@ -118,7 +118,7 @@
                                 Height="25"
                                 Margin="5"
                                 VerticalContentAlignment="Center"
-                                AutomationProperties.AutomationId="UserNameTextBox"
+                                AutomationProperties.AutomationId="UserFirstNameTextBox"
                                 Text="{Binding CreateUserName, Mode=TwoWay}" />
 
                             <TextBlock

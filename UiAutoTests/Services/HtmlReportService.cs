@@ -36,7 +36,7 @@ namespace UiAutoTests.Services
             _sparkReporter = new ExtentSparkReporter(reportPath);
 
             var fileDire = Path.GetDirectoryName(reportPath);
-            _logger.Trace($"CreateDirectory {fileDire}");
+            _logger.Trace($"Create Directory for report - [{fileDire}]");
             if (!Directory.Exists(fileDire))
             {
                 Directory.CreateDirectory(fileDire!);
@@ -59,8 +59,7 @@ namespace UiAutoTests.Services
             TimeTestStart = DateTime.Now;
             _report.AddSystemInfo("Start Time Project", TimeTestStart.ToString());
 
-            _logger.Trace("Exit from ReportLogger\r\n");
-
+            _loggerHelper.LogExitingTheMethod();
         }
 
 
@@ -105,7 +104,7 @@ namespace UiAutoTests.Services
         {
             _loggerHelper.LogEnteringTheMethod();
 
-            _logger.Debug($"{testName} - [Completed]");
+            //_logger.Debug($"{testName} - [Completed]");
 
             string pass = "Pass";
             _parentTest.Log(Status.Pass, MarkupHelper.CreateLabel(pass.ToUpperInvariant(), ExtentColor.Green));
@@ -120,7 +119,7 @@ namespace UiAutoTests.Services
         {
             _loggerHelper.LogEnteringTheMethod();
 
-            _logger.Error(exception, $"{testName} - [Failed], with Exeption:");
+            //_logger.Error(exception, $"{testName} - [Failed], with Exeption:");
 
             string faild = "Failed";
             _parentTest.Log(Status.Fail, MarkupHelper.CreateLabel(faild.ToUpperInvariant(), ExtentColor.Red));
