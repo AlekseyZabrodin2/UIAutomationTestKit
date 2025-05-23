@@ -16,7 +16,7 @@ namespace UiAutoTests.Extensions
         private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
 
-        public static bool IsTextBoxEnabled(this AutomationElement automationElement)
+        public static bool IsTextBoxEnabled(this TextBox automationElement)
         {
             _loggerHelper.LogEnteringTheMethod();
 
@@ -27,7 +27,7 @@ namespace UiAutoTests.Extensions
             return result;
         }
 
-        public static void FocusTextBoxAndSetCursor(this AutomationElement automationElement)
+        public static void FocusTextBoxAndSetCursor(this TextBox automationElement)
         {
             _loggerHelper.LogEnteringTheMethod();
 
@@ -38,7 +38,7 @@ namespace UiAutoTests.Extensions
             _logger.Info("TextBox получил фокус");
         }
 
-        public static string GetPlaceholder(this AutomationElement automationElement)
+        public static string GetPlaceholder(this TextBox automationElement)
         {
             _loggerHelper.LogEnteringTheMethod();
 
@@ -49,7 +49,7 @@ namespace UiAutoTests.Extensions
             return placeholder;
         }
 
-        public static void EnterText(this AutomationElement automationElement, string text)
+        public static void EnterText(this TextBox automationElement, string text)
         {
             _loggerHelper.LogEnteringTheMethod(); 
 
@@ -62,7 +62,7 @@ namespace UiAutoTests.Extensions
             _logger.Info($"Введён текст: \"{text}\"");
         }
 
-        public static string GetText(this AutomationElement automationElement)
+        public static string GetText(this TextBox automationElement)
         {
             _loggerHelper.LogEnteringTheMethod();
 
@@ -73,7 +73,7 @@ namespace UiAutoTests.Extensions
             return currentText;
         }
 
-        public static void ClearText(this AutomationElement automationElement)
+        public static void ClearText(this TextBox automationElement)
         {
             _loggerHelper.LogEnteringTheMethod();
 

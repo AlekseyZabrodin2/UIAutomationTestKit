@@ -26,5 +26,11 @@ namespace UiAutoTests.ControllerAssertions
             AssertHelpers.IsEmpty(controller.GetUserIdText(), message);
             return controller;
         }
+
+        public static MainWindowController AssertIsRegistrationButtonEnabled(this MainWindowController controller, string message = null)
+        {
+            AssertHelpers.IsTrue(controller.IsRegistrationButtonEnabled(), message);
+            return controller;
+        }
     }
 }

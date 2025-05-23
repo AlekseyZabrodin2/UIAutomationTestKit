@@ -139,7 +139,7 @@ namespace UiAutoTests.Extensions
             return false;
         }
 
-        public static void ClearText(this TextBox textBox)
+        public static void ClearTextWithKeyboard(this TextBox textBox)
         {
             textBox.Focus();
             Keyboard.TypeSimultaneously(VirtualKeyShort.CONTROL, VirtualKeyShort.KEY_A);
@@ -150,7 +150,7 @@ namespace UiAutoTests.Extensions
         {
             if (textBox.WaitUntilEnabled(timeoutInSeconds))
             {
-                textBox.ClearText();
+                textBox.ClearTextWithKeyboard();
                 textBox.Enter(text);
             }
             else
