@@ -42,7 +42,7 @@
 ### Установка
 1. Клонируйте репозиторий:
 ```bash
-git clone https://github.com/your-repo/UIAutomationTestKit.git
+git clone https://github.com/AlekseyZabrodin2/UIAutomationTestKit.git
 ```
 
 2. Установите зависимости через NuGet:
