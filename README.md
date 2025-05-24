@@ -2,11 +2,14 @@
 
 ## 📋 Оглавление
 - [Описание проекта](#описание-проекта)
-- [Технологии](#технологии)
-- [Архитектура](#архитектура)
+- [Требования к системе](#требования-к-системе)
 - [Начало работы](#начало-работы)
+- [Архитектура](#архитектура)
 - [Структура проекта](#структура-проекта)
-- [Компоненты](#компоненты)
+- [Основные компоненты](#основные-компоненты)
+- [Работа с тестами](#работа-с-тестами)
+- [Отчеты и логирование](#отчеты-и-логирование)
+- [Отладка](#отладка)
 - [Лучшие практики](#лучшие-практики)
 - [Вклад в проект](#вклад-в-проект)
 
@@ -23,12 +26,60 @@
 - 📌 Поддержка параметризованных тестов
 - 📌 Генерация HTML-отчетов
 
-## 🛠 Технологии
+## 💻 Требования к системе
 
-- **.NET 9** - Современная платформа разработки
-- **FlaUI** - Мощный фреймворк для автоматизации UI
-- **NUnit** - Фреймворк модульного тестирования
-- **NLog** - Система логирования
+- Windows 10 или выше
+- .NET 9.0
+- Visual Studio 2022 или выше
+- Установленные NuGet пакеты:
+  - FlaUI.Core
+  - FlaUI.UIA3
+  - NUnit
+  - NLog
+
+## 🚦 Начало работы
+
+### Установка
+1. Клонируйте репозиторий:
+```bash
+git clone https://github.com/your-repo/UIAutomationTestKit.git
+```
+
+2. Установите зависимости через NuGet:
+```bash
+dotnet restore
+```
+
+### Создание первого теста
+```csharp
+[Test]
+public void Test02_After()
+{
+    try
+    {
+        if (_mainWindow is MainWindowController mainWindowControlle)
+        {
+            var inputText = "test Id";
+
+            mainWindowControlle
+                .SetUserId(inputText)
+                .Pause(500)
+                .AssertUserIdEquals(inputText,$"Expected Text to be [{inputText}]")
+                .ClickCleanButton()
+                .WaitUntilTextIsEmpty(500)
+                .AssertUserIdIsEmpty("Expected TextBox to be Empty")
+                .Pause(500);
+
+            _loggerHelper.LogCompletedResult(_testName, _reportService);
+        }
+    }
+    catch (Exception exception)
+    {
+        _loggerHelper.LogFailedResult(_testName, exception, _reportService);
+        throw;
+    }
+}
+```
 
 ## 🏗 Архитектура
 
@@ -38,11 +89,34 @@
 - Повторное использование кода
 - Простоту поддержки
 
-### Основные компоненты:
+## 📂 Структура проекта
 
-#### 1. Controllers (Контроллеры)
-Отвечают за взаимодействие с UI элементами.
+```
+UIAutomationTestKit/                  # Основной проект приложения
+├── 📁 Views/                        # Представления XAML
+│   └── MainWindow.xaml              # Главное окно приложения
+├── 📁 ViewModels/                   # Модели представлений
+├── App.xaml                         # Конфигурация приложения
+└── App.xaml.cs                      # Логика приложения
 
+UiAutoTests/                         # Проект автоматизированных тестов
+├── 📁 Core/                         # Базовые классы и интерфейсы
+├── 📁 Controllers/                  # Контроллеры для работы с UI элементами
+├── 📁 ControllerAssertions/        # Проверки для контроллеров
+├── 📁 Locators/                    # Локаторы UI элементов
+├── 📁 Extensions/                  # Методы расширения
+├── 📁 Helpers/                     # Вспомогательные классы
+├── 📁 Services/                    # Сервисы для работы с данными
+├── 📁 Clients/                     # Клиенты для внешних сервисов
+├── 📁 Tests/                       # Тестовые сценарии
+├── 📁 TestCasesData/              # Данные для тестовых случаев
+├── 📁 TestDataJson/               # JSON файлы с тестовыми данными
+└── NLog.config                     # Конфигурация логирования
+```
+
+## 🔧 Основные компоненты
+
+### Controllers (Контроллеры)
 ```csharp
 public class MainWindowController : IClientState
 {
@@ -77,9 +151,7 @@ public class MainWindowController : IClientState
 }
 ```
 
-#### 2. Locators (Локаторы)
-Хранят информацию о расположении элементов UI.
-
+### Locators (Локаторы)
 ```csharp
 internal class MainWindowLocators
 {
@@ -100,9 +172,7 @@ internal class MainWindowLocators
 }
 ```
 
-#### 3. Extensions (Расширения)
-Добавляют удобные методы для работы с UI элементами.
-
+### Extensions (Расширения)
 ```csharp
 public static class TextBoxExtensions
 {
@@ -112,7 +182,6 @@ public static class TextBoxExtensions
     public static void EnterText(this TextBox automationElement, string text)
     {
         _loggerHelper.LogEnteringTheMethod(); 
-
         var textBox = automationElement.EnsureTextBox();
         if (!textBox.IsEnabled)
             throw new InvalidOperationException("TextBox is disabled");
@@ -120,97 +189,12 @@ public static class TextBoxExtensions
         textBox.Text = text;
         _logger.Info($"Введён текст: \"{text}\"");
     }
-
-    public static string GetText(this TextBox automationElement)
-    {
-        _loggerHelper.LogEnteringTheMethod();
-
-        var textBox = automationElement.EnsureTextBox();
-        var currentText = textBox.Text;
-
-        _logger.Info($"Получен текст: \"{currentText}\"");
-        return currentText;
-    }
 }
 ```
 
-## 🚦 Начало работы
+## 📋 Работа с тестами
 
-### Установка
-1. Клонируйте репозиторий:
-```bash
-git clone https://github.com/your-repo/UIAutomationTestKit.git
-```
-
-2. Установите зависимости через NuGet:
-```bash
-dotnet restore
-```
-
-### Создание первого теста
-
-```csharp
-[Test]
-public void Test02_After()
-{
-    try
-    {
-        if (_mainWindow is MainWindowController mainWindowControlle)
-        {
-            var inputText = "test Id";
-
-            mainWindowControlle
-                .SetUserId(inputText)
-                .Pause(500)
-                .AssertUserIdEquals(inputText,$"Expected Text to be [{inputText}]")
-                .ClickCleanButton()
-                .WaitUntilTextIsEmpty(500)
-                .AssertUserIdIsEmpty("Expected TextBox to be Empty")
-                .Pause(500);
-
-            _loggerHelper.LogCompletedResult(_testName, _reportService);
-        }
-    }
-    catch (Exception exception)
-    {
-        _loggerHelper.LogFailedResult(_testName, exception, _reportService);
-        throw;
-    }
-    finally
-    {
-        _testClient.Kill();
-    }
-}
-```
-
-## 📂 Структура проекта
-
-```
-UIAutomationTestKit/                  # Основной проект приложения
-├── 📁 Views/                        # Представления XAML
-│   └── MainWindow.xaml              # Главное окно приложения
-├── 📁 ViewModels/                   # Модели представлений
-├── App.xaml                         # Конфигурация приложения
-└── App.xaml.cs                      # Логика приложения
-
-UiAutoTests/                         # Проект автоматизированных тестов
-├── 📁 Core/                         # Базовые классы и интерфейсы
-├── 📁 Controllers/                  # Контроллеры для работы с UI элементами
-├── 📁 ControllerAssertions/        # Проверки для контроллеров
-├── 📁 Locators/                    # Локаторы UI элементов
-├── 📁 Extensions/                  # Методы расширения
-├── 📁 Helpers/                     # Вспомогательные классы
-├── 📁 Services/                    # Сервисы для работы с данными
-├── 📁 Clients/                     # Клиенты для внешних сервисов
-├── 📁 Tests/                       # Тестовые сценарии
-├── 📁 TestCasesData/              # Данные для тестовых случаев
-├── 📁 TestDataJson/               # JSON файлы с тестовыми данными
-└── NLog.config                     # Конфигурация логирования
-```
-
-## ✨ Лучшие практики
-
-### 1. Параметризованные тесты
+### Параметризованные тесты
 ```csharp
 [TestCase("001", "Smith", "James", "John")]
 [TestCase("002", "Johnson", "Lee", "Michael")]
@@ -245,12 +229,80 @@ public void Test04_WithParametersInTestCase(string id, string lastName,
 }
 ```
 
-### 2. Обработка ожиданий
+### JSON Тестовые данные
+```json
+{
+    "Id": "TEST001",
+    "LastName": "Smith",
+    "MiddleName": "John",
+    "FirstName": "James",
+    "BirthdateText": "01.01.1990",
+    "Address": "123 Main St",
+    "Phone": "+1234567890",
+    "Info": "Test user data",
+    "SelectedGender": 0
+}
+```
+
+## 📈 Отчеты и логирование
+
+### HTML-отчеты
+```csharp
+public class HtmlReportService
+{
+    private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
+    private static LoggerHelper _loggerHelper = new();
+
+    public void ReportLogger(string testName)
+    {
+        _loggerHelper.LogEnteringTheMethod();
+        
+        var reportPath = ".\\Report.html";
+        if (File.Exists(reportPath))
+        {
+            File.Delete(reportPath);
+        }
+
+        _logger.Info($"Report initialized for test: {testName}");
+    }
+
+    public void LogStatusPass(string message)
+    {
+        _logger.Info($"✅ PASS: {message}");
+    }
+
+    public void LogStatusFail(Exception ex, string message)
+    {
+        _logger.Error($"❌ FAIL: {message}");
+        _logger.Error($"Exception: {ex}");
+    }
+}
+```
+
+### Конфигурация логирования
+```xml
+<?xml version="1.0" encoding="utf-8" ?>
+<nlog xmlns="http://www.nlog-project.org/schemas/NLog.xsd"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <targets>
+        <target name="logfile" xsi:type="File"
+                fileName=".\\logs\\${shortdate}.log"
+                layout="${longdate} | ${level:uppercase=true} | ${logger} | ${message} ${exception:format=tostring}" />
+        <target name="console" xsi:type="Console"
+                layout="${longdate} | ${level:uppercase=true} | ${logger} | ${message} ${exception:format=tostring}" />
+    </targets>
+    <rules>
+        <logger name="*" minlevel="Trace" writeTo="logfile,console" />
+    </rules>
+</nlog>
+```
+
+## 🔍 Отладка
+
+### Методы ожидания
 ```csharp
 public static class WaitExtensions
 {
-    private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
-
     public static bool WaitUntilEnabled(this AutomationElement element, int timeoutInSeconds)
     {
         return Retry.WhileFalse(() => element?.IsEnabled ?? false, 
@@ -263,54 +315,28 @@ public static class WaitExtensions
             () => element?.Text == string.Empty,
             TimeSpan.FromMilliseconds(timeoutInSeconds)).Success;
     }
-
-    public static void EnterTextWhenReady(this TextBox textBox, string text, int timeoutInSeconds)
-    {
-        if (textBox.WaitUntilEnabled(timeoutInSeconds))
-        {
-            textBox.ClearTextWithKeyboard();
-            textBox.Enter(text);
-        }
-        else
-        {
-            throw new TimeoutException("TextBox was not ready for input.");
-        }
-    }
 }
 ```
 
-### 3. Инициализация тестов
+### Советы по отладке
+1. Используйте метод `Pause()` для замедления выполнения теста:
 ```csharp
-[SetUpFixture]
-public class AssemblyInitializeTests
-{
-    private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
-    private static LoggerHelper _loggerHelper = new();
-    public static HtmlReportService _reportService;
-
-    [OneTimeSetUp]
-    public void BeforeTestSuites()
-    {
-        _logger.Trace($"\r\n=========================== New Test Suite start  ===========================");
-        _loggerHelper.LogEnteringTheMethod();
-
-        _reportService = new();
-        _reportService.ReportLogger("UI Test");
-
-        _oldNameFullPath = ".\\Report.html";
-        _newNameFullPath = ".\\logs\\ReportResults\\TestReport" + 
-            DateTime.Now.ToString("_dd.MM.yyyy_HH.mm.ss") + ".html";
-
-        var directoryPath = Path.GetDirectoryName(_newNameFullPath);
-        if (!Directory.Exists(directoryPath))
-        {
-            Directory.CreateDirectory(directoryPath);
-        }
-
-        _reportService.ReplaceCssStyleDir();
-    }
-}
+mainWindowController.Pause(1000); // Пауза 1 секунда
 ```
+
+2. Добавляйте подробное логирование:
+```csharp
+_logger.Info($"Entering {nameof(SetUserId)} with value: {inputText}");
+```
+
+## ✨ Лучшие практики
+
+1. Всегда используйте Fluent API для улучшения читаемости тестов
+2. Добавляйте информативные сообщения в ассерты
+3. Используйте ожидания вместо фиксированных задержек
+4. Группируйте тесты по функциональности
+5. Следуйте принципам SOLID при разработке
+6. Используйте логирование для отладки
 
 ## 🤝 Вклад в проект
 
