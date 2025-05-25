@@ -141,14 +141,13 @@ namespace UiAutoTests.Extensions
             return grid;
         }
 
-        public static DataGrid EnsureDataGrid(this AutomationElement automationElement)
+        public static GridRow EnsureGridRow(this AutomationElement automationElement)
         {
-            var dataGrid = automationElement.AsDataGrid();
-            if (dataGrid == null || dataGrid.ControlType != ControlType.DataGrid)
-                throw new ArgumentException("Element is not a DataGrid.");
+            var gridRow = automationElement.AsGridRow();
+            if (gridRow == null || gridRow.ControlType != ControlType.Custom)
+                throw new ArgumentException("Element is not a GridRow.");
 
-            return dataGrid;
+            return gridRow;
         }
-
     }
 }
