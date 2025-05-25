@@ -43,9 +43,23 @@ namespace UiAutoTests.Extensions
             return textBox;
         }
 
+        public static MenuItem EnsureMenuItem(this AutomationElement automationElement)
+        {
+            var menuItem = automationElement.AsMenuItem();
+            if (menuItem == null || menuItem.ControlType != ControlType.MenuItem)
+                throw new ArgumentException("Element is not a MenuItem.");
 
+            return menuItem;
+        }
 
+        public static DataGridView EnsureDataGridView(this AutomationElement automationElement)
+        {
+            var dataGrid = automationElement.AsDataGridView();
+            if (dataGrid == null || dataGrid.ControlType != ControlType.DataGrid)
+                throw new ArgumentException("Element is not a MenuItem.");
 
+            return dataGrid;
+        }
 
 
     }
