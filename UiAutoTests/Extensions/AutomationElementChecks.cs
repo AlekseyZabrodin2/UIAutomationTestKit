@@ -132,5 +132,23 @@ namespace UiAutoTests.Extensions
             return listBoxItem;
         }
 
+        public static Grid EnsureGrid(this AutomationElement automationElement)
+        {
+            var grid = automationElement.AsGrid();
+            if (grid == null || grid.ControlType != ControlType.Custom)
+                throw new ArgumentException("Element is not a Grid.");
+
+            return grid;
+        }
+
+        public static DataGrid EnsureDataGrid(this AutomationElement automationElement)
+        {
+            var dataGrid = automationElement.AsDataGrid();
+            if (dataGrid == null || dataGrid.ControlType != ControlType.DataGrid)
+                throw new ArgumentException("Element is not a DataGrid.");
+
+            return dataGrid;
+        }
+
     }
 }
