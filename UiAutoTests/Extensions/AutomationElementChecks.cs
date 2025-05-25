@@ -149,5 +149,23 @@ namespace UiAutoTests.Extensions
 
             return gridRow;
         }
+
+        public static GridHeader EnsureGridHeader(this AutomationElement automationElement)
+        {
+            var gridHeader = automationElement.AsGridHeader();
+            if (gridHeader == null || gridHeader.ControlType != ControlType.Header)
+                throw new ArgumentException("Element is not a GridHeader.");
+
+            return gridHeader;
+        }
+
+        public static GridHeaderItem EnsureGridHeaderItem(this AutomationElement automationElement)
+        {
+            var gridHeaderItem = automationElement.AsGridHeaderItem();
+            if (gridHeaderItem == null || gridHeaderItem.ControlType != ControlType.HeaderItem)
+                throw new ArgumentException("Element is not a GridHeaderItem.");
+
+            return gridHeaderItem;
+        }
     }
 }
