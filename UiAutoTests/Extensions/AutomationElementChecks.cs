@@ -123,7 +123,14 @@ namespace UiAutoTests.Extensions
             return automationElement;
         }
 
+        public static ListBoxItem EnsureListBoxItem(this AutomationElement automationElement)
+        {
+            var listBoxItem = automationElement.AsListBoxItem();
+            if (listBoxItem == null || listBoxItem.ControlType != ControlType.ListItem)
+                throw new ArgumentException("Element is not a ListBoxItem.");
 
+            return listBoxItem;
+        }
 
     }
 }
