@@ -61,6 +61,60 @@ namespace UiAutoTests.Extensions
             return dataGrid;
         }
 
+        public static TreeItem EnsureTreeItem(this AutomationElement automationElement)
+        {
+            var treeItem = automationElement.AsTreeItem();
+            if (treeItem == null || treeItem.ControlType != ControlType.TreeItem)
+                throw new ArgumentException("Element is not a MenuItem.");
+
+            return treeItem;
+        }
+
+        public static ListBox EnsureListBox(this AutomationElement automationElement)
+        {
+            var listBox = automationElement.AsListBox();
+            if (listBox == null || listBox.ControlType != ControlType.List)
+                throw new ArgumentException("Element is not a ListBox.");
+
+            return listBox;
+        }
+
+        public static TabItem EnsureTabItem(this AutomationElement automationElement)
+        {
+            var tabItem = automationElement.AsTabItem();
+            if (tabItem == null || tabItem.ControlType != ControlType.TabItem)
+                throw new ArgumentException("Element is not a TabItem.");
+
+            return tabItem;
+        }
+
+        public static Tab EnsureTab(this AutomationElement automationElement)
+        {
+            var tab = automationElement.AsTab();
+            if (tab == null || tab.ControlType != ControlType.Tab)
+                throw new ArgumentException("Element is not a Tab.");
+
+            return tab;
+        }
+
+        public static Calendar EnsureCalendar(this AutomationElement automationElement)
+        {
+            var calendar = automationElement.AsCalendar();
+            if (calendar == null || calendar.ControlType != ControlType.Calendar)
+                throw new ArgumentException("Element is not a Calendar.");
+
+            return calendar;
+        }
+
+        public static AutomationElement EnsureToolTip(this AutomationElement automationElement)
+        {
+            if (automationElement == null || automationElement.ControlType != ControlType.ToolTip)
+                throw new ArgumentException("Element is not a ToolTip.");
+
+            return automationElement;
+        }
+
+
 
     }
 }
