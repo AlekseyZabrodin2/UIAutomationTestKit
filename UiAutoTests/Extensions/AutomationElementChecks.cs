@@ -106,6 +106,15 @@ namespace UiAutoTests.Extensions
             return calendar;
         }
 
+        public static DateTimePicker EnsureDateTimePicker(this AutomationElement automationElement)
+        {
+            var dateTimePicker = automationElement.AsDateTimePicker();
+            if (dateTimePicker == null || dateTimePicker.ControlType != ControlType.Custom)
+                throw new ArgumentException("Element is not a DateTimePicker.");
+
+            return dateTimePicker;
+        }
+
         public static AutomationElement EnsureToolTip(this AutomationElement automationElement)
         {
             if (automationElement == null || automationElement.ControlType != ControlType.ToolTip)
