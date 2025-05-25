@@ -91,7 +91,7 @@ namespace UiAutoTests.Helpers
             _loggerHelper.LogEnteringTheMethod();
 
             var comboBox = _mainWindowLocators.GenderUserComboBox;
-            comboBox.SelectItem(genderIndex);
+            comboBox.SelectItemByIndex(genderIndex);
         }
 
         public void SetAdressUser(string inputText)
