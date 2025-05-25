@@ -135,7 +135,7 @@ namespace UiAutoTests.Extensions
         public static Grid EnsureGrid(this AutomationElement automationElement)
         {
             var grid = automationElement.AsGrid();
-            if (grid == null || grid.ControlType != ControlType.Custom)
+            if (grid == null || grid.ControlType != ControlType.Table)
                 throw new ArgumentException("Element is not a Grid.");
 
             return grid;
@@ -144,7 +144,7 @@ namespace UiAutoTests.Extensions
         public static GridRow EnsureGridRow(this AutomationElement automationElement)
         {
             var gridRow = automationElement.AsGridRow();
-            if (gridRow == null || gridRow.ControlType != ControlType.Custom)
+            if (gridRow == null || gridRow.ControlType != ControlType.ListItem)
                 throw new ArgumentException("Element is not a GridRow.");
 
             return gridRow;

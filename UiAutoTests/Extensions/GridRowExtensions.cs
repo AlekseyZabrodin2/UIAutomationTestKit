@@ -11,17 +11,7 @@ namespace UiAutoTests.Extensions
         private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
         private static readonly LoggerHelper _loggerHelper = new();
 
-        /// <summary>
-        /// Проверяет, является ли элемент строкой сетки
-        /// </summary>
-        public static bool IsGridRow(this AutomationElement automationElement)
-        {
-            _loggerHelper.LogEnteringTheMethod();
-            var isGridRow = automationElement.ControlType == ControlType.Custom;
-            _logger.Info($"[{automationElement.AutomationId}] IsGridRow - [{isGridRow}]");
-            return isGridRow;
-        }
-
+        
         /// <summary>
         /// Получает все ячейки строки
         /// </summary>

@@ -11,17 +11,7 @@ namespace UiAutoTests.Extensions
         private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
         private static readonly LoggerHelper _loggerHelper = new();
 
-        /// <summary>
-        /// Проверяет, является ли элемент сеткой
-        /// </summary>
-        public static bool IsGrid(this AutomationElement automationElement)
-        {
-            _loggerHelper.LogEnteringTheMethod();
-            var isGrid = automationElement.ControlType == ControlType.Custom;
-            _logger.Info($"[{automationElement.AutomationId}] IsGrid - [{isGrid}]");
-            return isGrid;
-        }
-
+        
         /// <summary>
         /// Получает все строки сетки
         /// </summary>
