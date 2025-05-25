@@ -14,7 +14,7 @@ namespace UiAutoTests.Extensions
     {
         private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
         private const int DefaultTimeout = 5000; // 5 секунд по умолчанию
-
+                
         /// <summary>
         /// Пауза на указанное время
         /// </summary>
