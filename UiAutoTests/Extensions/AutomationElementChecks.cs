@@ -56,16 +56,25 @@ namespace UiAutoTests.Extensions
         {
             var dataGrid = automationElement.AsDataGridView();
             if (dataGrid == null || dataGrid.ControlType != ControlType.DataGrid)
-                throw new ArgumentException("Element is not a MenuItem.");
+                throw new ArgumentException("Element is not a DataGridView.");
 
             return dataGrid;
+        }
+
+        public static Tree EnsureTree(this AutomationElement automationElement)
+        {
+            var tree = automationElement.AsTree();
+            if (tree == null || tree.ControlType != ControlType.Tree)
+                throw new ArgumentException("Element is not a Tree.");
+
+            return tree;
         }
 
         public static TreeItem EnsureTreeItem(this AutomationElement automationElement)
         {
             var treeItem = automationElement.AsTreeItem();
             if (treeItem == null || treeItem.ControlType != ControlType.TreeItem)
-                throw new ArgumentException("Element is not a MenuItem.");
+                throw new ArgumentException("Element is not a TreeItem.");
 
             return treeItem;
         }
@@ -166,6 +175,60 @@ namespace UiAutoTests.Extensions
                 throw new ArgumentException("Element is not a GridHeaderItem.");
 
             return gridHeaderItem;
+        }
+
+        public static Label EnsureLabel(this AutomationElement automationElement)
+        {
+            var label = automationElement.AsLabel();
+            if (label == null || label.ControlType != ControlType.Text)
+                throw new ArgumentException("Element is not a Label.");
+
+            return label;
+        }
+
+        public static RadioButton EnsureRadioButton(this AutomationElement automationElement)
+        {
+            var radio = automationElement.AsRadioButton();
+            if (radio == null || radio.ControlType != ControlType.RadioButton)
+                throw new ArgumentException("Element is not a RadioButton.");
+
+            return radio;
+        }
+
+        public static Slider EnsureSlider(this AutomationElement automationElement)
+        {
+            var slider = automationElement.AsSlider();
+            if (slider == null || slider.ControlType != ControlType.Slider)
+                throw new ArgumentException("Element is not a Slider.");
+
+            return slider;
+        }
+
+        public static ProgressBar EnsureProgressBar(this AutomationElement automationElement)
+        {
+            var progressBar = automationElement.AsProgressBar();
+            if (progressBar == null || progressBar.ControlType != ControlType.ProgressBar)
+                throw new ArgumentException("Element is not a ProgressBar.");
+
+            return progressBar;
+        }
+
+        public static Spinner EnsureSpinner(this AutomationElement automationElement)
+        {
+            var spinner = automationElement.AsSpinner();
+            if (spinner == null || spinner.ControlType != ControlType.Spinner)
+                throw new ArgumentException("Element is not a Spinner.");
+
+            return spinner;
+        }
+        
+        public static Window EnsureWindow(this AutomationElement automationElement)
+        {
+            var window = automationElement.AsWindow();
+            if (window == null || window.ControlType != ControlType.Window)
+                throw new ArgumentException("Element is not a Window.");
+
+            return window;
         }
     }
 }

@@ -1,6 +1,5 @@
-﻿using UiAutoTests.Controllers;
-using UiAutoTests.Helpers;
-using UiAutoTests.Locators;
+﻿using UiAutoTests.Assertions;
+using UiAutoTests.Controllers;
 
 namespace UiAutoTests.ControllerAssertions
 {
