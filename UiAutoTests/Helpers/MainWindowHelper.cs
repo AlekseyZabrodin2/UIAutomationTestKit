@@ -172,7 +172,19 @@ namespace UiAutoTests.Helpers
             userIdTextBox.WaitUntilTextIsEmpty(timeInSecond);
         }
 
-
+        public void SetValidDataInUserForm()
+        {
+            SetUserId("1");
+            SetLastName("Ivanov");
+            SetMiddleName("Ivan");
+            SetFirstName("Ivanovich");
+            CheckedBirthdate();
+            SetBirthdateText("25.12.1995");
+            SetAdressUser("London, Baker Street 221B");
+            SetPhoneUser("5465431");
+            SetInfoUser("Second test case with different data");
+            SelectGender(2);
+        }
 
 
     }
