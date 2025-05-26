@@ -185,5 +185,11 @@ namespace UiAutoTests.Controllers
         {
             return _mainWindowHelper.IsRegistrationButtonEnabled();
         }
+
+        public MainWindowController SetValidDataInUserForm()
+        {
+            _mainWindowHelper.SetValidDataInUserForm();
+            return this;
+        }
     }
 }
