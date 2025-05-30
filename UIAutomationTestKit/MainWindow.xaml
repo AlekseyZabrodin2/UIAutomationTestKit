@@ -9,7 +9,7 @@
     xmlns:views="clr-namespace:UIAutomationTestKit.Views"
     Title="User Registration"
     Width="600"
-    Height="490"
+    Height="640"
     mc:Ignorable="d">
 
     <Grid>

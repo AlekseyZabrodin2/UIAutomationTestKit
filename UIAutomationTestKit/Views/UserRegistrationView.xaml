@@ -17,6 +17,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="60" />
             <RowDefinition Height="60" />
         </Grid.RowDefinitions>
@@ -172,6 +173,25 @@
             Grid.Row="5"
             Grid.Column="0"
             Grid.ColumnSpan="4"
+            Margin="15,0,15,10">
+            <Border
+                Grid.Row="0"
+                BorderBrush="Black"
+                BorderThickness="1">
+                <DataGrid
+                    AutoGenerateColumns="True"
+                    AutomationProperties.AutomationId="UsersCollectionDataGrid"
+                    CanUserAddRows="False"
+                    EnableRowVirtualization="{Binding RowVirtualization}"
+                    ItemsSource="{Binding UsersCollection}" />
+
+            </Border>
+        </Grid>
+
+        <Grid
+            Grid.Row="6"
+            Grid.Column="0"
+            Grid.ColumnSpan="4"
             Margin="15,0">
             <Border
                 Grid.Row="0"
@@ -190,7 +210,7 @@
         </Grid>
 
         <Grid
-            Grid.Row="6"
+            Grid.Row="7"
             Grid.Column="1"
             Grid.ColumnSpan="2">
             <Button
