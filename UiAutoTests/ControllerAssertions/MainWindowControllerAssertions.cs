@@ -14,6 +14,13 @@ namespace UiAutoTests.ControllerAssertions
             return controller;
         }
 
+        public static MainWindowController AssertAreEqual<T>(this MainWindowController controller, T expected, T actual, string message = null)
+        {
+            AssertHelpers.AreEqual(actual, expected, message);
+
+            return controller;
+        }
+
         public static MainWindowController AssertUserIdEquals(this MainWindowController controller, string expected, string message = null)
         {
             AssertHelpers.AreEqual(expected, controller.GetUserIdText(), message);
@@ -29,6 +36,13 @@ namespace UiAutoTests.ControllerAssertions
         public static MainWindowController AssertIsRegistrationButtonEnabled(this MainWindowController controller, string message = null)
         {
             AssertHelpers.IsTrue(controller.IsRegistrationButtonEnabled(), message);
+            return controller;
+        }
+
+        public static MainWindowController AssertRowCountIs(this MainWindowController controller, int expected, string message = null)
+        {
+            var actual = controller.GetRowCount();
+            AssertHelpers.AreEqual(expected, actual, message);
             return controller;
         }
     }

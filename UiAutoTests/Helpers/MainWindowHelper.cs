@@ -133,16 +133,16 @@ namespace UiAutoTests.Helpers
         {
             _loggerHelper.LogEnteringTheMethod();
 
-            var cleanUpButton = _mainWindowLocators.RegistrationUserButton;
-            cleanUpButton.ClickButton();
+            var regButton = _mainWindowLocators.RegistrationUserButton;
+            regButton.ClickButton();
         }
 
         public bool IsRegistrationButtonEnabled()
         {
             _loggerHelper.LogEnteringTheMethod();
 
-            var cleanUpButton = _mainWindowLocators.RegistrationUserButton;
-            return cleanUpButton.IsButtonEnabled();
+            var button = _mainWindowLocators.RegistrationUserButton;
+            return button.IsButtonEnabled();
         }
 
         public string GetTextFromUserIdTextBox()
@@ -154,7 +154,27 @@ namespace UiAutoTests.Helpers
             return userIdTextBox.GetText();
         }
 
+        public void RegistrationSeveralUsers(int count)
+        {
+            _loggerHelper.LogEnteringTheMethod();
 
+            for (int i = 0; i < count; i++)
+            {
+                SetValidDataInUserForm();
+                ClickRegistrationButton();
+                Pause(1000);
+            }
+        }
+
+        public int GetRowCountInDataGrid()
+        {
+            _loggerHelper.LogEnteringTheMethod();
+
+            var dataGrid = _mainWindowLocators.UsersCollectionDataGrid;
+            var result = dataGrid.GetRowCount();
+
+            return result;
+        }
 
 
         public void Pause(int timeInSecond)
@@ -172,7 +192,19 @@ namespace UiAutoTests.Helpers
             userIdTextBox.WaitUntilTextIsEmpty(timeInSecond);
         }
 
-
+        public void SetValidDataInUserForm()
+        {
+            SetUserId("1");
+            SetLastName("Ivanov");
+            SetMiddleName("Ivan");
+            SetFirstName("Ivanovich");
+            CheckedBirthdate();
+            SetBirthdateText("25.12.1995");
+            SetAdressUser("London, Baker Street 221B");
+            SetPhoneUser("5465431");
+            SetInfoUser("Second test case with different data");
+            SelectGender(2);
+        }
 
 
     }

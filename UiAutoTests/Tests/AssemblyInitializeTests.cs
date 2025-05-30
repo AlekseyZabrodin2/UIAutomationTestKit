@@ -10,6 +10,7 @@ namespace UiAutoTests.Tests
         private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
         private static LoggerHelper _loggerHelper = new();
         public static HtmlReportService _reportService;
+        private ClientConfigurationHelper _clientConfigurationHelper = new();
 
         public static string? _oldNameFullPath;
         public static string? _newNameFullPath;
@@ -21,6 +22,8 @@ namespace UiAutoTests.Tests
             _logger.Trace($"\r\n=========================== New Test Suite start  ===========================");
 
             _loggerHelper.LogEnteringTheMethod();
+
+            _clientConfigurationHelper.InitializeAppConfig();
 
             _reportService = new();
             _reportService.ReportLogger("UI Test");
@@ -37,7 +40,7 @@ namespace UiAutoTests.Tests
             _reportService.ReplaceCssStyleDir();
         }
 
-
+        
 
         [OneTimeTearDown]
         public void AfterAllTests()

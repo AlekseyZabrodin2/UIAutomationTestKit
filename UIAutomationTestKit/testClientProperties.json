@@ -1,0 +1,10 @@
+﻿{
+  "TestClientProperties": {
+
+    "TestClientPath": "..\\..\\..\\..\\UIAutomationTestKit\\bin\\Debug\\net9.0-windows\\UIAutomationTestKit.exe",
+
+    "TestClientDir": "..\\..\\..\\..\\UIAutomationTestKit\\bin\\Debug\\net9.0-windows\\",
+
+    "EnableRowVirtualization": true
+  }
+}

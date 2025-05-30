@@ -20,11 +20,12 @@ namespace UiAutoTests.Tests.UIAutomationTests
         private LoggerHelper _loggerHelper = new();
         public HtmlReportService _reportService = new();
         private TestsInitializeService _initializeService = new();
+        private MainWindowController _mainWindowController;
 
 
         public TestsExample()
         {
-            _testClient = new AutomationTestClient("..\\..\\..\\..\\UIAutomationTestKit\\bin\\Debug\\net9.0-windows\\UIAutomationTestKit.exe");
+            _testClient = new AutomationTestClient(ClientConfigurationHelper.TestClientProperties.TestClientPath);
         }
 
 
@@ -34,60 +35,20 @@ namespace UiAutoTests.Tests.UIAutomationTests
         {
             _testClass = GetType().Name;
             _testName = _initializeService.GetTestMethodName();
+
+            if (_initializeService.IgnoreSetUpInTest(
+                nameof(Test03_IgnoreSetUpAndLoadingTestClient)))
+                return;
+
+            if (_initializeService.IgnoreSetUpInTestWithParameters(
+                "Test05"))
+                return;
+
             _mainWindow = _initializeService.StartClientWithReportInitialization(_testName, _testClass, _reportService, _testClient);
+
+            _mainWindowController = _mainWindow as MainWindowController
+                ?? throw new InvalidCastException("Client state is not MainWindowController.");
         }
-
-
-
-        //[TestCase(0, 0, 0, 0)]
-        //[TestCase(1, 1, 1, 1)]
-        //[TestCase(2, 3, 2, 0)]
-        //[TestCase(3, 4, 0, 1)]
-        //[TestCase(4, 5, 1, 0)]
-        //[TestCase(5, 6, 2, 1)]
-        //[TestCase("test string", 3, 2, 1)]
-        //[TestCase(null, 3, 2, 1)]
-        //[TestCase("", 3, 2, 1)]
-        //[TestCase("99999999999", 3, 2, 1)]
-        //[TestCase("5555", 3, 2, 1)]
-        //[Test]
-        //public void Test_RegistrationAccountWithParams(object? depositIndex, int leveragesIndex, int currenciesIndex, int accountTypeIndex)
-        //{
-        //    try
-        //    {
-        //        if (_mainWindow is mainWindowControlle mainWindowControlle)
-        //        {
-        //            mainWindowControlle.SelectDepositItem(depositIndex);
-        //            mainWindowControlle.SelectLeverages(leveragesIndex);
-        //            mainWindowControlle.SelectCurrencies(currenciesIndex);
-        //            mainWindowControlle.SelectAccountType(accountTypeIndex);
-
-        //            var resultValidation = mainWindowControlle.ValidationDeposits();
-        //            Assert.That(resultValidation, Is.True, $"ComboBox is Valid - [{resultValidation}]");
-
-        //            var buttonIsEnabled = mainWindowControlle.CheckingCreateAccountButtonIsEnabled();
-        //            Assert.That(buttonIsEnabled, Is.True, $"CreateAccount Button IsEnabled - [{buttonIsEnabled}]");
-
-        //            mainWindowControlle.CreateAccounte();
-
-        //            // Pause for demonstration
-        //            mainWindowControlle.WaitingBetweenCommand(1000);
-
-        //            _logger.Debug($"{_testName} Completed");
-        //            _reportCore.LogStatusPass(_testName + " Completed");
-        //        }
-        //    }
-        //    catch (Exception exception)
-        //    {
-        //        _logger.Error(exception, $"{_testName} Failed");
-        //        _reportCore.LogStatusFail(exception, _testName + " Failed");
-        //        throw;
-        //    }
-        //    finally
-        //    {
-        //        _testClient.Kill();
-        //    }
-        //}
 
 
 
@@ -96,25 +57,25 @@ namespace UiAutoTests.Tests.UIAutomationTests
         {
             try
             {
-                if (_mainWindow is MainWindowController mainWindowControlle)
+                if (_mainWindow is MainWindowController mainWindowController)
                 {
                     var inputText = "test Id";
 
-                    mainWindowControlle.SetUserId(inputText);
-                    mainWindowControlle.Pause(500);
+                    mainWindowController.SetUserId(inputText);
+                    mainWindowController.Pause(500);
 
-                    var actual = mainWindowControlle.GetUserIdText();
+                    var actual = mainWindowController.GetUserIdText();
                     Assert.That(actual, Is.EqualTo(inputText), "Text is not equal");
 
-                    mainWindowControlle.ClickCleanButton();
+                    mainWindowController.ClickCleanButton();
 
-                    mainWindowControlle.Pause(1000);
+                    mainWindowController.Pause(1000);
 
-                    var resultTest = mainWindowControlle.GetUserIdText();
+                    var resultTest = mainWindowController.GetUserIdText();
                     Assert.That(resultTest, Is.Empty, "Text is not empty");
 
                     // Pause for demonstration
-                    mainWindowControlle.Pause(1000);
+                    mainWindowController.Pause(1000);
 
                     _logger.Debug($"{_testName} Completed");
                     _reportService.LogStatusPass(_testName + " Completed");
@@ -137,19 +98,59 @@ namespace UiAutoTests.Tests.UIAutomationTests
         {
             try
             {
-                if (_mainWindow is MainWindowController mainWindowControlle)
-                {
-                    var inputText = "test Id";
+                var inputText = "test Id";
 
-                    mainWindowControlle
+                _mainWindowController
+                    .SetUserId(inputText)
+                    .Pause(500)
+                    .AssertUserIdEquals(inputText, $"Expected Text to be [{inputText}]")
+                    .ClickCleanButton()
+                    .WaitUntilTextIsEmpty(500)
+                    .AssertUserIdIsEmpty("Expected TextBox to be Empty")
+                    .Pause(500);
+
+                _loggerHelper.LogCompletedResult(_testName, _reportService);
+            }
+            catch (Exception exception)
+            {
+                _loggerHelper.LogFailedResult(_testName, exception, _reportService);
+                throw;
+            }
+            finally
+            {
+                _testClient.Kill();
+            }
+        }
+
+        [Test]
+        public async Task Test03_IgnoreSetUpAndLoadingTestClient()
+        {
+            try
+            {
+                var inputText = "test Id";
+
+                var mainWindow = await _testClient.StartAsync(TimeSpan.FromSeconds(30));
+                Assert.That(mainWindow, Is.Not.Null, "Test client Not louded");
+
+                var mainWindowState = mainWindow.IsState(mainWindow.GetMainWindow());
+                Assert.That(mainWindowState, Is.True, "Wrong state");
+
+                var mainState = await mainWindow.GoToStateAsync("MainWindowState", TimeSpan.FromSeconds(30));
+                _logger.Info("Test Client started");
+
+                _reportService.InitializeTests(_testName, _testClass);
+
+                if (mainState is MainWindowController mainWindowController)
+                {
+                    mainWindowController
                         .SetUserId(inputText)
                         .Pause(500)
-                        .AssertUserIdEquals(inputText,$"Expected Text to be [{inputText}]")
+                        .AssertUserIdEquals(inputText, $"Expected Text to be [{inputText}]")
                         .ClickCleanButton()
                         .WaitUntilTextIsEmpty(500)
                         .AssertUserIdIsEmpty("Expected TextBox to be Empty")
-                        .Pause(500);
-
+                        .Pause(500);           
+                    
                     _loggerHelper.LogCompletedResult(_testName, _reportService);
                 }
             }
@@ -166,22 +167,67 @@ namespace UiAutoTests.Tests.UIAutomationTests
 
         [TestCaseSource(typeof(MainWindowTestCases), nameof(MainWindowTestCases.ValidRegistrationFieldCases))]
         [Test]
-        public void Test03_ParametersFromProperties(RegistrationCaseDto registrDto)
+        public void Test04_Registration_WithDtoFromClass(RegistrationCaseDto registrDto)
         {
             try
             {
-                if (_mainWindow is MainWindowController mainWindowControlle)
+                _mainWindowController
+                    .SetUserId(registrDto.Id)
+                    .SetLastName(registrDto.LastName)
+                    .SetMiddleName(registrDto.MiddleName)
+                    .SetFirstName(registrDto.FirstName)
+
+                    .CheckedBirthdate()
+
+                    .AssertUserIdEquals(registrDto.Id, $"Expected Text to be [{registrDto.Id}]")
+
+                    .ClickCleanButton()
+                    .WaitUntilTextIsEmpty(500)
+                    .AssertUserIdIsEmpty("Expected TextBox to be Empty")
+                    .Pause(500);
+
+                _loggerHelper.LogCompletedResult(_testName, _reportService);
+            }
+            catch (Exception exception)
+            {
+                _loggerHelper.LogFailedResult(_testName, exception, _reportService);
+                throw;
+            }
+            finally
+            {
+                _testClient.Kill();
+            }
+        }
+
+        [TestCaseSource(typeof(MainWindowTestCases), nameof(MainWindowTestCases.IgnoreSetUpCases))]
+        [Test]
+        public async Task Test05_IgnoreSetUpWhenTestWithParameter(RegistrationCaseDto registrDto)
+        {
+            try
+            {
+                var mainWindow = await _testClient.StartAsync(TimeSpan.FromSeconds(30));
+                Assert.That(mainWindow, Is.Not.Null, "Test client Not louded");
+
+                var mainWindowState = mainWindow.IsState(mainWindow.GetMainWindow());
+                Assert.That(mainWindowState, Is.True, "Wrong state");
+
+                var mainState = await mainWindow.GoToStateAsync("MainWindowState", TimeSpan.FromSeconds(30));
+                _logger.Info("Test Client started");
+
+                _reportService.InitializeTests(_testName, _testClass);
+
+                if (mainState is MainWindowController mainWindowController)
                 {
-                    mainWindowControlle
+                    mainWindowController
                         .SetUserId(registrDto.Id)
                         .SetLastName(registrDto.LastName)
                         .SetMiddleName(registrDto.MiddleName)
                         .SetFirstName(registrDto.FirstName)
-
+                        
                         .CheckedBirthdate()
-
+                        
                         .AssertUserIdEquals(registrDto.Id, $"Expected Text to be [{registrDto.Id}]")
-
+                        
                         .ClickCleanButton()
                         .WaitUntilTextIsEmpty(500)
                         .AssertUserIdIsEmpty("Expected TextBox to be Empty")
@@ -204,16 +250,13 @@ namespace UiAutoTests.Tests.UIAutomationTests
         [TestCase("001", "Smith", "James", "John")]
         [TestCase("002", "Johnson", "Lee", "Michael")]
         [TestCase("003", "Williams", "Anne", "Emily")]
-        [TestCase("004", "Brown", "Marie", "Sophia")]
-        [TestCase("005", "Davis", "Alan", "Robert")]
+        [TestCase("004", "", "Marie", "Sophia")]
         [Test]
-        public void Test04_WithParametersInTestCase(string id, string lastName, string middleName, string firstName)
+        public void Test06_WithParametersInTestCase(string id, string lastName, string middleName, string firstName)
         {
             try
             {
-                if (_mainWindow is MainWindowController mainWindowControlle)
-                {
-                    mainWindowControlle
+                _mainWindowController
                         .SetUserId(id)
                         .SetLastName(lastName)
                         .SetMiddleName(middleName)
@@ -228,8 +271,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
                         .AssertUserIdIsEmpty("Expected TextBox to be Empty")
                         .Pause(500);
 
-                    _loggerHelper.LogCompletedResult(_testName, _reportService);
-                }
+                _loggerHelper.LogCompletedResult(_testName, _reportService);
             }
             catch (Exception exception)
             {
@@ -244,13 +286,11 @@ namespace UiAutoTests.Tests.UIAutomationTests
 
         [TestCaseSource(typeof(MainWindowTestCases), nameof(MainWindowTestCases.ValidRegistrationCases))]
         [Test]
-        public void Test05_ParametersFromClass(RegistrationCaseDto registrDto)
+        public void Test07_ParametersFromClass(RegistrationCaseDto registrDto)
         {
             try
             {
-                if (_mainWindow is MainWindowController mainWindowControlle)
-                {
-                    mainWindowControlle
+                _mainWindowController
                         .SetUserId(registrDto.Id)
                         .SetLastName(registrDto.LastName)
                         .SetMiddleName(registrDto.MiddleName)
@@ -272,8 +312,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
                         .ClickRegistrationButton()
                         .Pause(1000);
 
-                    _loggerHelper.LogCompletedResult(_testName, _reportService);
-                }
+                _loggerHelper.LogCompletedResult(_testName, _reportService);
             }
             catch (Exception exception)
             {
@@ -288,13 +327,11 @@ namespace UiAutoTests.Tests.UIAutomationTests
 
         [TestCaseSource(typeof(MainWindowTestCases), nameof(MainWindowTestCases.ValidRegistrationCasesFromJson))]
         [Test]
-        public void Test06_ParametersFromJson(RegistrationCaseFromJson dataFromJson)
+        public void Test08_Registration_WithDtoFromJson(RegistrationCaseFromJson dataFromJson)
         {
             try
             {
-                if (_mainWindow is MainWindowController mainWindowControlle)
-                {
-                    mainWindowControlle
+                _mainWindowController
                         .SetUserId(dataFromJson.Id)
                         .SetLastName(dataFromJson.LastName)
                         .SetMiddleName(dataFromJson.MiddleName)
@@ -316,8 +353,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
                         .ClickRegistrationButton()
                         .Pause(1000);
 
-                    _loggerHelper.LogCompletedResult(_testName, _reportService);
-                }
+                _loggerHelper.LogCompletedResult(_testName, _reportService);
             }
             catch (Exception exception)
             {
@@ -330,7 +366,56 @@ namespace UiAutoTests.Tests.UIAutomationTests
             }
         }
 
+        [Test]
+        public void Test09_CombiningIntoOneMethod()
+        {
+            try
+            {
+                _mainWindowController
+                        .SetValidDataInUserForm()
+                        .AssertIsRegistrationButtonEnabled()
+                        .ClickRegistrationButton()
+                        .Pause(1000);
 
+                _loggerHelper.LogCompletedResult(_testName, _reportService);
+            }
+            catch (Exception exception)
+            {
+                _loggerHelper.LogFailedResult(_testName, exception, _reportService);
+                throw;
+            }
+            finally
+            {
+                _testClient.Kill();
+            }
+        }
+
+        [Test]
+        public void Test10_RegistrationSeveralUsers([Values(3)] int number)
+        {
+            try
+            {
+                for (int i = 0; i < number; i++)
+                {
+                    _mainWindowController
+                        .SetValidDataInUserForm()
+                        .AssertIsRegistrationButtonEnabled()
+                        .ClickRegistrationButton()
+                        .Pause(1000);
+                }
+
+                _loggerHelper.LogCompletedResult(_testName, _reportService);
+            }
+            catch (Exception exception)
+            {
+                _loggerHelper.LogFailedResult(_testName, exception, _reportService);
+                throw;
+            }
+            finally
+            {
+                _testClient.Kill();
+            }
+        }
 
 
         [TearDown]

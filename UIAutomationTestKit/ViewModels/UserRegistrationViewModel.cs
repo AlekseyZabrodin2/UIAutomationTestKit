@@ -1,12 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Text;
-using System.Windows.Input;
-using System.Windows;
 using CommunityToolkit.Mvvm.Input;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using UIAutomationTestKit.Model;
+using UIAutomationTestKit.Models;
 
 namespace UIAutomationTestKit.ViewModels
 {
@@ -88,10 +88,19 @@ namespace UIAutomationTestKit.ViewModels
 
         public bool RegistrationUserCanExecute => IsBusy;
 
+        [ObservableProperty]
+        public partial ObservableCollection<User> UsersCollection { get; set; } = new();
+
+        [ObservableProperty]
+        public partial bool RowVirtualization { get; set; }
+
+        private User _user;
+
 
 
         public UserRegistrationViewModel()
         {
+            InitializeAppConfig();
             InitialiseProperties();
 
             PropertyChanged += UserRegistrationViewModel_OnPropertyChanged;
@@ -102,6 +111,23 @@ namespace UIAutomationTestKit.ViewModels
         private void UserRegistrationViewModel_OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             CanRegistratUser();
+        }
+
+        public void InitializeAppConfig()
+        {
+            IConfiguration configuration = new ConfigurationBuilder()
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("testClientProperties.json")
+                .Build();
+
+            IServiceCollection services = new ServiceCollection();
+
+            services.Configure<TestClientProperties>(configuration.GetSection(nameof(TestClientProperties)));
+
+            IServiceProvider serviceProvider = services.BuildServiceProvider();
+            var testClientProperties = serviceProvider.GetRequiredService<IOptions<TestClientProperties>>().Value;
+
+            RowVirtualization = testClientProperties.EnableRowVirtualization;
         }
 
         private void InitialiseProperties()
@@ -117,18 +143,7 @@ namespace UIAutomationTestKit.ViewModels
         [RelayCommand]
         private void CleanUpFields()
         {
-            CreateUserId = string.Empty;
-            CreateUserLastName = string.Empty;
-            CreateUserName = string.Empty;
-            CreateUserMiddleName = string.Empty;
-            SelectedGender = CreateGenderUser[3];
-
-            UseBirthDateUser = false;
-            CreateUserBirthDate = DateTime.Now;
-
-            CreateAdressUser = string.Empty;
-            CreatePhoneUser = 0;
-            CreateInfoUser = string.Empty;
+            ResetData();
 
             UpdateText = "All fields are cleared !!!";
         }
@@ -139,7 +154,11 @@ namespace UIAutomationTestKit.ViewModels
             IsEnabled = false;
             OpacityProperty = 0.3;
 
+            UpdateUserCollection();
+
             await Task.Delay(1000);
+
+            ResetData();
 
             OpacityProperty = 1;
             IsEnabled = true;
@@ -159,6 +178,40 @@ namespace UIAutomationTestKit.ViewModels
                 !string.IsNullOrWhiteSpace(CreateAdressUser) &&
                 CreatePhoneUser != 0 &&
                 !string.IsNullOrWhiteSpace(CreateInfoUser);
+        }
+
+        private void UpdateUserCollection()
+        {
+            _user = new()
+            {
+                Id = CreateUserId,
+                LastName = CreateUserLastName,
+                Name = CreateUserName,
+                MiddleName = CreateUserMiddleName,
+                Gender = SelectedGender,
+                BirthDate = CreateUserBirthDate,
+                Adress = CreateAdressUser,
+                Phone = CreatePhoneUser,
+                Info = CreateInfoUser
+            };
+
+            UsersCollection.Add( _user );
+        }
+
+        private void ResetData()
+        {
+            CreateUserId = string.Empty;
+            CreateUserLastName = string.Empty;
+            CreateUserName = string.Empty;
+            CreateUserMiddleName = string.Empty;
+            SelectedGender = CreateGenderUser[3];
+
+            UseBirthDateUser = false;
+            CreateUserBirthDate = DateTime.Now;
+
+            CreateAdressUser = string.Empty;
+            CreatePhoneUser = 0;
+            CreateInfoUser = string.Empty;
         }
 
     }
