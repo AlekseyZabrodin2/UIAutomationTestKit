@@ -1,8 +1,6 @@
 ﻿using FlaUI.Core.AutomationElements;
 using FlaUI.Core.Conditions;
 using NLog;
-using RazorEngine.Compilation.ImpromptuInterface.Dynamic;
-using UiAutoTests.ControllerAssertions;
 using UiAutoTests.Core;
 using UiAutoTests.Helpers;
 using UiAutoTests.Locators;
@@ -190,6 +188,23 @@ namespace UiAutoTests.Controllers
         {
             _mainWindowHelper.SetValidDataInUserForm();
             return this;
+        }
+
+        public MainWindowController RegistrationSeveralUsers(int count)
+        {
+            _mainWindowHelper.RegistrationSeveralUsers(count);
+            return this;
+        }
+
+        public MainWindowController GetDataGridRowCount()
+        {
+            GetRowCount();
+            return this;
+        }
+
+        public int GetRowCount()
+        {            
+            return _mainWindowHelper.GetRowCountInDataGrid();
         }
     }
 }

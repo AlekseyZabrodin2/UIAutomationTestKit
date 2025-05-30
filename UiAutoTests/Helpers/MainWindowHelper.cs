@@ -133,16 +133,16 @@ namespace UiAutoTests.Helpers
         {
             _loggerHelper.LogEnteringTheMethod();
 
-            var cleanUpButton = _mainWindowLocators.RegistrationUserButton;
-            cleanUpButton.ClickButton();
+            var regButton = _mainWindowLocators.RegistrationUserButton;
+            regButton.ClickButton();
         }
 
         public bool IsRegistrationButtonEnabled()
         {
             _loggerHelper.LogEnteringTheMethod();
 
-            var cleanUpButton = _mainWindowLocators.RegistrationUserButton;
-            return cleanUpButton.IsButtonEnabled();
+            var button = _mainWindowLocators.RegistrationUserButton;
+            return button.IsButtonEnabled();
         }
 
         public string GetTextFromUserIdTextBox()
@@ -154,7 +154,27 @@ namespace UiAutoTests.Helpers
             return userIdTextBox.GetText();
         }
 
+        public void RegistrationSeveralUsers(int count)
+        {
+            _loggerHelper.LogEnteringTheMethod();
 
+            for (int i = 0; i < count; i++)
+            {
+                SetValidDataInUserForm();
+                ClickRegistrationButton();
+                Pause(1000);
+            }
+        }
+
+        public int GetRowCountInDataGrid()
+        {
+            _loggerHelper.LogEnteringTheMethod();
+
+            var dataGrid = _mainWindowLocators.UsersCollectionDataGrid;
+            var result = dataGrid.GetRowCount();
+
+            return result;
+        }
 
 
         public void Pause(int timeInSecond)
