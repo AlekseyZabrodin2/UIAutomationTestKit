@@ -11,6 +11,15 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+	<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.5" />
+	<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.5" />
+	<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="testClientProperties.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
