@@ -25,7 +25,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
 
         public TestsExample()
         {
-            _testClient = new AutomationTestClient("..\\..\\..\\..\\UIAutomationTestKit\\bin\\Debug\\net9.0-windows\\UIAutomationTestKit.exe");
+            _testClient = new AutomationTestClient(ClientConfigurationHelper.TestClientProperties.TestClientPath);
         }
 
 
@@ -35,6 +35,15 @@ namespace UiAutoTests.Tests.UIAutomationTests
         {
             _testClass = GetType().Name;
             _testName = _initializeService.GetTestMethodName();
+
+            if (_initializeService.IgnoreSetUpInTest(
+                nameof(Test03_IgnoreSetUpAndLoadingTestClient)))
+                return;
+
+            if (_initializeService.IgnoreSetUpInTestWithParameters(
+                "Test05"))
+                return;
+
             _mainWindow = _initializeService.StartClientWithReportInitialization(_testName, _testClass, _reportService, _testClient);
 
             _mainWindowController = _mainWindow as MainWindowController
@@ -113,9 +122,52 @@ namespace UiAutoTests.Tests.UIAutomationTests
             }
         }
 
+        [Test]
+        public async Task Test03_IgnoreSetUpAndLoadingTestClient()
+        {
+            try
+            {
+                var inputText = "test Id";
+
+                var mainWindow = await _testClient.StartAsync(TimeSpan.FromSeconds(30));
+                Assert.That(mainWindow, Is.Not.Null, "Test client Not louded");
+
+                var mainWindowState = mainWindow.IsState(mainWindow.GetMainWindow());
+                Assert.That(mainWindowState, Is.True, "Wrong state");
+
+                var mainState = await mainWindow.GoToStateAsync("MainWindowState", TimeSpan.FromSeconds(30));
+                _logger.Info("Test Client started");
+
+                _reportService.InitializeTests(_testName, _testClass);
+
+                if (mainState is MainWindowController mainWindowController)
+                {
+                    mainWindowController
+                        .SetUserId(inputText)
+                        .Pause(500)
+                        .AssertUserIdEquals(inputText, $"Expected Text to be [{inputText}]")
+                        .ClickCleanButton()
+                        .WaitUntilTextIsEmpty(500)
+                        .AssertUserIdIsEmpty("Expected TextBox to be Empty")
+                        .Pause(500);           
+                    
+                    _loggerHelper.LogCompletedResult(_testName, _reportService);
+                }
+            }
+            catch (Exception exception)
+            {
+                _loggerHelper.LogFailedResult(_testName, exception, _reportService);
+                throw;
+            }
+            finally
+            {
+                _testClient.Kill();
+            }
+        }
+
         [TestCaseSource(typeof(MainWindowTestCases), nameof(MainWindowTestCases.ValidRegistrationFieldCases))]
         [Test]
-        public void Test03_Registration_WithDtoFromClass(RegistrationCaseDto registrDto)
+        public void Test04_Registration_WithDtoFromClass(RegistrationCaseDto registrDto)
         {
             try
             {
@@ -147,12 +199,60 @@ namespace UiAutoTests.Tests.UIAutomationTests
             }
         }
 
+        [TestCaseSource(typeof(MainWindowTestCases), nameof(MainWindowTestCases.IgnoreSetUpCases))]
+        [Test]
+        public async Task Test05_IgnoreSetUpWhenTestWithParameter(RegistrationCaseDto registrDto)
+        {
+            try
+            {
+                var mainWindow = await _testClient.StartAsync(TimeSpan.FromSeconds(30));
+                Assert.That(mainWindow, Is.Not.Null, "Test client Not louded");
+
+                var mainWindowState = mainWindow.IsState(mainWindow.GetMainWindow());
+                Assert.That(mainWindowState, Is.True, "Wrong state");
+
+                var mainState = await mainWindow.GoToStateAsync("MainWindowState", TimeSpan.FromSeconds(30));
+                _logger.Info("Test Client started");
+
+                _reportService.InitializeTests(_testName, _testClass);
+
+                if (mainState is MainWindowController mainWindowController)
+                {
+                    mainWindowController
+                        .SetUserId(registrDto.Id)
+                        .SetLastName(registrDto.LastName)
+                        .SetMiddleName(registrDto.MiddleName)
+                        .SetFirstName(registrDto.FirstName)
+                        
+                        .CheckedBirthdate()
+                        
+                        .AssertUserIdEquals(registrDto.Id, $"Expected Text to be [{registrDto.Id}]")
+                        
+                        .ClickCleanButton()
+                        .WaitUntilTextIsEmpty(500)
+                        .AssertUserIdIsEmpty("Expected TextBox to be Empty")
+                        .Pause(500);
+
+                    _loggerHelper.LogCompletedResult(_testName, _reportService);
+                }
+            }
+            catch (Exception exception)
+            {
+                _loggerHelper.LogFailedResult(_testName, exception, _reportService);
+                throw;
+            }
+            finally
+            {
+                _testClient.Kill();
+            }
+        }
+
         [TestCase("001", "Smith", "James", "John")]
         [TestCase("002", "Johnson", "Lee", "Michael")]
         [TestCase("003", "Williams", "Anne", "Emily")]
         [TestCase("004", "", "Marie", "Sophia")]
         [Test]
-        public void Test04_WithParametersInTestCase(string id, string lastName, string middleName, string firstName)
+        public void Test06_WithParametersInTestCase(string id, string lastName, string middleName, string firstName)
         {
             try
             {
@@ -186,7 +286,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
 
         [TestCaseSource(typeof(MainWindowTestCases), nameof(MainWindowTestCases.ValidRegistrationCases))]
         [Test]
-        public void Test05_ParametersFromClass(RegistrationCaseDto registrDto)
+        public void Test07_ParametersFromClass(RegistrationCaseDto registrDto)
         {
             try
             {
@@ -227,7 +327,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
 
         [TestCaseSource(typeof(MainWindowTestCases), nameof(MainWindowTestCases.ValidRegistrationCasesFromJson))]
         [Test]
-        public void Test06_Registration_WithDtoFromJson(RegistrationCaseFromJson dataFromJson)
+        public void Test08_Registration_WithDtoFromJson(RegistrationCaseFromJson dataFromJson)
         {
             try
             {
@@ -267,7 +367,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
         }
 
         [Test]
-        public void Test07_CombiningIntoOneMethod()
+        public void Test09_CombiningIntoOneMethod()
         {
             try
             {
@@ -290,7 +390,32 @@ namespace UiAutoTests.Tests.UIAutomationTests
             }
         }
 
+        [Test]
+        public void Test10_RegistrationSeveralUsers([Values(3)] int number)
+        {
+            try
+            {
+                for (int i = 0; i < number; i++)
+                {
+                    _mainWindowController
+                        .SetValidDataInUserForm()
+                        .AssertIsRegistrationButtonEnabled()
+                        .ClickRegistrationButton()
+                        .Pause(1000);
+                }
 
+                _loggerHelper.LogCompletedResult(_testName, _reportService);
+            }
+            catch (Exception exception)
+            {
+                _loggerHelper.LogFailedResult(_testName, exception, _reportService);
+                throw;
+            }
+            finally
+            {
+                _testClient.Kill();
+            }
+        }
 
 
         [TearDown]
