@@ -9,7 +9,7 @@ namespace UiAutoTests.Services
         private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
         private LoggerHelper _loggerHelper = new();
 
-                
+
         public string GetTestMethodName()
         {
             var testName = TestContext.CurrentContext.Test.MethodName!;
@@ -35,7 +35,7 @@ namespace UiAutoTests.Services
             InitializeReportingTests(testName, testClass, reportCore);
 
             return mainWindow;
-        }
+        }        
 
         public async Task<IClientState> StartTestClient(ITestClient testClient)
         {
@@ -67,6 +67,18 @@ namespace UiAutoTests.Services
             _loggerHelper.LogEnteringTheMethod();
 
             reportCore.InitializeTests(testName, testClass);
+        }
+
+        public bool IgnoreSetUpInTest(params string[] testName)
+        {
+            var currentTestName = TestContext.CurrentContext.Test.Name;
+            return testName.Contains(currentTestName);
+        }
+
+        public bool IgnoreSetUpInTestWithParameters(params string[] testName)
+        {
+            var currentTestName = TestContext.CurrentContext.Test.Name;
+            return testName.Any(test => currentTestName.StartsWith(test));
         }
 
         public void DisposeClientAndReportResults(ITestClient testClient, HtmlReportService reportCore)
