@@ -16,27 +16,33 @@ namespace UiAutoTests.Locators
             _conditionFactory = conditionFactory;
         }
 
-        private AutomationElement Find(string automationId) =>
+        private AutomationElement FindFirst(string automationId) =>
             _window.FindFirstDescendant(_conditionFactory.ByAutomationId(automationId))
             ?? throw new ElementNotAvailableException($"Element with AutomationId - [{automationId}] not found");
 
+        private AutomationElement[] FindAll(string automationId) =>
+           _window.FindAllDescendants(_conditionFactory.ByAutomationId(automationId))
+           ?? throw new ElementNotAvailableException($"Element with AutomationId - [{automationId}] not found");
 
-        public AutomationElement MainWindowsLocator => Find("UserRegistrationView");
 
-        public TextBox UserIdTextBox => Find("UserIdTextBox").AsTextBox();
-        public TextBox UserLastNameTextBox => Find("UserLastNameTextBox").AsTextBox();
-        public TextBox UserMiddleNameTextBox => Find("UserMiddleNameTextBox").AsTextBox();        
-        public TextBox UserFirstNameTextBox => Find("UserFirstNameTextBox").AsTextBox();
-        public TextBox AdressUserTextBox => Find("AdressUserTextBox").AsTextBox();
-        public TextBox PhoneUserTextBox => Find("PhoneUserTextBox").AsTextBox();
-        public TextBox InfoUserTextBox => Find("InfoUserTextBox").AsTextBox();
-        public TextBox UpdateTextTextBox => Find("UpdateTextTextBox").AsTextBox();
+        public AutomationElement MainWindowsLocator => FindFirst("UserRegistrationView");
 
-        public CheckBox BirthDateUserCheckBox => Find("BirthDateUserCheckBox").AsCheckBox();
-        public DateTimePicker UserBirthDateDatePicker => Find("UserBirthDateDatePicker").AsDateTimePicker();
-        public ComboBox GenderUserComboBox => Find("GenderUserComboBox").AsComboBox();
+        public TextBox UserIdTextBox => FindFirst("UserIdTextBox").AsTextBox();
+        public TextBox UserLastNameTextBox => FindFirst("UserLastNameTextBox").AsTextBox();
+        public TextBox UserMiddleNameTextBox => FindFirst("UserMiddleNameTextBox").AsTextBox();        
+        public TextBox UserFirstNameTextBox => FindFirst("UserFirstNameTextBox").AsTextBox();
+        public TextBox AdressUserTextBox => FindFirst("AdressUserTextBox").AsTextBox();
+        public TextBox PhoneUserTextBox => FindFirst("PhoneUserTextBox").AsTextBox();
+        public TextBox InfoUserTextBox => FindFirst("InfoUserTextBox").AsTextBox();
+        public TextBox UpdateTextTextBox => FindFirst("UpdateTextTextBox").AsTextBox();
 
-        public Button CleanUpFieldsButton => Find("CleanUpFieldsButton").AsButton();
-        public Button RegistrationUserButton => Find("RegistrationUserButton").AsButton();
+        public DataGridView UsersCollectionDataGrid => FindFirst("UsersCollectionDataGrid").AsDataGridView();
+
+        public CheckBox BirthDateUserCheckBox => FindFirst("BirthDateUserCheckBox").AsCheckBox();
+        public DateTimePicker UserBirthDateDatePicker => FindFirst("UserBirthDateDatePicker").AsDateTimePicker();
+        public ComboBox GenderUserComboBox => FindFirst("GenderUserComboBox").AsComboBox();
+
+        public Button CleanUpFieldsButton => FindFirst("CleanUpFieldsButton").AsButton();
+        public Button RegistrationUserButton => FindFirst("RegistrationUserButton").AsButton();
     }
 }
