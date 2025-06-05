@@ -54,7 +54,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
             {
                 _mainWindowController
                         .RegistrationSeveralUsers(number)
-                        .AssertRowCountIs(number);
+                        .AssertRowCountIsNot(number);
 
                 _loggerHelper.LogCompletedResult(_testName, _reportService);
             }

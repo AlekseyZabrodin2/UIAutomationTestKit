@@ -35,7 +35,7 @@ namespace UIAutomationTestKit.ViewModels
         public partial bool UseBirthDateUser { get; set; }
 
         [ObservableProperty]
-        public partial DateTime SelectedBirthDatePatient { get; set; }
+        public partial DateTime SelectedCalendarDate { get; set; }
 
         [ObservableProperty]
         public partial List<string> CreateGenderUser { get; set; }
@@ -96,6 +96,17 @@ namespace UIAutomationTestKit.ViewModels
 
         private User _user;
 
+        [ObservableProperty]
+        public partial int SliderValue { get; set; }
+
+        [ObservableProperty]
+        public partial int ProgressBarValue { get; set; }
+
+        [ObservableProperty]
+        public partial bool IsCalendarOpen {  get; set; }
+
+        [ObservableProperty]
+        public partial Documents SelectedDocument {  get; set; }
 
 
         public UserRegistrationViewModel()
@@ -138,6 +149,8 @@ namespace UIAutomationTestKit.ViewModels
             CreateGenderUser = new List<string> { "Man", "Female", "Other", "string - Empty" };
             UseBirthDateUser = false;
             CreateUserBirthDate = DateTime.Now;
+            SelectedCalendarDate = DateTime.Now;
+            ProgressBarValue = 0;
         }
 
         [RelayCommand]
@@ -152,18 +165,22 @@ namespace UIAutomationTestKit.ViewModels
         private async Task RegistrationUser()
         {
             IsEnabled = false;
-            OpacityProperty = 0.3;
+            OpacityProperty = 0.9;
 
-            UpdateUserCollection();
+            await UpdateUserCollection();
 
-            await Task.Delay(1000);
-
-            ResetData();
+            //ResetData();
 
             OpacityProperty = 1;
             IsEnabled = true;
 
-            UpdateText = "User is registered";
+            UpdateText = $"[{UsersCollection.Count}] Users is registered";
+        }
+
+        [RelayCommand]
+        private void CalendarPopupOpen()
+        {
+            IsCalendarOpen = true;
         }
 
         private void CanRegistratUser()
@@ -180,22 +197,31 @@ namespace UIAutomationTestKit.ViewModels
                 !string.IsNullOrWhiteSpace(CreateInfoUser);
         }
 
-        private void UpdateUserCollection()
+        private async Task UpdateUserCollection()
         {
-            _user = new()
+            for (int i = 0; i < SliderValue; i++)
             {
-                Id = CreateUserId,
-                LastName = CreateUserLastName,
-                Name = CreateUserName,
-                MiddleName = CreateUserMiddleName,
-                Gender = SelectedGender,
-                BirthDate = CreateUserBirthDate,
-                Adress = CreateAdressUser,
-                Phone = CreatePhoneUser,
-                Info = CreateInfoUser
-            };
+                _user = new()
+                {
+                    Id = CreateUserId,
+                    LastName = CreateUserLastName,
+                    Name = CreateUserName,
+                    MiddleName = CreateUserMiddleName,
+                    Gender = SelectedGender,
+                    BirthDate = CreateUserBirthDate.ToShortDateString(),
+                    Adress = CreateAdressUser,
+                    Phone = CreatePhoneUser,
+                    Info = CreateInfoUser,
+                    CalendarDate = SelectedCalendarDate.ToShortDateString(),
+                    Document = SelectedDocument
+                };
 
-            UsersCollection.Add( _user );
+                UsersCollection.Add(_user);
+
+                ProgressBarValue = i + 1;
+
+                await Task.Delay(1000);
+            }            
         }
 
         private void ResetData()
@@ -212,6 +238,8 @@ namespace UIAutomationTestKit.ViewModels
             CreateAdressUser = string.Empty;
             CreatePhoneUser = 0;
             CreateInfoUser = string.Empty;
+
+            ProgressBarValue = 0;
         }
 
     }

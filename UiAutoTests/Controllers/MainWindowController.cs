@@ -184,9 +184,9 @@ namespace UiAutoTests.Controllers
             return _mainWindowHelper.IsRegistrationButtonEnabled();
         }
 
-        public MainWindowController SetValidDataInUserForm()
+        public MainWindowController SetValidDataInUserForm(int genderCount, int userCount)
         {
-            _mainWindowHelper.SetValidDataInUserForm();
+            _mainWindowHelper.SetValidDataInUserForm(genderCount, userCount);
             return this;
         }
 
