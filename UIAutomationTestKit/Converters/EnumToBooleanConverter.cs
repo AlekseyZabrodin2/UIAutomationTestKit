@@ -15,5 +15,4 @@ namespace UIAutomationTestKit.Converters
             return (value is bool b && b) ? parameter : Binding.DoNothing;
         }
     }
-
 }

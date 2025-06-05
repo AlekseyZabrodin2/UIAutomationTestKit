@@ -259,10 +259,10 @@
                 BorderBrush="Black"
                 BorderThickness="1">
                 <DataGrid
+                    HorizontalContentAlignment="Center"
                     AutoGenerateColumns="True"
                     AutomationProperties.AutomationId="UsersCollectionDataGrid"
                     CanUserAddRows="False"
-                    HorizontalContentAlignment="Center"
                     EnableRowVirtualization="{Binding RowVirtualization}"
                     ItemsSource="{Binding UsersCollection}" />
 
