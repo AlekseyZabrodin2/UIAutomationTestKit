@@ -121,6 +121,30 @@ namespace UiAutoTests.Helpers
             textBox.EnterText(inputText);
         }
 
+        public RadioButton[] GetAllRadioButtons()
+        {
+            _loggerHelper.LogEnteringTheMethod();
+
+            return new[]
+            {
+                _mainWindowLocators.RadioButtonPassport,
+                _mainWindowLocators.RadioButtonDriverLicense,
+                _mainWindowLocators.RadioButtonIdCard
+            };
+        }
+
+        public void SelectRandomRadioButton()
+        {
+            _loggerHelper.LogEnteringTheMethod();
+
+            var radioButtons = GetAllRadioButtons();
+            var random = new Random();
+
+            var result = random.Next(0, radioButtons.Length);
+            var button = radioButtons[result];
+            button.SelectRadioButton();
+        }
+
         public void SelectUserCountBySlider(int count)
         {
             _loggerHelper.LogEnteringTheMethod();
@@ -212,11 +236,14 @@ namespace UiAutoTests.Helpers
             SetMiddleName("Ivan");
             SetFirstName("Ivanovich");
             CheckedBirthdate();
+            SelectGender(genderCount);
             SetBirthdateText("25.12.1995");
             SetAdressUser("London, Baker Street 221B");
             SetPhoneUser("5465431");
             SetInfoUser("Second test case with different data");
-            SelectGender(genderCount);
+
+            SelectRandomRadioButton();
+
             SelectUserCountBySlider(userCount);
         }
 

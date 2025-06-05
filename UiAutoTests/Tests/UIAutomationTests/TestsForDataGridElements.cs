@@ -107,10 +107,6 @@ namespace UiAutoTests.Tests.UIAutomationTests
 
 
 
-
-
-
-
         [TearDown]
         public void AfterTest()
         {
