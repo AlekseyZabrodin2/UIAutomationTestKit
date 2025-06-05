@@ -8,8 +8,8 @@
     xmlns:viewModels="clr-namespace:UIAutomationTestKit.ViewModels"
     xmlns:views="clr-namespace:UIAutomationTestKit.Views"
     Title="User Registration"
-    Width="750"
-    Height="750"
+    Width="600"
+    Height="640"
     mc:Ignorable="d">
 
     <Grid>
