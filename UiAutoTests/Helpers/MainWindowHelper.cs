@@ -241,7 +241,6 @@ namespace UiAutoTests.Helpers
             SetAdressUser("London, Baker Street 221B");
             SetPhoneUser("5465431");
             SetInfoUser("Second test case with different data");
-
             SelectRandomRadioButton();
 
             SelectUserCountBySlider(userCount);
