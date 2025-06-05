@@ -185,7 +185,6 @@
                     CanUserAddRows="False"
                     EnableRowVirtualization="{Binding RowVirtualization}"
                     ItemsSource="{Binding UsersCollection}" />
-
             </Border>
         </Grid>
 
@@ -236,7 +235,5 @@
                 Command="{Binding RegistrationUserCommand}"
                 Content="Registration" />
         </Grid>
-
     </Grid>
-
 </UserControl>
