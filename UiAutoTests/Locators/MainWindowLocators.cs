@@ -34,26 +34,13 @@ namespace UiAutoTests.Locators
         public TextBox AdressUserTextBox => FindFirst("AdressUserTextBox").AsTextBox();
         public TextBox PhoneUserTextBox => FindFirst("PhoneUserTextBox").AsTextBox();
         public TextBox InfoUserTextBox => FindFirst("InfoUserTextBox").AsTextBox();
+        public TextBox UpdateTextTextBox => FindFirst("UpdateTextTextBox").AsTextBox();
+
+        public DataGridView UsersCollectionDataGrid => FindFirst("UsersCollectionDataGrid").AsDataGridView();
 
         public CheckBox BirthDateUserCheckBox => FindFirst("BirthDateUserCheckBox").AsCheckBox();
         public DateTimePicker UserBirthDateDatePicker => FindFirst("UserBirthDateDatePicker").AsDateTimePicker();
         public ComboBox GenderUserComboBox => FindFirst("GenderUserComboBox").AsComboBox();
-
-        public Calendar CalendarDate => FindFirst("CalendarDate").AsCalendar();
-        public TextBox CalendarDateTextBox => FindFirst("CalendarDateTextBox").AsTextBox();
-
-        public RadioButton RadioButtonPassport => FindFirst("RadioButtonPassport").AsRadioButton();
-        public RadioButton RadioButtonDriverLicense => FindFirst("RadioButtonDriverLicense").AsRadioButton();
-        public RadioButton RadioButtonIdCard => FindFirst("RadioButtonIdCard").AsRadioButton();
-
-        public Label SliderLabel => FindFirst("SliderLabel").AsLabel();
-        public Slider SliderCount => FindFirst("SliderCount").AsSlider();
-
-        public ProgressBar UserGenerationProgressBar => FindFirst("UserGenerationProgressBar").AsProgressBar();
-
-        public DataGridView UsersCollectionDataGrid => FindFirst("UsersCollectionDataGrid").AsDataGridView();
-
-        public TextBox UpdateTextTextBox => FindFirst("UpdateTextTextBox").AsTextBox();
 
         public Button CleanUpFieldsButton => FindFirst("CleanUpFieldsButton").AsButton();
         public Button RegistrationUserButton => FindFirst("RegistrationUserButton").AsButton();

@@ -76,7 +76,7 @@ namespace UiAutoTests.Extensions
         /// <summary>
         /// Ожидать, пока значение ProgressBar достигнет указанного значения
         /// </summary>
-        public static bool WaitUntilValueIs(this ProgressBar progressBar, double expectedValue, int timeoutMs = 20000)
+        public static bool WaitUntilValueIs(this ProgressBar progressBar, double expectedValue, int timeoutMs = 5000)
         {
             _loggerHelper.LogEnteringTheMethod();
 

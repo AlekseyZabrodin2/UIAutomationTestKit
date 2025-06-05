@@ -121,14 +121,6 @@ namespace UiAutoTests.Helpers
             textBox.EnterText(inputText);
         }
 
-        public void SelectUserCountBySlider(int count)
-        {
-            _loggerHelper.LogEnteringTheMethod();
-
-            var slider = _mainWindowLocators.SliderCount;
-            slider.SetValue(count);
-        }
-
         public void ClickCleanButton()
         {
             _loggerHelper.LogEnteringTheMethod();
@@ -143,14 +135,6 @@ namespace UiAutoTests.Helpers
 
             var regButton = _mainWindowLocators.RegistrationUserButton;
             regButton.ClickButton();
-        }
-
-        public void WaitUntilProgressBarIs(int prograssBarValue)
-        {
-            _loggerHelper.LogEnteringTheMethod();
-
-            var progressBar = _mainWindowLocators.UserGenerationProgressBar;
-            progressBar.WaitUntilValueIs(prograssBarValue);
         }
 
         public bool IsRegistrationButtonEnabled()
@@ -174,9 +158,12 @@ namespace UiAutoTests.Helpers
         {
             _loggerHelper.LogEnteringTheMethod();
 
-            SetValidDataInUserForm(2, count);
-            ClickRegistrationButton();
-            WaitUntilProgressBarIs(count);
+            for (int i = 0; i < count; i++)
+            {
+                SetValidDataInUserForm();
+                ClickRegistrationButton();
+                Pause(1000);
+            }
         }
 
         public int GetRowCountInDataGrid()
@@ -205,7 +192,7 @@ namespace UiAutoTests.Helpers
             userIdTextBox.WaitUntilTextIsEmpty(timeInSecond);
         }
 
-        public void SetValidDataInUserForm(int genderCount, int userCount)
+        public void SetValidDataInUserForm()
         {
             SetUserId("1");
             SetLastName("Ivanov");
@@ -216,8 +203,7 @@ namespace UiAutoTests.Helpers
             SetAdressUser("London, Baker Street 221B");
             SetPhoneUser("5465431");
             SetInfoUser("Second test case with different data");
-            SelectGender(genderCount);
-            SelectUserCountBySlider(userCount);
+            SelectGender(2);
         }
 
 
