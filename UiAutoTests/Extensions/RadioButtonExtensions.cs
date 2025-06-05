@@ -2,11 +2,6 @@
 using FlaUI.Core.Definitions;
 using FlaUI.Core.Tools;
 using NLog;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UiAutoTests.Helpers;
 
 namespace UiAutoTests.Extensions
@@ -31,7 +26,7 @@ namespace UiAutoTests.Extensions
         /// <summary>
         /// Получить выбран ли RadioButton
         /// </summary>
-        public static bool IsSelected(this RadioButton radioButton)
+        public static bool IsRadioButtonSelected(this RadioButton radioButton)
         {
             _loggerHelper.LogEnteringTheMethod();
 
@@ -44,12 +39,12 @@ namespace UiAutoTests.Extensions
         /// <summary>
         /// Установить RadioButton как выбранный
         /// </summary>
-        public static void Select(this RadioButton radioButton)
+        public static void SelectRadioButton(this RadioButton radioButton)
         {
             _loggerHelper.LogEnteringTheMethod();
 
             var rb = radioButton.EnsureRadioButton();
-            rb.Select();
+            rb.Patterns.SelectionItem.Pattern.Select();
             _logger.Info($"[{rb.AutomationId}] RadioButton selected.");
         }
 
@@ -69,7 +64,7 @@ namespace UiAutoTests.Extensions
         /// <summary>
         /// Ожидание пока RadioButton станет выбранным
         /// </summary>
-        public static bool WaitUntilSelected(this RadioButton radioButton, int timeoutMs = 5000)
+        public static bool WaitUntilRadioButtonSelected(this RadioButton radioButton, int timeoutMs = 5000)
         {
             _loggerHelper.LogEnteringTheMethod();
 
@@ -82,7 +77,7 @@ namespace UiAutoTests.Extensions
         /// <summary>
         /// Ожидание пока RadioButton станет доступным
         /// </summary>
-        public static bool WaitUntilEnabled(this RadioButton radioButton, int timeoutMs = 5000)
+        public static bool WaitUntilRadioButtonEnabled(this RadioButton radioButton, int timeoutMs = 5000)
         {
             _loggerHelper.LogEnteringTheMethod();
 
@@ -95,7 +90,7 @@ namespace UiAutoTests.Extensions
         /// <summary>
         /// Получить текст (Name) радиокнопки
         /// </summary>
-        public static string GetText(this RadioButton radioButton)
+        public static string GetRadioButtonText(this RadioButton radioButton)
         {
             _loggerHelper.LogEnteringTheMethod();
 
@@ -108,7 +103,7 @@ namespace UiAutoTests.Extensions
         /// <summary>
         /// Ожидать, пока радиокнопка станет видимой
         /// </summary>
-        public static bool WaitUntilVisible(this RadioButton radioButton, int timeoutMs = 5000)
+        public static bool WaitUntilRadioButtonVisible(this RadioButton radioButton, int timeoutMs = 5000)
         {
             _loggerHelper.LogEnteringTheMethod();
 
@@ -121,7 +116,7 @@ namespace UiAutoTests.Extensions
         /// <summary>
         /// Проверить, видим ли элемент
         /// </summary>
-        public static bool IsVisible(this RadioButton radioButton)
+        public static bool IsRadioButtonVisible(this RadioButton radioButton)
         {
             _loggerHelper.LogEnteringTheMethod();
 
@@ -134,7 +129,7 @@ namespace UiAutoTests.Extensions
         /// <summary>
         /// Ожидать, пока RadioButton станет доступной и выбрать её
         /// </summary>
-        public static bool WaitAndSelect(this RadioButton radioButton, int timeoutMs = 5000)
+        public static bool WaitAndSelectRadioButton(this RadioButton radioButton, int timeoutMs = 5000)
         {
             _loggerHelper.LogEnteringTheMethod();
 
@@ -143,7 +138,7 @@ namespace UiAutoTests.Extensions
 
             if (waitResult)
             {
-                rb.Select();
+                rb.SelectRadioButton();
                 _logger.Info($"[{rb.AutomationId}] Waited and selected.");
                 return true;
             }
