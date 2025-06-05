@@ -45,5 +45,12 @@ namespace UiAutoTests.ControllerAssertions
             AssertHelpers.AreEqual(expected, actual, message);
             return controller;
         }
+
+        public static MainWindowController AssertRowCountIsNot(this MainWindowController controller, int notExpected, string message = null)
+        {
+            var actual = controller.GetRowCount();
+            AssertHelpers.AreNotEqual(notExpected, actual, message);
+            return controller;
+        }
     }
 }

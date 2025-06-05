@@ -372,7 +372,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
             try
             {
                 _mainWindowController
-                        .SetValidDataInUserForm()
+                        .SetValidDataInUserForm(1, 3)
                         .AssertIsRegistrationButtonEnabled()
                         .ClickRegistrationButton()
                         .Pause(1000);
@@ -398,7 +398,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
                 for (int i = 0; i < number; i++)
                 {
                     _mainWindowController
-                        .SetValidDataInUserForm()
+                        .SetValidDataInUserForm(2, 4)
                         .AssertIsRegistrationButtonEnabled()
                         .ClickRegistrationButton()
                         .Pause(1000);
