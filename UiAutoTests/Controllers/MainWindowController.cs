@@ -144,6 +144,24 @@ namespace UiAutoTests.Controllers
             return this;
         }
 
+        public MainWindowController SelectUserCountBySlider(int count)
+        {
+            _mainWindowHelper.SelectUserCountBySlider(count);
+            return this;
+        }
+
+        public MainWindowController SelectRandomRadioButton()
+        {
+            _mainWindowHelper.SelectRandomRadioButton();
+            return this;
+        }
+
+        public MainWindowController SelectRadioButtonByIndex(int index)
+        {
+            _mainWindowHelper.SelectRadioButtonByIndex(index);
+            return this;
+        }
+
         public MainWindowController Pause(int time)
         {
             _mainWindowHelper.Pause(time);
@@ -187,6 +205,12 @@ namespace UiAutoTests.Controllers
         public MainWindowController SetValidDataInUserForm(int genderCount, int userCount)
         {
             _mainWindowHelper.SetValidDataInUserForm(genderCount, userCount);
+            return this;
+        }
+
+        public MainWindowController WaitUntilProgressBarIs(int prograssBarValue)
+        {
+            _mainWindowHelper.WaitUntilProgressBarIs(prograssBarValue);
             return this;
         }
 

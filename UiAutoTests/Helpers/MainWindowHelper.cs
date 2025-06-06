@@ -138,10 +138,21 @@ namespace UiAutoTests.Helpers
             _loggerHelper.LogEnteringTheMethod();
 
             var radioButtons = GetAllRadioButtons();
-            var random = new Random();
 
+            var random = new Random();
             var result = random.Next(0, radioButtons.Length);
             var button = radioButtons[result];
+
+            button.SelectRadioButton();
+        }
+
+        public void SelectRadioButtonByIndex(int index)
+        {
+            _loggerHelper.LogEnteringTheMethod();
+
+            var radioButtons = GetAllRadioButtons();
+            var button = radioButtons[index];
+
             button.SelectRadioButton();
         }
 
