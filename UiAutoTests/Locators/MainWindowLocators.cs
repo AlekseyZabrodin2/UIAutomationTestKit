@@ -22,7 +22,15 @@ namespace UiAutoTests.Locators
 
         private AutomationElement[] FindAll(string automationId) =>
            _window.FindAllDescendants(_conditionFactory.ByAutomationId(automationId))
-           ?? throw new ElementNotAvailableException($"Element with AutomationId - [{automationId}] not found");
+           ?? throw new ElementNotAvailableException($"Elements with AutomationId - [{automationId}] not found");
+
+        private AutomationElement FindFirstByClassName(string className) =>
+            _window.FindFirstDescendant(_conditionFactory.ByClassName(className))
+            ?? throw new ElementNotAvailableException($"Element with ClassName - [{className}] not found");
+
+        private AutomationElement[] FindAllByClassName(string className) =>
+            _window.FindAllDescendants(_conditionFactory.ByClassName(className))
+            ?? throw new ElementNotAvailableException($"Element with ClassName - [{className}] not found");
 
 
         public AutomationElement MainWindowsLocator => FindFirst("UserRegistrationView");
@@ -40,6 +48,12 @@ namespace UiAutoTests.Locators
         public ComboBox GenderUserComboBox => FindFirst("GenderUserComboBox").AsComboBox();
 
         public Calendar CalendarDate => FindFirst("CalendarDate").AsCalendar();
+        public Button PART_PreviousButton => FindFirst("PART_PreviousButton").AsButton();
+        public Button PART_HeaderButton => FindFirst("PART_HeaderButton").AsButton();
+        public Button PART_NextButton => FindFirst("PART_NextButton").AsButton();
+        public AutomationElement CalendarDayButton => FindFirstByClassName("CalendarDayButton"); 
+        public AutomationElement[] CalendarDayButtons => FindAllByClassName("CalendarDayButton");
+
         public TextBox CalendarDateTextBox => FindFirst("CalendarDateTextBox").AsTextBox();
 
         public RadioButton RadioButtonPassport => FindFirst("RadioButtonPassport").AsRadioButton();
