@@ -298,19 +298,20 @@ namespace UiAutoTests.Tests.UIAutomationTests
 
                         .CheckedBirthdate()
                         .SetBirthdateText(registrDto.BirthdateText)
+                        .SelectGender(registrDto.SelectedGender)
 
                         .SetAdressUser(registrDto.Address)
                         .SetPhoneUser(registrDto.Phone)
                         .SetInfoUser(registrDto.Info)
 
-                        .SelectGender(registrDto.SelectedGender)
+                        .SelectRadioButtonByIndex(1)
+                        .SelectUserCountBySlider(3)
 
                         .AssertUserIdEquals(registrDto.Id, $"Expected Text to be [{registrDto.Id}]")
-
                         .AssertIsRegistrationButtonEnabled()
 
                         .ClickRegistrationButton()
-                        .Pause(1000);
+                        .WaitUntilProgressBarIs(3);
 
                 _loggerHelper.LogCompletedResult(_testName, _reportService);
             }
@@ -339,19 +340,20 @@ namespace UiAutoTests.Tests.UIAutomationTests
 
                         .CheckedBirthdate()
                         .SetBirthdateText(dataFromJson.BirthdateText)
+                        .SelectGender(dataFromJson.SelectedGender)
 
                         .SetAdressUser(dataFromJson.Address)
                         .SetPhoneUser(dataFromJson.Phone)
                         .SetInfoUser(dataFromJson.Info)
-
-                        .SelectGender(dataFromJson.SelectedGender)
+                        
+                        .SelectRandomRadioButton()
+                        .SelectUserCountBySlider(3)
 
                         .AssertUserIdEquals(dataFromJson.Id, $"Expected Text to be [{dataFromJson.Id}]")
-
                         .AssertIsRegistrationButtonEnabled()
 
                         .ClickRegistrationButton()
-                        .Pause(1000);
+                        .WaitUntilProgressBarIs(3);
 
                 _loggerHelper.LogCompletedResult(_testName, _reportService);
             }
@@ -375,7 +377,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
                         .SetValidDataInUserForm(1, 3)
                         .AssertIsRegistrationButtonEnabled()
                         .ClickRegistrationButton()
-                        .Pause(1000);
+                        .WaitUntilProgressBarIs(3);
 
                 _loggerHelper.LogCompletedResult(_testName, _reportService);
             }
@@ -395,14 +397,11 @@ namespace UiAutoTests.Tests.UIAutomationTests
         {
             try
             {
-                for (int i = 0; i < number; i++)
-                {
-                    _mainWindowController
-                        .SetValidDataInUserForm(2, 4)
+                _mainWindowController
+                        .SetValidDataInUserForm(2, number)
                         .AssertIsRegistrationButtonEnabled()
                         .ClickRegistrationButton()
-                        .Pause(1000);
-                }
+                        .WaitUntilProgressBarIs(number);
 
                 _loggerHelper.LogCompletedResult(_testName, _reportService);
             }
