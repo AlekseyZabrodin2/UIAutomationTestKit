@@ -150,6 +150,31 @@ namespace UiAutoTests.Controllers
             return this;
         }
 
+        public MainWindowController ClickCalendarPreviousButton()
+        {
+            _mainWindowHelper.ClickCalendarPreviousButton();
+            return this;
+        }
+
+        public MainWindowController ClickCalendarHeaderButton()
+        {
+            _mainWindowHelper.ClickCalendarHeaderButton();
+            return this;
+
+        }
+
+        public MainWindowController ClickCalendarNextButton()
+        {
+            _mainWindowHelper.ClickCalendarNextButton();
+            return this;
+        }
+
+        public MainWindowController ClickCalendarDayButton(string helpText)
+        {
+            _mainWindowHelper.ClickCalendarDayButton(helpText);
+            return this;
+        }
+
         public MainWindowController SelectRandomRadioButton()
         {
             _mainWindowHelper.SelectRandomRadioButton();

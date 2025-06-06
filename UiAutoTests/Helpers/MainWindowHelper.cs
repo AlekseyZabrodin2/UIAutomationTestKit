@@ -121,6 +121,43 @@ namespace UiAutoTests.Helpers
             textBox.EnterText(inputText);
         }
 
+        public void ClickCalendarPreviousButton()
+        {
+            _loggerHelper.LogEnteringTheMethod();
+
+            var previousButton = _mainWindowLocators.PART_PreviousButton;
+            previousButton.ClickButton();
+        }
+
+        public void ClickCalendarHeaderButton()
+        {
+            _loggerHelper.LogEnteringTheMethod();
+
+            var headerButton = _mainWindowLocators.PART_HeaderButton;
+            headerButton.ClickButton();
+
+        }
+
+        public void ClickCalendarNextButton()
+        {
+            _loggerHelper.LogEnteringTheMethod();
+
+            var nextButton = _mainWindowLocators.PART_NextButton.AsButton();
+            nextButton.ClickButton();
+        }
+
+        /// <summary>
+        /// HelpText in Button for Example - "1 июня 2025 г."
+        /// </summary>
+        public void ClickCalendarDayButton(string helpText)
+        {
+            _loggerHelper.LogEnteringTheMethod();
+
+            var calendarDayButton = _mainWindowLocators.CalendarDayButtons;
+            var button = calendarDayButton.FirstOrDefault(ht => ht.HelpText == helpText).AsButton();
+            button.ClickButton();
+        }
+
         public RadioButton[] GetAllRadioButtons()
         {
             _loggerHelper.LogEnteringTheMethod();
@@ -242,6 +279,8 @@ namespace UiAutoTests.Helpers
 
         public void SetValidDataInUserForm(int genderCount, int userCount)
         {
+            _loggerHelper.LogEnteringTheMethod();
+
             SetUserId("1");
             SetLastName("Ivanov");
             SetMiddleName("Ivan");
@@ -252,6 +291,7 @@ namespace UiAutoTests.Helpers
             SetAdressUser("London, Baker Street 221B");
             SetPhoneUser("5465431");
             SetInfoUser("Second test case with different data");
+            ClickCalendarDayButton("1 июня 2025 г.");
             SelectRandomRadioButton();
 
             SelectUserCountBySlider(userCount);
