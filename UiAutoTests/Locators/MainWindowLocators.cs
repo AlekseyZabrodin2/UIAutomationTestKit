@@ -51,8 +51,12 @@ namespace UiAutoTests.Locators
         public Button PART_PreviousButton => FindFirst("PART_PreviousButton").AsButton();
         public Button PART_HeaderButton => FindFirst("PART_HeaderButton").AsButton();
         public Button PART_NextButton => FindFirst("PART_NextButton").AsButton();
+        //Choose day Name in Button for Example - ("15 июня 2025 г.")
         public AutomationElement CalendarDayButton => FindFirstByClassName("CalendarDayButton"); 
         public AutomationElement[] CalendarDayButtons => FindAllByClassName("CalendarDayButton");
+        //Choose month for Example - (Name:	"июль 2025 г.") and year - (Name:	"2020")
+        public AutomationElement CalendarButton => FindFirstByClassName("CalendarButton");
+        public AutomationElement[] CalendarButtons => FindAllByClassName("CalendarButton");
 
         public TextBox CalendarDateTextBox => FindFirst("CalendarDateTextBox").AsTextBox();
 

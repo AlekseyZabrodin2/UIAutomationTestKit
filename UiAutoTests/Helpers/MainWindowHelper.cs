@@ -146,15 +146,12 @@ namespace UiAutoTests.Helpers
             nextButton.ClickButton();
         }
 
-        /// <summary>
-        /// HelpText in Button for Example - "1 июня 2025 г."
-        /// </summary>
-        public void ClickCalendarDayButton(string helpText)
+        public void ClickCalendarDayButton(string buttonName)
         {
             _loggerHelper.LogEnteringTheMethod();
 
             var calendarDayButton = _mainWindowLocators.CalendarDayButtons;
-            var button = calendarDayButton.FirstOrDefault(ht => ht.HelpText == helpText).AsButton();
+            var button = calendarDayButton.FirstOrDefault(name => name.Name == buttonName).AsButton();
             button.ClickButton();
         }
 
@@ -291,7 +288,7 @@ namespace UiAutoTests.Helpers
             SetAdressUser("London, Baker Street 221B");
             SetPhoneUser("5465431");
             SetInfoUser("Second test case with different data");
-            ClickCalendarDayButton("1 июня 2025 г.");
+            ClickCalendarDayButton("15 июня 2025 г.");
             SelectRandomRadioButton();
 
             SelectUserCountBySlider(userCount);
