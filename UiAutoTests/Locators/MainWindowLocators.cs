@@ -39,7 +39,7 @@ namespace UiAutoTests.Locators
         public TextBox UserLastNameTextBox => FindFirst("UserLastNameTextBox").AsTextBox();
         public TextBox UserMiddleNameTextBox => FindFirst("UserMiddleNameTextBox").AsTextBox();        
         public TextBox UserFirstNameTextBox => FindFirst("UserFirstNameTextBox").AsTextBox();
-        public TextBox AdressUserTextBox => FindFirst("AdressUserTextBox").AsTextBox();
+        public TextBox AddressUserTextBox => FindFirst("AddressUserTextBox").AsTextBox();
         public TextBox PhoneUserTextBox => FindFirst("PhoneUserTextBox").AsTextBox();
         public TextBox InfoUserTextBox => FindFirst("InfoUserTextBox").AsTextBox();
 

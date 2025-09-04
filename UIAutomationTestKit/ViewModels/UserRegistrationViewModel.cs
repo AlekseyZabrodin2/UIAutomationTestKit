@@ -68,7 +68,7 @@ namespace UIAutomationTestKit.ViewModels
         }
 
         [ObservableProperty]
-        public partial string CreateAdressUser { get; set; }
+        public partial string CreateAddressUser { get; set; }
 
         [ObservableProperty]
         public partial int CreatePhoneUser { get; set; }
@@ -192,7 +192,7 @@ namespace UIAutomationTestKit.ViewModels
                 !string.IsNullOrWhiteSpace(CreateUserMiddleName) &&
                 !string.IsNullOrWhiteSpace(SelectedGender) &&
                 UseBirthDateUser &&
-                !string.IsNullOrWhiteSpace(CreateAdressUser) &&
+                !string.IsNullOrWhiteSpace(CreateAddressUser) &&
                 CreatePhoneUser != 0 &&
                 !string.IsNullOrWhiteSpace(CreateInfoUser);
         }
@@ -209,7 +209,7 @@ namespace UIAutomationTestKit.ViewModels
                     MiddleName = CreateUserMiddleName,
                     Gender = SelectedGender,
                     BirthDate = CreateUserBirthDate.ToShortDateString(),
-                    Adress = CreateAdressUser,
+                    Adress = CreateAddressUser,
                     Phone = CreatePhoneUser,
                     Info = CreateInfoUser,
                     CalendarDate = SelectedCalendarDate.ToShortDateString(),
@@ -235,7 +235,7 @@ namespace UIAutomationTestKit.ViewModels
             UseBirthDateUser = false;
             CreateUserBirthDate = DateTime.Now;
 
-            CreateAdressUser = string.Empty;
+            CreateAddressUser = string.Empty;
             CreatePhoneUser = 0;
             CreateInfoUser = string.Empty;
 

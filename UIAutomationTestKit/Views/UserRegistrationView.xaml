@@ -103,8 +103,8 @@
                                 Height="25"
                                 Margin="5"
                                 VerticalContentAlignment="Center"
-                                AutomationProperties.AutomationId="AdressUserTextBox"
-                                Text="{Binding CreateAdressUser, Mode=TwoWay}" />
+                                AutomationProperties.AutomationId="AddressUserTextBox"
+                                Text="{Binding CreateAddressUser, Mode=TwoWay}" />
                         </StackPanel>
                     </Grid>
 
