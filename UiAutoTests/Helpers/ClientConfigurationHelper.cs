@@ -39,7 +39,7 @@ namespace UiAutoTests.Helpers
             TestClientProperties = serviceProvider.GetRequiredService<IOptions<TestClientProperties>>().Value;
         }
 
-        public IClientState StartClientWithCopyConfig(string testName, string testClass,
+        public IClientState StartClientWithCopyRowVirtualizationConfig(string testName, string testClass,
             HtmlReportService reportCore, ITestClient testClient)
         {
             _loggerHelper.LogEnteringTheMethod();
