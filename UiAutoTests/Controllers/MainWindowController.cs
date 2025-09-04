@@ -126,9 +126,9 @@ namespace UiAutoTests.Controllers
             return this;
         }
 
-        public MainWindowController SetAdressUser(string inputText)
+        public MainWindowController SetAddressUser(string inputText)
         {
-            _mainWindowHelper.SetAdressUser(inputText);
+            _mainWindowHelper.SetAddressUser(inputText);
             return this;
         }
 
@@ -254,6 +254,12 @@ namespace UiAutoTests.Controllers
         public int GetRowCount()
         {            
             return _mainWindowHelper.GetRowCountInDataGrid();
+        }
+
+        public MainWindowController EnsureClientStopped(ITestClient testClient, string clientName = "default")
+        {
+            _mainWindowHelper.EnsureClientStopped(testClient, clientName);
+            return this;
         }
     }
 }

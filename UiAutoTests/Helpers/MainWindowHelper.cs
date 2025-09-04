@@ -1,6 +1,8 @@
 ﻿using FlaUI.Core.AutomationElements;
 using FlaUI.Core.Conditions;
 using NLog;
+using System.ComponentModel;
+using UiAutoTests.Core;
 using UiAutoTests.Extensions;
 using UiAutoTests.Locators;
 
@@ -94,11 +96,11 @@ namespace UiAutoTests.Helpers
             comboBox.SelectItemByIndex(genderIndex);
         }
 
-        public void SetAdressUser(string inputText)
+        public void SetAddressUser(string inputText)
         {
             _loggerHelper.LogEnteringTheMethod();
 
-            var textBox = _mainWindowLocators.AdressUserTextBox;
+            var textBox = _mainWindowLocators.AddressUserTextBox;
             textBox.FocusTextBoxAndSetCursor();
             textBox.EnterText(inputText);
         }
@@ -278,6 +280,8 @@ namespace UiAutoTests.Helpers
         {
             _loggerHelper.LogEnteringTheMethod();
 
+            var dayStringFormat = DateTime.Now.AddDays(-3).ToLongDateString();
+
             SetUserId("1");
             SetLastName("Ivanov");
             SetMiddleName("Ivan");
@@ -285,15 +289,45 @@ namespace UiAutoTests.Helpers
             CheckedBirthdate();
             SelectGender(genderCount);
             SetBirthdateText("25.12.1995");
-            SetAdressUser("London, Baker Street 221B");
+            SetAddressUser("London, Baker Street 221B");
             SetPhoneUser("5465431");
             SetInfoUser("Second test case with different data");
-            ClickCalendarDayButton("15 июня 2025 г.");
+            ClickCalendarDayButton(dayStringFormat);
             SelectRandomRadioButton();
 
             SelectUserCountBySlider(userCount);
         }
 
+        public void EnsureClientStopped(ITestClient testClient, string clientName = "default")
+        {
+            try
+            {
+                if (testClient == null)
+                {
+                    _logger.Debug($"Client '{clientName}' is null - nothing to stop");
+                    return;
+                }
+
+                testClient.Kill();
+                _logger.Debug($"Client '{clientName}' stopped successfully");
+            }
+            catch (ObjectDisposedException)
+            {
+                _logger.Debug($"Client '{clientName}' already disposed");
+            }
+            catch (InvalidOperationException ex)
+            {
+                _logger.Debug(ex, $"Client '{clientName}' already stopped or in invalid state");
+            }
+            catch (Win32Exception ex)
+            {
+                _logger.Warn(ex, $"Win32 exception during client '{clientName}' shutdown");
+            }
+            catch (Exception ex)
+            {
+                _logger.Warn(ex, $"Failed to stop client '{clientName}' safely");
+            }
+        }
 
     }
 }
