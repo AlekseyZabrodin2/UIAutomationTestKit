@@ -65,7 +65,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
             }
             finally
             {
-                _testClient.Kill();
+                _mainWindowController.EnsureClientStopped(_testClient);
             }
         }
 
@@ -74,7 +74,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
         {
             try
             {
-                _mainWindow = _clientConfigurationHelper.StartClientWithCopyConfig(_testName, _testClass, _reportService, _testClient);
+                _mainWindow = _clientConfigurationHelper.StartClientWithCopyRowVirtualizationConfig(_testName, _testClass, _reportService, _testClient);
 
                 _mainWindowController = _mainWindow as MainWindowController
                     ?? throw new InvalidCastException("Client state is not MainWindowController.");
@@ -94,7 +94,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
             }
             finally
             {
-                _testClient.Kill();
+                _mainWindowController.EnsureClientStopped(_testClient);
             }
         }
 
@@ -107,6 +107,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
         [TearDown]
         public void AfterTest()
         {
+            _mainWindowController.EnsureClientStopped(_testClient);
             _initializeService.DisposeClientAndReportResults(_testClient, _reportService);
         }
     }

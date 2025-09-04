@@ -89,7 +89,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
             }
             finally
             {
-                _testClient.Kill();
+                _mainWindowController.EnsureClientStopped(_testClient);
             }
         }
 
@@ -118,7 +118,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
             }
             finally
             {
-                _testClient.Kill();
+                _mainWindowController.EnsureClientStopped(_testClient);
             }
         }
 
@@ -130,7 +130,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
                 var inputText = "test Id";
 
                 var mainWindow = await _testClient.StartAsync(TimeSpan.FromSeconds(30));
-                Assert.That(mainWindow, Is.Not.Null, "Test client Not louded");
+                Assert.That(mainWindow, Is.Not.Null, "Test client Not loaded");
 
                 var mainWindowState = mainWindow.IsState(mainWindow.GetMainWindow());
                 Assert.That(mainWindowState, Is.True, "Wrong state");
@@ -161,7 +161,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
             }
             finally
             {
-                _testClient.Kill();
+                _mainWindowController.EnsureClientStopped(_testClient);
             }
         }
 
@@ -195,7 +195,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
             }
             finally
             {
-                _testClient.Kill();
+                _mainWindowController.EnsureClientStopped(_testClient);
             }
         }
 
@@ -206,7 +206,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
             try
             {
                 var mainWindow = await _testClient.StartAsync(TimeSpan.FromSeconds(30));
-                Assert.That(mainWindow, Is.Not.Null, "Test client Not louded");
+                Assert.That(mainWindow, Is.Not.Null, "Test client Not loaded");
 
                 var mainWindowState = mainWindow.IsState(mainWindow.GetMainWindow());
                 Assert.That(mainWindowState, Is.True, "Wrong state");
@@ -243,7 +243,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
             }
             finally
             {
-                _testClient.Kill();
+                _mainWindowController.EnsureClientStopped(_testClient);
             }
         }
 
@@ -280,7 +280,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
             }
             finally
             {
-                _testClient.Kill();
+                _mainWindowController.EnsureClientStopped(_testClient);
             }
         }
 
@@ -300,7 +300,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
                         .SetBirthdateText(registrDto.BirthdateText)
                         .SelectGender(registrDto.SelectedGender)
 
-                        .SetAdressUser(registrDto.Address)
+                        .SetAddressUser(registrDto.Address)
                         .SetPhoneUser(registrDto.Phone)
                         .SetInfoUser(registrDto.Info)
 
@@ -322,7 +322,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
             }
             finally
             {
-                _testClient.Kill();
+                _mainWindowController.EnsureClientStopped(_testClient);
             }
         }
 
@@ -342,7 +342,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
                         .SetBirthdateText(dataFromJson.BirthdateText)
                         .SelectGender(dataFromJson.SelectedGender)
 
-                        .SetAdressUser(dataFromJson.Address)
+                        .SetAddressUser(dataFromJson.Address)
                         .SetPhoneUser(dataFromJson.Phone)
                         .SetInfoUser(dataFromJson.Info)
                         
@@ -364,7 +364,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
             }
             finally
             {
-                _testClient.Kill();
+                _mainWindowController.EnsureClientStopped(_testClient);
             }
         }
 
@@ -388,7 +388,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
             }
             finally
             {
-                _testClient.Kill();
+                _mainWindowController.EnsureClientStopped(_testClient);
             }
         }
 
@@ -412,7 +412,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
             }
             finally
             {
-                _testClient.Kill();
+                _mainWindowController.EnsureClientStopped(_testClient);
             }
         }
 
@@ -420,6 +420,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
         [TearDown]
         public void AfterTest()
         {
+            _mainWindowController.EnsureClientStopped(_testClient);
             _initializeService.DisposeClientAndReportResults(_testClient, _reportService);
         }
 
