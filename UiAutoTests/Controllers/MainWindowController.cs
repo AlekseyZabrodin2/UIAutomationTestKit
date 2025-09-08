@@ -7,7 +7,7 @@ using UiAutoTests.Locators;
 
 namespace UiAutoTests.Controllers
 {
-    public class MainWindowController : IClientState
+    public class MainWindowController : BaseController, IClientState
     {
         private readonly Window _window;
         private readonly ConditionFactory _conditionFactory;
@@ -256,9 +256,9 @@ namespace UiAutoTests.Controllers
             return _mainWindowHelper.GetRowCountInDataGrid();
         }
 
-        public MainWindowController EnsureClientStopped(ITestClient testClient, string clientName = "default")
+        public MainWindowController EnsureClientStoping(ITestClient testClient, string clientName = "default")
         {
-            _mainWindowHelper.EnsureClientStopped(testClient, clientName);
+            EnsureClientStopped(testClient, clientName);
             return this;
         }
     }

@@ -26,6 +26,7 @@ namespace UiAutoTests.Helpers
         }
 
 
+
         public void SetUserId(string inputText)
         {
             _loggerHelper.LogEnteringTheMethod();
