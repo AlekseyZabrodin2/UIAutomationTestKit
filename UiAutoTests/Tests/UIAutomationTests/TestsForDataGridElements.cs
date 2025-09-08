@@ -50,55 +50,31 @@ namespace UiAutoTests.Tests.UIAutomationTests
         [Test]
         public void Test01_RegistrationSeveralUsersNextVariant([Values(10)] int number)
         {
-            try
+            _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
                         .RegistrationSeveralUsers(number)
                         .AssertRowCountIsNot(number);
-
-                _loggerHelper.LogCompletedResult(_testName, _reportService);
-            }
-            catch (Exception exception)
-            {
-                _loggerHelper.LogFailedResult(_testName, exception, _reportService);
-                throw;
-            }
-            finally
-            {
-                _mainWindowController.EnsureClientStoping(_testClient);
-            }
+            });
         }
 
         [Test]
         public void Test02_RegistrationSeveralUsersNextVariant([Values(10)] int number)
         {
-            try
+            _mainWindow = _clientConfigurationHelper.StartClientWithCopyRowVirtualizationConfig(_testName, _testClass, _reportService, _testClient);
+
+            _mainWindowController = _mainWindow as MainWindowController
+                ?? throw new InvalidCastException("Client state is not MainWindowController.");
+
+            _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
-                _mainWindow = _clientConfigurationHelper.StartClientWithCopyRowVirtualizationConfig(_testName, _testClass, _reportService, _testClient);
-
-                _mainWindowController = _mainWindow as MainWindowController
-                    ?? throw new InvalidCastException("Client state is not MainWindowController.");
-
                 _mainWindowController
                         .RegistrationSeveralUsers(number)
                         .AssertRowCountIs(number);
 
                 _clientConfigurationHelper.CopyDefaultConfigFile();
-
-                _loggerHelper.LogCompletedResult(_testName, _reportService);
-            }
-            catch (Exception exception)
-            {
-                _loggerHelper.LogFailedResult(_testName, exception, _reportService);
-                throw;
-            }
-            finally
-            {
-                _mainWindowController.EnsureClientStoping(_testClient);
-            }
+            });
         }
-
-
 
 
 
@@ -107,7 +83,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
         [TearDown]
         public void AfterTest()
         {
-            _mainWindowController.EnsureClientStoping(_testClient);
+            _mainWindowController?.EnsureClientStopped(_testClient);
             _initializeService.DisposeClientAndReportResults(_testClient, _reportService);
         }
     }
