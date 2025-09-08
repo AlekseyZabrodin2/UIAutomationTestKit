@@ -347,6 +347,58 @@ namespace UiAutoTests.Tests.UIAutomationTests
             });
         }
 
+        [Test]
+        public void Test12_TestWithCombinationValues(
+            [Values("1", "18", "32")] string id, 
+            [Values("John", "Mon", "Don")] string lastName, 
+            [Values("Makaronavich")] string middleName, 
+            [Values("Firstov")]string firstName)
+        {
+            _mainWindowController.ExecuteTest(_testClient, _testName, () =>
+            {
+                _mainWindowController
+                        .SetUserId(id)
+                        .SetLastName(lastName)
+                        .SetMiddleName(middleName)
+                        .SetFirstName(firstName)
+
+                        .CheckedBirthdate()
+
+                        .AssertUserIdEquals(id, $"Expected Text to be [{id}]")
+
+                        .ClickCleanButton()
+                        .WaitUntilTextIsEmpty(500)
+                        .AssertUserIdIsEmpty("Expected TextBox to be Empty")
+                        .Pause(500);
+            });
+        }
+
+        [Test]
+        public void Test13_TestWithCountRange([Range(1, 10, 2)] int number)
+        {
+            _mainWindowController.ExecuteTest(_testClient, _testName, () =>
+            {
+                _mainWindowController
+                        .SetValidDataInUserForm(2, number)
+                        .AssertIsRegistrationButtonEnabled()
+                        .ClickRegistrationButton()
+                        .WaitUntilProgressBarIs(number);
+            });
+        }
+
+        [Test]
+        public void Test14_TestWithRandomCount([Random(2, 10, 3)] int number)
+        {
+            _mainWindowController.ExecuteTest(_testClient, _testName, () =>
+            {
+                _mainWindowController
+                        .SetValidDataInUserForm(2, number)
+                        .AssertIsRegistrationButtonEnabled()
+                        .ClickRegistrationButton()
+                        .WaitUntilProgressBarIs(number);
+            });
+        }
+
 
         [TearDown]
         public void AfterTest()
