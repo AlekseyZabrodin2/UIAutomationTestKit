@@ -255,11 +255,5 @@ namespace UiAutoTests.Controllers
         {            
             return _mainWindowHelper.GetRowCountInDataGrid();
         }
-
-        public MainWindowController EnsureClientStoping(ITestClient testClient, string clientName = "default")
-        {
-            EnsureClientStopped(testClient, clientName);
-            return this;
-        }
     }
 }
