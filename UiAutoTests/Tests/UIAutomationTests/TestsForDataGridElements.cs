@@ -65,7 +65,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
             }
             finally
             {
-                _mainWindowController.EnsureClientStopped(_testClient);
+                _mainWindowController.EnsureClientStoping(_testClient);
             }
         }
 
@@ -94,7 +94,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
             }
             finally
             {
-                _mainWindowController.EnsureClientStopped(_testClient);
+                _mainWindowController.EnsureClientStoping(_testClient);
             }
         }
 
@@ -107,7 +107,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
         [TearDown]
         public void AfterTest()
         {
-            _mainWindowController.EnsureClientStopped(_testClient);
+            _mainWindowController.EnsureClientStoping(_testClient);
             _initializeService.DisposeClientAndReportResults(_testClient, _reportService);
         }
     }

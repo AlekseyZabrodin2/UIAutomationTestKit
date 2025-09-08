@@ -89,7 +89,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
             }
             finally
             {
-                _mainWindowController.EnsureClientStopped(_testClient);
+                _mainWindowController.EnsureClientStoping(_testClient);
             }
         }
 
@@ -118,8 +118,26 @@ namespace UiAutoTests.Tests.UIAutomationTests
             }
             finally
             {
-                _mainWindowController.EnsureClientStopped(_testClient);
+                _mainWindowController.EnsureClientStoping(_testClient);
             }
+        }
+
+        [Test]
+        public void Test02_After_New()
+        {
+            _mainWindowController.ExecuteTest(_testClient, _testName, () =>
+            {
+                var inputText = "test Id";
+
+                _mainWindowController.SetUserId(inputText)
+                    .Pause(500)
+                    .AssertUserIdEquals(inputText, $"Expected Text to be [{inputText}]")
+                    .ClickCleanButton()
+                    .WaitUntilTextIsEmpty(500)
+                    .AssertUserIdIsEmpty("Expected TextBox to be Empty")
+                    .Pause(500);
+
+            });
         }
 
         [Test]
@@ -161,7 +179,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
             }
             finally
             {
-                _mainWindowController.EnsureClientStopped(_testClient);
+                _mainWindowController.EnsureClientStoping(_testClient);
             }
         }
 
@@ -195,7 +213,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
             }
             finally
             {
-                _mainWindowController.EnsureClientStopped(_testClient);
+                _mainWindowController.EnsureClientStoping(_testClient);
             }
         }
 
@@ -243,7 +261,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
             }
             finally
             {
-                _mainWindowController.EnsureClientStopped(_testClient);
+                _mainWindowController.EnsureClientStoping(_testClient);
             }
         }
 
@@ -280,7 +298,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
             }
             finally
             {
-                _mainWindowController.EnsureClientStopped(_testClient);
+                _mainWindowController.EnsureClientStoping(_testClient);
             }
         }
 
@@ -322,7 +340,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
             }
             finally
             {
-                _mainWindowController.EnsureClientStopped(_testClient);
+                _mainWindowController.EnsureClientStoping(_testClient);
             }
         }
 
@@ -364,7 +382,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
             }
             finally
             {
-                _mainWindowController.EnsureClientStopped(_testClient);
+                _mainWindowController.EnsureClientStoping(_testClient);
             }
         }
 
@@ -388,7 +406,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
             }
             finally
             {
-                _mainWindowController.EnsureClientStopped(_testClient);
+                _mainWindowController.EnsureClientStoping(_testClient);
             }
         }
 
@@ -412,7 +430,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
             }
             finally
             {
-                _mainWindowController.EnsureClientStopped(_testClient);
+                _mainWindowController.EnsureClientStoping(_testClient);
             }
         }
 
@@ -420,7 +438,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
         [TearDown]
         public void AfterTest()
         {
-            _mainWindowController.EnsureClientStopped(_testClient);
+            _mainWindowController.EnsureClientStoping(_testClient);
             _initializeService.DisposeClientAndReportResults(_testClient, _reportService);
         }
 
