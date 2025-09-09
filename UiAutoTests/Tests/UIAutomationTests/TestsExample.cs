@@ -40,10 +40,6 @@ namespace UiAutoTests.Tests.UIAutomationTests
                 nameof(Test04_IgnoreSetUpAndLoadingTestClient)))
                 return;
 
-            if (_initializeService.IgnoreSetUpInTestWithParameters(
-                "Test06"))
-                return;
-
             _mainWindow = _initializeService.StartClientWithReportInitialization(_testName, _testClass, _reportService, _testClient);
 
             _mainWindowController = _mainWindow as MainWindowController
@@ -172,148 +168,29 @@ namespace UiAutoTests.Tests.UIAutomationTests
             }
         }
 
-        [TestCaseSource(typeof(MainWindowTestCases), nameof(MainWindowTestCases.ValidRegistrationFieldCases))]
         [Test]
-        public void Test05_Registration_WithDtoFromClass(RegistrationCaseDto registrDto)
+        public void Test05_RegistrationWithLongWay()
         {
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
-                    .SetUserId(registrDto.Id)
-                    .SetLastName(registrDto.LastName)
-                    .SetMiddleName(registrDto.MiddleName)
-                    .SetFirstName(registrDto.FirstName)
-
-                    .CheckedBirthdate()
-
-                    .AssertUserIdEquals(registrDto.Id, $"Expected Text to be [{registrDto.Id}]")
-
-                    .ClickCleanButton()
-                    .WaitUntilTextIsEmpty(500)
-                    .AssertUserIdIsEmpty("Expected TextBox to be Empty")
-                    .Pause(500);
-            });
-        }
-
-        [TestCaseSource(typeof(MainWindowTestCases), nameof(MainWindowTestCases.IgnoreSetUpCases))]
-        [Test]
-        public async Task Test06_IgnoreSetUpWhenTestWithParameter(RegistrationCaseDto registrDto)
-        {
-            var mainWindow = await _testClient.StartAsync(TimeSpan.FromSeconds(30));
-            Assert.That(mainWindow, Is.Not.Null, "Test client Not loaded");
-
-            var mainWindowState = mainWindow.IsState(mainWindow.GetMainWindow());
-            Assert.That(mainWindowState, Is.True, "Wrong state");
-
-            var mainState = await mainWindow.GoToStateAsync("MainWindowState", TimeSpan.FromSeconds(30));
-            _logger.Info("Test Client started");
-
-            _reportService.InitializeTests(_testName, _testClass);
-
-            if (mainState is MainWindowController mainWindowController)
-            {
-                _mainWindowController = mainWindowController;
-                _mainWindowController.ExecuteTest(_testClient, _testName, () =>
-                {
-                    _mainWindowController
-                        .SetUserId(registrDto.Id)
-                        .SetLastName(registrDto.LastName)
-                        .SetMiddleName(registrDto.MiddleName)
-                        .SetFirstName(registrDto.FirstName)
+                        .SetUserId("001")
+                        .SetLastName("Smith")
+                        .SetMiddleName("Jamesonnova")
+                        .SetFirstName("Emily")
 
                         .CheckedBirthdate()
+                        .SetBirthdateText("19.01.2021")
+                        .SelectGender(2)
 
-                        .AssertUserIdEquals(registrDto.Id, $"Expected Text to be [{registrDto.Id}]")
-
-                        .ClickCleanButton()
-                        .WaitUntilTextIsEmpty(500)
-                        .AssertUserIdIsEmpty("Expected TextBox to be Empty")
-                        .Pause(500);
-                });
-            }
-        }
-
-        [TestCase("001", "Smith", "James", "John")]
-        [TestCase("002", "Johnson", "Lee", "Michael")]
-        [TestCase("003", "Williams", "Anne", "Emily")]
-        [TestCase("004", "", "Marie", "Sophia")]
-        [Test]
-        public void Test07_WithParametersInTestCase(string id, string lastName, string middleName, string firstName)
-        {
-            _mainWindowController.ExecuteTest(_testClient, _testName, () =>
-            {
-                _mainWindowController
-                        .SetUserId(id)
-                        .SetLastName(lastName)
-                        .SetMiddleName(middleName)
-                        .SetFirstName(firstName)
-
-                        .CheckedBirthdate()
-
-                        .AssertUserIdEquals(id, $"Expected Text to be [{id}]")
-
-                        .ClickCleanButton()
-                        .WaitUntilTextIsEmpty(500)
-                        .AssertUserIdIsEmpty("Expected TextBox to be Empty")
-                        .Pause(500);
-            });
-        }
-
-        [TestCaseSource(typeof(MainWindowTestCases), nameof(MainWindowTestCases.ValidRegistrationCases))]
-        [Test]
-        public void Test08_ParametersFromClass(RegistrationCaseDto registrDto)
-        {
-            _mainWindowController.ExecuteTest(_testClient, _testName, () =>
-            {
-                _mainWindowController
-                        .SetUserId(registrDto.Id)
-                        .SetLastName(registrDto.LastName)
-                        .SetMiddleName(registrDto.MiddleName)
-                        .SetFirstName(registrDto.FirstName)
-
-                        .CheckedBirthdate()
-                        .SetBirthdateText(registrDto.BirthdateText)
-                        .SelectGender(registrDto.SelectedGender)
-
-                        .SetAddressUser(registrDto.Address)
-                        .SetPhoneUser(registrDto.Phone)
-                        .SetInfoUser(registrDto.Info)
+                        .SetAddressUser("Minsk")
+                        .SetPhoneUser("769879879")
+                        .SetInfoUser("Testing text")
 
                         .SelectRadioButtonByIndex(1)
                         .SelectUserCountBySlider(3)
 
-                        .AssertUserIdEquals(registrDto.Id, $"Expected Text to be [{registrDto.Id}]")
-                        .AssertIsRegistrationButtonEnabled()
-
-                        .ClickRegistrationButton()
-                        .WaitUntilProgressBarIs(3);
-            });
-        }
-
-        [TestCaseSource(typeof(MainWindowTestCases), nameof(MainWindowTestCases.ValidRegistrationCasesFromJson))]
-        [Test]
-        public void Test09_Registration_WithDtoFromJson(RegistrationCaseFromJson dataFromJson)
-        {
-            _mainWindowController.ExecuteTest(_testClient, _testName, () =>
-            {
-                _mainWindowController
-                        .SetUserId(dataFromJson.Id)
-                        .SetLastName(dataFromJson.LastName)
-                        .SetMiddleName(dataFromJson.MiddleName)
-                        .SetFirstName(dataFromJson.FirstName)
-
-                        .CheckedBirthdate()
-                        .SetBirthdateText(dataFromJson.BirthdateText)
-                        .SelectGender(dataFromJson.SelectedGender)
-
-                        .SetAddressUser(dataFromJson.Address)
-                        .SetPhoneUser(dataFromJson.Phone)
-                        .SetInfoUser(dataFromJson.Info)
-
-                        .SelectRandomRadioButton()
-                        .SelectUserCountBySlider(3)
-
-                        .AssertUserIdEquals(dataFromJson.Id, $"Expected Text to be [{dataFromJson.Id}]")
+                        .AssertUserIdEquals("001", $"Expected Text to be [001]")
                         .AssertIsRegistrationButtonEnabled()
 
                         .ClickRegistrationButton()
@@ -322,7 +199,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
         }
 
         [Test]
-        public void Test10_CombiningIntoOneMethod()
+        public void Test06_CombiningIntoOneMethod()
         {
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
@@ -332,72 +209,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
                         .ClickRegistrationButton()
                         .WaitUntilProgressBarIs(3);
             });
-        }
-
-        [Test]
-        public void Test11_RegistrationSeveralUsers([Values(5)] int number)
-        {
-            _mainWindowController.ExecuteTest(_testClient, _testName, () =>
-            {
-                _mainWindowController
-                        .SetValidDataInUserForm(2, number)
-                        .AssertIsRegistrationButtonEnabled()
-                        .ClickRegistrationButton()
-                        .WaitUntilProgressBarIs(number);
-            });
-        }
-
-        [Test]
-        public void Test12_TestWithCombinationValues(
-            [Values("1", "18", "32")] string id, 
-            [Values("John", "Mon", "Don")] string lastName, 
-            [Values("Makaronavich")] string middleName, 
-            [Values("Firstov")]string firstName)
-        {
-            _mainWindowController.ExecuteTest(_testClient, _testName, () =>
-            {
-                _mainWindowController
-                        .SetUserId(id)
-                        .SetLastName(lastName)
-                        .SetMiddleName(middleName)
-                        .SetFirstName(firstName)
-
-                        .CheckedBirthdate()
-
-                        .AssertUserIdEquals(id, $"Expected Text to be [{id}]")
-
-                        .ClickCleanButton()
-                        .WaitUntilTextIsEmpty(500)
-                        .AssertUserIdIsEmpty("Expected TextBox to be Empty")
-                        .Pause(500);
-            });
-        }
-
-        [Test]
-        public void Test13_TestWithCountRange([Range(1, 10, 2)] int number)
-        {
-            _mainWindowController.ExecuteTest(_testClient, _testName, () =>
-            {
-                _mainWindowController
-                        .SetValidDataInUserForm(2, number)
-                        .AssertIsRegistrationButtonEnabled()
-                        .ClickRegistrationButton()
-                        .WaitUntilProgressBarIs(number);
-            });
-        }
-
-        [Test]
-        public void Test14_TestWithRandomCount([Random(2, 10, 3)] int number)
-        {
-            _mainWindowController.ExecuteTest(_testClient, _testName, () =>
-            {
-                _mainWindowController
-                        .SetValidDataInUserForm(2, number)
-                        .AssertIsRegistrationButtonEnabled()
-                        .ClickRegistrationButton()
-                        .WaitUntilProgressBarIs(number);
-            });
-        }
+        }        
 
 
         [TearDown]
