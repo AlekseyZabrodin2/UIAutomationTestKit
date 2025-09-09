@@ -22,7 +22,7 @@ namespace UiAutoTests.TestCasesData
                     Address = "Minsk",
                     Phone = "769879879",
                     Info = "Some text"
-                }).SetName("Test05-1: Valid first");
+                }).SetName("Test01-1: Valid first");
 
                 yield return new TestCaseData( new RegistrationCaseDto
                 {
@@ -33,7 +33,7 @@ namespace UiAutoTests.TestCasesData
                     Address = "Brest",
                     Phone = "564654321",
                     Info = "Just some text"
-                }).SetName("Test05-2: Valid next");
+                }).SetName("Test01-2: Valid next");
 
                 yield return new TestCaseData(new RegistrationCaseDto
                 {
@@ -44,7 +44,7 @@ namespace UiAutoTests.TestCasesData
                     Address = "Gdanovichi",
                     Phone = "769879879",
                     Info = "Some text"
-                }).SetName("Test05-3: Valid next next");
+                }).SetName("Test01-3: Valid next next");
             }
         }
 
@@ -61,7 +61,7 @@ namespace UiAutoTests.TestCasesData
                     Address = "Minsk",
                     Phone = "769879879",
                     Info = "Some text"
-                }).SetName("Test06-1: Valid first");
+                }).SetName("Test02-1: Valid first");
 
                 yield return new TestCaseData(new RegistrationCaseDto
                 {
@@ -72,7 +72,7 @@ namespace UiAutoTests.TestCasesData
                     Address = "Brest",
                     Phone = "564654321",
                     Info = "Just some text"
-                }).SetName("Test06-2: Valid next");
+                }).SetName("Test02-2: Valid next");
             }
         }
 
@@ -95,7 +95,7 @@ namespace UiAutoTests.TestCasesData
                     Address = "Minsk",
                     Phone = "769879879",
                     Info = "Testing text"
-                }).SetName("Test08-1: Valid Registration");
+                }).SetName("Test04-1: Valid Registration");
 
                 yield return new TestCaseData(new RegistrationCaseDto
                 {
@@ -112,7 +112,7 @@ namespace UiAutoTests.TestCasesData
                     Address = "London, Baker Street 221B",
                     Phone = "123456789",
                     Info = "Second test case with different data"
-                }).SetName("Test08-2: Valid Registration");
+                }).SetName("Test04-2: Valid Registration");
             }
         }
 
@@ -124,10 +124,10 @@ namespace UiAutoTests.TestCasesData
                 var testData = TestDataFromJson.TestDataInitialize();
 
                 yield return new TestCaseData(testData.TestValidRegistration)
-                        .SetName("Test09-1: Valid Registration from Json");
+                        .SetName("Test05-1: Valid Registration from Json");
 
                 yield return new TestCaseData(testData.TestInvalidRegistration)
-                        .SetName("Test09-2: Invalid Registration from Json");
+                        .SetName("Test05-2: Invalid Registration from Json");
             }
         }
 
