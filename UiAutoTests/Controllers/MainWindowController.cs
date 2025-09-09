@@ -239,6 +239,18 @@ namespace UiAutoTests.Controllers
             return this;
         }
 
+        public MainWindowController WaitProgressBarWithToken(int expectedValue, CancellationToken cancellationToken = default)
+        {
+            _mainWindowHelper.WaitProgressBarWithToken(expectedValue, cancellationToken);
+            return this;
+        }
+
+        public MainWindowController GetProgressBarValue()
+        {
+            _mainWindowHelper.GetProgressBarValue();
+            return this;
+        }
+
         public MainWindowController RegistrationSeveralUsers(int count)
         {
             _mainWindowHelper.RegistrationSeveralUsers(count);
