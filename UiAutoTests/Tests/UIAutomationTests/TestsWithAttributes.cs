@@ -214,6 +214,51 @@ namespace UiAutoTests.Tests.UIAutomationTests
             });
         }
 
+        // Атрибут: Platform - Позволяет указывать, на каких платформах (ОС) должен запускаться тест.
+        // Очень полезно для кросс-платформенных проектов.
+        [Test]
+        [Platform("Win")]
+        public void Test12_WindowsSpecificTest()
+        {
+            _mainWindowController.ExecuteTest(_testClient, _testName, () =>
+            {
+                _mainWindowController
+                        .SetValidDataInUserForm(1, 1)
+                        .AssertIsRegistrationButtonEnabled()
+                        .ClickRegistrationButton()
+                        .WaitUntilProgressBarIs(1);
+            });
+        }
+
+        [Test]
+        [Platform("Linux")]
+        public void Test13_LinuxSpecificTest()
+        {
+            _mainWindowController.ExecuteTest(_testClient, _testName, () =>
+            {
+                _mainWindowController
+                        .SetValidDataInUserForm(1, 1)
+                        .AssertIsRegistrationButtonEnabled()
+                        .ClickRegistrationButton()
+                        .WaitUntilProgressBarIs(1);
+            });
+        }
+
+        // Везде, кроме Linux и Unix
+        [Test]
+        [Platform(Exclude = "Linux,Unix")]
+        public void Test14_NotOnLinuxTest()
+        {
+            _mainWindowController.ExecuteTest(_testClient, _testName, () =>
+            {
+                _mainWindowController
+                        .SetValidDataInUserForm(1, 1)
+                        .AssertIsRegistrationButtonEnabled()
+                        .ClickRegistrationButton()
+                        .WaitUntilProgressBarIs(1);
+            });
+        }
+
 
 
         [TearDown]
