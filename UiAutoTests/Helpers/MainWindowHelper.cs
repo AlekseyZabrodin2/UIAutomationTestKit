@@ -225,6 +225,25 @@ namespace UiAutoTests.Helpers
             progressBar.WaitUntilValueIs(prograssBarValue);
         }
 
+        public void WaitProgressBarWithToken(int expectedValue, CancellationToken cancellationToken = default)
+        {
+            _loggerHelper.LogEnteringTheMethod();
+
+            while (GetProgressBarValue()  != expectedValue)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                Thread.Sleep(100);
+            }
+        }
+
+        public double GetProgressBarValue()
+        {
+            _loggerHelper.LogEnteringTheMethod();
+
+            var progressBar = _mainWindowLocators.UserGenerationProgressBar;
+            return progressBar.GetValue();
+        }
+
         public bool IsRegistrationButtonEnabled()
         {
             _loggerHelper.LogEnteringTheMethod();

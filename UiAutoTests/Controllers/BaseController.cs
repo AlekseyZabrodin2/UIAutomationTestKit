@@ -1,5 +1,6 @@
 ﻿using NLog;
 using System.ComponentModel;
+using System.Diagnostics;
 using UiAutoTests.Core;
 using UiAutoTests.Helpers;
 using UiAutoTests.Services;
@@ -47,7 +48,7 @@ namespace UiAutoTests.Controllers
                     return;
                 }
 
-                testClient.Kill();
+                StopTestClient(testClient);
                 _logger.Debug($"Client '{clientName}' stopped successfully");
             }
             catch (ObjectDisposedException)
@@ -65,6 +66,27 @@ namespace UiAutoTests.Controllers
             catch (Exception ex)
             {
                 _logger.Warn(ex, $"Failed to stop client '{clientName}' safely");
+            }
+        }
+
+        private void StopTestClient(ITestClient testClient)
+        {
+            _loggerHelper.LogEnteringTheMethod();
+
+            var nameTestClient = ClientConfigurationHelper.TestClientProperties.TestClientPath;
+            var processes = Process.GetProcessesByName(Path.GetFileNameWithoutExtension(nameTestClient));
+            foreach (var process in processes)
+            {
+                try
+                {
+                    process.Kill();
+                    process.WaitForExit();
+                }
+                catch (Exception ex)
+                {
+                    _logger.Error(ex, "Can`t stop process {processId}", process.Id);
+                }
+                _logger.Info("WebHost stoped");
             }
         }
 
