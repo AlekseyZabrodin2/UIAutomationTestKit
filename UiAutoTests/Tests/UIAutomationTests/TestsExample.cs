@@ -4,7 +4,6 @@ using UiAutoTests.Controllers;
 using UiAutoTests.Core;
 using UiAutoTests.Helpers;
 using UiAutoTests.Services;
-using UiAutoTests.TestCasesData;
 
 namespace UiAutoTests.Tests.UIAutomationTests
 {
