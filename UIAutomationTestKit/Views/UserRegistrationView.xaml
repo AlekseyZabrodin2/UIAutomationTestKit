@@ -21,6 +21,7 @@
         Opacity="{Binding OpacityProperty}"
         ShowGridLines="False">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="160" />
             <RowDefinition Height="160" />
             <RowDefinition Height="Auto" />
@@ -39,14 +40,130 @@
         </Grid.ColumnDefinitions>
 
         <Grid
-            Name="AddUsersBlock"
             Grid.Row="0"
+            Grid.ColumnSpan="5"
+            Margin="5,0,10,0">
+            <StackPanel>
+                <Menu
+                    AutomationProperties.AutomationId="MainMenu"
+                    Background="Transparent"
+                    BorderBrush="Black"
+                    BorderThickness="0,1">
+                    <MenuItem
+                        Height="25"
+                        Margin="1,1,1,10"
+                        AutomationProperties.AutomationId="HomeMenuItem"
+                        BorderBrush="Black"
+                        BorderThickness="1.2"
+                        FontSize="14"
+                        FontWeight="DemiBold"
+                        Header="Home" />
+                    <MenuItem
+                        Height="25"
+                        Margin="1,1,1,10"
+                        AutomationProperties.AutomationId="CoursesMenuItem"
+                        BorderBrush="Black"
+                        BorderThickness="1.2"
+                        FontSize="14"
+                        FontWeight="DemiBold"
+                        Header="Courses">
+                        <MenuItem AutomationProperties.AutomationId="ProgrammingMenuItem" Header="Programming">
+                            <MenuItem AutomationProperties.AutomationId="C#MenuItem" Header="C# for Beginners" />
+                            <MenuItem AutomationProperties.AutomationId="PythonMenuItem" Header="Python Advanced" />
+                            <MenuItem AutomationProperties.AutomationId="WebMenuItem" Header="Web Development" />
+                            <MenuItem AutomationProperties.AutomationId="MobileMenuItem" Header="Mobile Apps" />
+                        </MenuItem>
+                        <MenuItem AutomationProperties.AutomationId="DataScienceMenuItem" Header="Data Science">
+                            <MenuItem AutomationProperties.AutomationId="MachineLearningMenuItem" Header="Machine Learning" />
+                            <MenuItem AutomationProperties.AutomationId="BigDataMenuItem" Header="Big Data" />
+                            <MenuItem AutomationProperties.AutomationId="DataVisualizationMenuItem" Header="Data Visualization" />
+                        </MenuItem>
+                        <MenuItem AutomationProperties.AutomationId="DesignMenuItem" Header="Design">
+                            <MenuItem AutomationProperties.AutomationId="UiMenuItem" Header="UI/UX Design" />
+                            <MenuItem AutomationProperties.AutomationId="GraphicMenuItem" Header="Graphic Design" />
+                            <MenuItem AutomationProperties.AutomationId="3dMenuItem" Header="3D Modeling" />
+                        </MenuItem>
+                    </MenuItem>
+                    <MenuItem
+                        Height="25"
+                        Margin="1,1,1,10"
+                        AutomationProperties.AutomationId="TestsMenuItem"
+                        BorderBrush="Black"
+                        BorderThickness="1.2"
+                        FontSize="14"
+                        FontWeight="DemiBold"
+                        Header="Tests Exercises">
+                        <MenuItem AutomationProperties.AutomationId="C#TestMenuItem" Header="C# Test" />
+                        <MenuItem AutomationProperties.AutomationId="PythonTestMenuItem" Header="Python Test" />
+                        <MenuItem AutomationProperties.AutomationId="PracticalTasksMenuItem" Header="Practical Tasks" />
+                        <MenuItem AutomationProperties.AutomationId="CodeChallengesMenuItem" Header="Code Challenges" />
+                    </MenuItem>
+                    <MenuItem
+                        Height="25"
+                        Margin="1,1,1,10"
+                        AutomationProperties.AutomationId="ProgressMenuItem"
+                        BorderBrush="Black"
+                        BorderThickness="1.2"
+                        FontSize="14"
+                        FontWeight="DemiBold"
+                        Header="Progress">
+                        <MenuItem AutomationProperties.AutomationId="AchievementsMenuItem" Header="My Achievements" />
+                        <MenuItem AutomationProperties.AutomationId="StatisticsMenuItem" Header="Learning Statistics" />
+                        <MenuItem AutomationProperties.AutomationId="CertificatesMenuItem" Header="Certificates" />
+                    </MenuItem>
+                    <MenuItem
+                        Height="25"
+                        Margin="1,1,1,10"
+                        AutomationProperties.AutomationId="CommunityMenuItem"
+                        BorderBrush="Black"
+                        BorderThickness="1.2"
+                        FontSize="14"
+                        FontWeight="DemiBold"
+                        Header="Community">
+                        <MenuItem AutomationProperties.AutomationId="ForumMenuItem" Header="Forum" />
+                        <MenuItem AutomationProperties.AutomationId="GroupMenuItem" Header="Group Projects" />
+                        <MenuItem AutomationProperties.AutomationId="MentorshipMenuItem" Header="Mentorship" />
+                    </MenuItem>
+                    <MenuItem
+                        Height="25"
+                        Margin="1,1,1,10"
+                        AutomationProperties.AutomationId="SettingsMenuItem"
+                        BorderBrush="Black"
+                        BorderThickness="1.2"
+                        FontSize="14"
+                        FontWeight="DemiBold"
+                        Header="Settings">
+                        <MenuItem AutomationProperties.AutomationId="ProfileMenuItem" Header="Profile" />
+                        <MenuItem AutomationProperties.AutomationId="NotificationsMenuItem" Header="Notifications" />
+                        <MenuItem AutomationProperties.AutomationId="AppearanceMenuItem" Header="Appearance" />
+                        <MenuItem AutomationProperties.AutomationId="SecurityMenuItem" Header="Security" />
+                    </MenuItem>
+                    <MenuItem
+                        Height="25"
+                        Margin="1,1,1,10"
+                        AutomationProperties.AutomationId="HelpMenuItem"
+                        BorderBrush="Black"
+                        BorderThickness="1.2"
+                        FontSize="14"
+                        FontWeight="DemiBold"
+                        Header="Help">
+                        <MenuItem AutomationProperties.AutomationId="FAQMenuItem" Header="FAQ" />
+                        <MenuItem AutomationProperties.AutomationId="FeedbackMenuItem" Header="Feedback" />
+                        <MenuItem AutomationProperties.AutomationId="AboutMenuItem" Header="About" />
+                    </MenuItem>
+                </Menu>
+            </StackPanel>
+        </Grid>
+
+        <Grid
+            Name="AddUsersBlock"
+            Grid.Row="1"
             Grid.RowSpan="2"
             Grid.Column="0"
             Grid.ColumnSpan="4"
             Margin="5">
 
-            <Border Grid.Row="0" BorderThickness="5">
+            <Border>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -179,44 +296,46 @@
             </Border>
         </Grid>
         <Grid
-            Grid.Row="0"
+            Grid.Row="1"
             Grid.RowSpan="2"
             Grid.Column="5"
             Margin="0,25,10,5">
-            <StackPanel>
-                <Calendar AutomationProperties.AutomationId="CalendarDate" SelectedDate="{Binding SelectedCalendarDate}" />
-                <TextBox
-                    Width="180"
-                    Height="25"
-                    Margin="5"
-                    HorizontalAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    AutomationProperties.AutomationId="CalendarDateTextBox"
-                    IsReadOnly="True"
-                    Text="{Binding SelectedCalendarDate, StringFormat='{}{0:dd.MM.yyyy}'}" />
-                <TextBlock
-                    Margin="5"
-                    FontWeight="DemiBold"
-                    Text="Document type:" />
-                <RadioButton
-                    Margin="5,0,0,0"
-                    AutomationProperties.AutomationId="RadioButtonPassport"
-                    Content="Passport"
-                    IsChecked="{Binding SelectedDocument, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static models:Documents.Passport}}" />
-                <RadioButton
-                    Margin="5,5,0,0"
-                    AutomationProperties.AutomationId="RadioButtonDriverLicense"
-                    Content="Driver license"
-                    IsChecked="{Binding SelectedDocument, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static models:Documents.DriverLicense}}" />
-                <RadioButton
-                    Margin="5,5,0,0"
-                    AutomationProperties.AutomationId="RadioButtonIdCard"
-                    Content="ID card"
-                    IsChecked="{Binding SelectedDocument, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static models:Documents.IdCard}}" />
-            </StackPanel>
+            <Border>
+                <StackPanel>
+                    <Calendar AutomationProperties.AutomationId="CalendarDate" SelectedDate="{Binding SelectedCalendarDate}" />
+                    <TextBox
+                        Width="180"
+                        Height="25"
+                        Margin="0,5"
+                        HorizontalAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        AutomationProperties.AutomationId="CalendarDateTextBox"
+                        IsReadOnly="True"
+                        Text="{Binding SelectedCalendarDate, StringFormat='{}{0:dd.MM.yyyy}'}" />
+                    <TextBlock
+                        Margin="5"
+                        FontWeight="DemiBold"
+                        Text="Document type:" />
+                    <RadioButton
+                        Margin="5,0,0,0"
+                        AutomationProperties.AutomationId="RadioButtonPassport"
+                        Content="Passport"
+                        IsChecked="{Binding SelectedDocument, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static models:Documents.Passport}}" />
+                    <RadioButton
+                        Margin="5,5,0,0"
+                        AutomationProperties.AutomationId="RadioButtonDriverLicense"
+                        Content="Driver license"
+                        IsChecked="{Binding SelectedDocument, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static models:Documents.DriverLicense}}" />
+                    <RadioButton
+                        Margin="5,5,0,0"
+                        AutomationProperties.AutomationId="RadioButtonIdCard"
+                        Content="ID card"
+                        IsChecked="{Binding SelectedDocument, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static models:Documents.IdCard}}" />
+                </StackPanel>
+            </Border>
         </Grid>
         <Grid
-            Grid.Row="3"
+            Grid.Row="4"
             Grid.Column="0"
             Grid.ColumnSpan="5"
             Margin="15">
@@ -237,7 +356,7 @@
             </StackPanel>
         </Grid>
         <Grid
-            Grid.Row="4"
+            Grid.Row="5"
             Grid.Column="0"
             Grid.ColumnSpan="5"
             Margin="15">
@@ -250,7 +369,7 @@
                 Value="{Binding ProgressBarValue}" />
         </Grid>
         <Grid
-            Grid.Row="5"
+            Grid.Row="6"
             Grid.Column="0"
             Grid.ColumnSpan="5"
             Margin="15,10,15,10">
@@ -269,7 +388,7 @@
         </Grid>
 
         <Grid
-            Grid.Row="6"
+            Grid.Row="7"
             Grid.Column="0"
             Grid.ColumnSpan="5"
             Margin="15,0">
@@ -289,7 +408,7 @@
             </Border>
         </Grid>
 
-        <Grid Grid.Row="7" Grid.ColumnSpan="5">
+        <Grid Grid.Row="8" Grid.ColumnSpan="5">
             <Button
                 Name="CleanUpButton"
                 Width="80"
