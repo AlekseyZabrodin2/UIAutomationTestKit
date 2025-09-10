@@ -75,5 +75,65 @@ namespace UiAutoTests.Locators
 
         public Button CleanUpFieldsButton => FindFirst("CleanUpFieldsButton").AsButton();
         public Button RegistrationUserButton => FindFirst("RegistrationUserButton").AsButton();
+
+        // Main Menu
+        public Menu MainMenu => FindFirst("MainMenu").AsMenu();
+
+        // Level 1 - Main Items
+        public MenuItem HomeMenuItem => FindFirst("HomeMenuItem").AsMenuItem();
+        public MenuItem CoursesMenuItem => FindFirst("CoursesMenuItem").AsMenuItem();
+        public MenuItem TestsMenuItem => FindFirst("TestsMenuItem").AsMenuItem();
+        public MenuItem ProgressMenuItem => FindFirst("ProgressMenuItem").AsMenuItem();
+        public MenuItem CommunityMenuItem => FindFirst("CommunityMenuItem").AsMenuItem();
+        public MenuItem SettingsMenuItem => FindFirst("SettingsMenuItem").AsMenuItem();
+        public MenuItem HelpMenuItem => FindFirst("HelpMenuItem").AsMenuItem();
+
+        // Level 2 - Courses Submenu
+        public MenuItem ProgrammingMenuItem => FindFirst("ProgrammingMenuItem").AsMenuItem();
+        public MenuItem DataScienceMenuItem => FindFirst("DataScienceMenuItem").AsMenuItem();
+        public MenuItem DesignMenuItem => FindFirst("DesignMenuItem").AsMenuItem();
+
+        // Level 2 - Tests & Exercises Submenu
+        public MenuItem CSharpTestMenuItem => FindFirst("C#TestMenuItem").AsMenuItem();
+        public MenuItem PythonTestMenuItem => FindFirst("PythonTestMenuItem").AsMenuItem();
+        public MenuItem PracticalTasksMenuItem => FindFirst("PracticalTasksMenuItem").AsMenuItem();
+        public MenuItem CodeChallengesMenuItem => FindFirst("CodeChallengesMenuItem").AsMenuItem();
+
+        // Level 2 - Progress Submenu
+        public MenuItem AchievementsMenuItem => FindFirst("AchievementsMenuItem").AsMenuItem();
+        public MenuItem StatisticsMenuItem => FindFirst("StatisticsMenuItem").AsMenuItem();
+        public MenuItem CertificatesMenuItem => FindFirst("CertificatesMenuItem").AsMenuItem();
+
+        // Level 2 - Community Submenu
+        public MenuItem ForumMenuItem => FindFirst("ForumMenuItem").AsMenuItem();
+        public MenuItem GroupMenuItem => FindFirst("GroupMenuItem").AsMenuItem();
+        public MenuItem MentorshipMenuItem => FindFirst("MentorshipMenuItem").AsMenuItem();
+
+        // Level 2 - Settings Submenu
+        public MenuItem ProfileMenuItem => FindFirst("ProfileMenuItem").AsMenuItem();
+        public MenuItem NotificationsMenuItem => FindFirst("NotificationsMenuItem").AsMenuItem();
+        public MenuItem AppearanceMenuItem => FindFirst("AppearanceMenuItem").AsMenuItem();
+        public MenuItem SecurityMenuItem => FindFirst("SecurityMenuItem").AsMenuItem();
+
+        // Level 2 - Help Submenu
+        public MenuItem FAQMenuItem => FindFirst("FAQMenuItem").AsMenuItem();
+        public MenuItem FeedbackMenuItem => FindFirst("FeedbackMenuItem").AsMenuItem();
+        public MenuItem AboutMenuItem => FindFirst("AboutMenuItem").AsMenuItem();
+
+        // Level 3 - Programming Submenu
+        public MenuItem CSharpMenuItem => FindFirst("C#MenuItem").AsMenuItem();
+        public MenuItem PythonMenuItem => FindFirst("PythonMenuItem").AsMenuItem();
+        public MenuItem WebMenuItem => FindFirst("WebMenuItem").AsMenuItem();
+        public MenuItem MobileMenuItem => FindFirst("MobileMenuItem").AsMenuItem();
+
+        // Level 3 - Data Science Submenu
+        public MenuItem MachineLearningMenuItem => FindFirst("MachineLearningMenuItem").AsMenuItem();
+        public MenuItem BigDataMenuItem => FindFirst("BigDataMenuItem").AsMenuItem();
+        public MenuItem DataVisualizationMenuItem => FindFirst("DataVisualizationMenuItem").AsMenuItem();
+
+        // Level 3 - Design Submenu
+        public MenuItem UiMenuItem => FindFirst("UiMenuItem").AsMenuItem();
+        public MenuItem GraphicMenuItem => FindFirst("GraphicMenuItem").AsMenuItem();
+        public MenuItem TreeDMenuItem => FindFirst("3dMenuItem").AsMenuItem();
     }
 }

@@ -1,4 +1,5 @@
-﻿using UiAutoTests.Clients;
+﻿using System.Globalization;
+using UiAutoTests.Clients;
 using UiAutoTests.ControllerAssertions;
 using UiAutoTests.Controllers;
 using UiAutoTests.Core;
@@ -186,9 +187,24 @@ namespace UiAutoTests.Tests.UIAutomationTests
             });
         }
 
+        // Атрибут: MaxTime - тест должен выполниться за отведенное время,
+        // Иначе даже при успехе будет - Failed из-за превышения максимального времени.
+        [Test, MaxTime(10000)]
+        public void Test10_TestWithMaxTimeAttribute()
+        {
+            _mainWindowController.ExecuteTest(_testClient, _testName, () =>
+            {
+                _mainWindowController
+                        .SetValidDataInUserForm(1, 10)
+                        .AssertIsRegistrationButtonEnabled()
+                        .ClickRegistrationButton()
+                        .WaitUntilProgressBarIs(10);
+            });
+        }
+
         // Атрибут: Author - метаданные для отчетов и организации работы команды
         [Test, Author("Alice Smith")]
-        public void Test10_AuthoredTest()
+        public void Test11_AuthoredTest()
         {
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
@@ -202,7 +218,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
 
         // Атрибут: Description - добавляет контекст для читателей отчетов
         [Test, Description("Информация необходимая для пояснения особенностей теста")]
-        public void Test11_TestWithDescription()
+        public void Test12_TestWithDescription()
         {
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
@@ -212,6 +228,73 @@ namespace UiAutoTests.Tests.UIAutomationTests
                         .ClickRegistrationButton()
                         .WaitUntilProgressBarIs(1);
             });
+        }
+
+        // Атрибут: Platform - Позволяет указывать, на каких платформах (ОС) должен запускаться тест.
+        // Очень полезно для кросс-платформенных проектов.
+        [Test]
+        [Platform("Win")]
+        public void Test13_WindowsSpecificTest()
+        {
+            _mainWindowController.ExecuteTest(_testClient, _testName, () =>
+            {
+                _mainWindowController
+                        .SetValidDataInUserForm(1, 1)
+                        .AssertIsRegistrationButtonEnabled()
+                        .ClickRegistrationButton()
+                        .WaitUntilProgressBarIs(1);
+            });
+        }
+
+        [Test]
+        [Platform("Linux")]
+        public void Test14_LinuxSpecificTest()
+        {
+            _mainWindowController.ExecuteTest(_testClient, _testName, () =>
+            {
+                _mainWindowController
+                        .SetValidDataInUserForm(1, 1)
+                        .AssertIsRegistrationButtonEnabled()
+                        .ClickRegistrationButton()
+                        .WaitUntilProgressBarIs(1);
+            });
+        }
+
+        // Везде, кроме Linux и Unix
+        [Test]
+        [Platform(Exclude = "Linux,Unix")]
+        public void Test15_NotOnLinuxTest()
+        {
+            _mainWindowController.ExecuteTest(_testClient, _testName, () =>
+            {
+                _mainWindowController
+                        .SetValidDataInUserForm(1, 1)
+                        .AssertIsRegistrationButtonEnabled()
+                        .ClickRegistrationButton()
+                        .WaitUntilProgressBarIs(1);
+            });
+        }
+
+        // Атрибут: SetCulture - временно устанавливает CurrentCulture для потока
+        // Влияет на: парсинг чисел/дат, форматирование, сравнения строк
+        // В данном тесте: американский формат (точка для десятичных, мм/дд/гггг для дат)
+        // Без атрибута тест использует системную культуру и может падать на разных машинах
+        [Test, SetCulture("en-US")]
+        public void Test16_ParseAndFormat_WithEnglishCulture()
+        {
+            // Десятичная точка и формат даты мм/дд/гггг
+            var number = double.Parse("1.23");                  // ok в en-US
+            var date = DateTime.Parse("01/19/2021");            // ok в en-US (январь 19)
+
+            Assert.That(number, Is.EqualTo(1.23).Within(0.0001));
+            Assert.That(date, Is.EqualTo(new DateTime(2021, 1, 19)));
+
+            // Форматирование по американской культуре
+            var formattedNumber = 12345.67.ToString("N2");      // "12,345.67"
+            var formattedDate = new DateTime(2025, 2, 1).ToString("d"); // "2/1/2025"
+
+            Assert.That(formattedNumber, Is.EqualTo("12,345.67"));
+            Assert.That(formattedDate, Is.EqualTo("2/1/2025"));
         }
 
 

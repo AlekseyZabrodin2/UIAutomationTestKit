@@ -61,22 +61,25 @@ namespace UiAutoTests.Tests.UIAutomationTests
         [Test]
         public void Test02_RegistrationSeveralUsersNextVariant([Values(10)] int number)
         {
-            _mainWindow = _clientConfigurationHelper.StartClientWithCopyRowVirtualizationConfig(_testName, _testClass, _reportService, _testClient);
-
-            _mainWindowController = _mainWindow as MainWindowController
-                ?? throw new InvalidCastException("Client state is not MainWindowController.");
-
-            _mainWindowController.ExecuteTest(_testClient, _testName, () =>
+            try
             {
-                _mainWindowController
-                        .RegistrationSeveralUsers(number)
-                        .AssertRowCountIs(number);
+                _mainWindow = _clientConfigurationHelper.StartClientWithCopyRowVirtualizationConfig(_testName, _testClass, _reportService, _testClient);
 
+                _mainWindowController = _mainWindow as MainWindowController
+                    ?? throw new InvalidCastException("Client state is not MainWindowController.");
+
+                _mainWindowController.ExecuteTest(_testClient, _testName, () =>
+                {
+                    _mainWindowController
+                            .RegistrationSeveralUsers(number)
+                            .AssertRowCountIs(number);
+                });
+            }
+            finally
+            {
                 _clientConfigurationHelper.CopyDefaultConfigFile();
-            });
+            }            
         }
-
-
 
 
 
