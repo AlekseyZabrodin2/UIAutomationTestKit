@@ -8,14 +8,9 @@ using UiAutoTests.Services;
 
 namespace UiAutoTests.Tests.UIAutomationTests
 {
-    public class TestsWithAttributes
+    public class TestsWithAttributes : InitializeBaseTest
     {
         private ITestClient _testClient;
-        private IClientState _mainWindow;
-        public string _testName;
-        public string _testClass;
-        public HtmlReportService _reportService = new();
-        private TestsInitializeService _initializeService = new();
         private MainWindowController _mainWindowController;
 
 
@@ -26,25 +21,13 @@ namespace UiAutoTests.Tests.UIAutomationTests
 
 
 
-        [SetUp]
-        public void Setup()
-        {
-            _testClass = GetType().Name;
-            _testName = _initializeService.GetTestMethodName();
-
-            _mainWindow = _initializeService.StartClientWithReportInitialization(_testName, _testClass, _reportService, _testClient);
-
-            _mainWindowController = _mainWindow as MainWindowController
-                ?? throw new InvalidCastException("Client state is not MainWindowController.");
-        }
-
-
         // Атрибуты: Category - для организации тестов в группы
         [Test]
         [Category("Smoke")]
         [Category("UI")]
         public void Test01_TestWithCategory()
         {
+            _mainWindowController = GetController<MainWindowController>();
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 var inputText = "test Id";
@@ -64,6 +47,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
         [Ignore("Требуется доработка логина на стороне API. TODO: JIRA-123")]
         public void Test02_IgnoredTest()
         {
+            _mainWindowController = GetController<MainWindowController>();
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -79,6 +63,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
         [Test, Explicit]
         public void Test03_ManualTest()
         {
+            _mainWindowController = GetController<MainWindowController>();
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -93,6 +78,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
         [Test, Order(1)]
         public void Test04_FirstSequentialTest()
         {
+            _mainWindowController = GetController<MainWindowController>();
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -107,6 +93,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
         [Test, Order(2)]
         public void Test05_SecondSequentialTest()
         {
+            _mainWindowController = GetController<MainWindowController>();
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -118,10 +105,11 @@ namespace UiAutoTests.Tests.UIAutomationTests
         }
 
         // Атрибут: Retry - борется с ложными падениями из-за временных проблем
-        // Особенность: Автоматически перезапускает упавший тест до 3 раз
+        // Особенность: Автоматически перезапускает упавший тест
         [Test, Retry(3)]
         public void Test06_RetryTest()
         {
+            _mainWindowController = GetController<MainWindowController>();
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 var inputText = "test Id";
@@ -141,6 +129,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
         [Test, Repeat(2)]
         public void Test07_StabilityTest()
         {
+            _mainWindowController = GetController<MainWindowController>();
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -156,10 +145,11 @@ namespace UiAutoTests.Tests.UIAutomationTests
         // Аварийное завершение: NUnit не дает тесту завершиться нормально
         // Нет контроля: Процесс прерывается на системном уровне
         // Ресурсы не освобождаются: Соединения, файлы, дескрипторы могут остаться висеть
-        // Придеться чистить вручную в [SetUp] блоке, потому что даже в [TearDown] не зайдет
+        // Придеться чистить вручную в следующем [SetUp] блоке, потому что даже в [TearDown] не зайдет
         [Test, Timeout(15000)]
         public void Test08_PerformanceTest()
         {
+            _mainWindowController = GetController<MainWindowController>();
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -176,6 +166,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
         {
             CancellationToken cancellationToken = TestContext.CurrentContext.CancellationToken;
 
+            _mainWindowController = GetController<MainWindowController>();
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 cancellationToken.ThrowIfCancellationRequested();
@@ -183,15 +174,16 @@ namespace UiAutoTests.Tests.UIAutomationTests
                         .SetValidDataInUserForm(1, 1)
                         .AssertIsRegistrationButtonEnabled()
                         .ClickRegistrationButton()
-                        .WaitProgressBarWithToken(3, cancellationToken);
+                        .WaitProgressBarWithToken(3, cancellationToken); // ждем три Users, но так как не дождемся, тест завершится по отмене (cancellationToken)
             });
         }
 
-        // Атрибут: MaxTime - тест должен выполниться за отведенное время,
+        // Атрибут: MaxTime - тест ДОЛЖЕН выполниться за отведенное время,
         // Иначе даже при успехе будет - Failed из-за превышения максимального времени.
         [Test, MaxTime(10000)]
         public void Test10_TestWithMaxTimeAttribute()
         {
+            _mainWindowController = GetController<MainWindowController>();
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -206,6 +198,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
         [Test, Author("Alice Smith")]
         public void Test11_AuthoredTest()
         {
+            _mainWindowController = GetController<MainWindowController>();
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -220,6 +213,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
         [Test, Description("Информация необходимая для пояснения особенностей теста")]
         public void Test12_TestWithDescription()
         {
+            _mainWindowController = GetController<MainWindowController>();
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -236,6 +230,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
         [Platform("Win")]
         public void Test13_WindowsSpecificTest()
         {
+            _mainWindowController = GetController<MainWindowController>();
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -250,6 +245,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
         [Platform("Linux")]
         public void Test14_LinuxSpecificTest()
         {
+            _mainWindowController = GetController<MainWindowController>();
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -265,6 +261,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
         [Platform(Exclude = "Linux,Unix")]
         public void Test15_NotOnLinuxTest()
         {
+            _mainWindowController = GetController<MainWindowController>();
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -296,15 +293,5 @@ namespace UiAutoTests.Tests.UIAutomationTests
             Assert.That(formattedNumber, Is.EqualTo("12,345.67"));
             Assert.That(formattedDate, Is.EqualTo("2/1/2025"));
         }
-
-
-
-        [TearDown]
-        public void AfterTest()
-        {
-            _mainWindowController?.EnsureClientStopped(_testClient);
-            _initializeService.DisposeClientAndReportResults(_testClient, _reportService);
-        }
-
     }
 }
