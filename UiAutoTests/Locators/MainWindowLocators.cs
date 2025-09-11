@@ -16,11 +16,11 @@ namespace UiAutoTests.Locators
             _conditionFactory = conditionFactory;
         }
 
-        private AutomationElement FindFirst(string automationId) =>
+        private AutomationElement FindFirstById(string automationId) =>
             _window.FindFirstDescendant(_conditionFactory.ByAutomationId(automationId))
             ?? throw new ElementNotAvailableException($"Element with AutomationId - [{automationId}] not found");
 
-        private AutomationElement[] FindAll(string automationId) =>
+        public AutomationElement[] FindAllById(string automationId) =>
            _window.FindAllDescendants(_conditionFactory.ByAutomationId(automationId))
            ?? throw new ElementNotAvailableException($"Elements with AutomationId - [{automationId}] not found");
 
@@ -33,24 +33,24 @@ namespace UiAutoTests.Locators
             ?? throw new ElementNotAvailableException($"Element with ClassName - [{className}] not found");
 
 
-        public AutomationElement MainWindowsLocator => FindFirst("UserRegistrationView");
+        public AutomationElement MainWindowsLocator => FindFirstById("UserRegistrationView");
 
-        public TextBox UserIdTextBox => FindFirst("UserIdTextBox").AsTextBox();
-        public TextBox UserLastNameTextBox => FindFirst("UserLastNameTextBox").AsTextBox();
-        public TextBox UserMiddleNameTextBox => FindFirst("UserMiddleNameTextBox").AsTextBox();        
-        public TextBox UserFirstNameTextBox => FindFirst("UserFirstNameTextBox").AsTextBox();
-        public TextBox AddressUserTextBox => FindFirst("AddressUserTextBox").AsTextBox();
-        public TextBox PhoneUserTextBox => FindFirst("PhoneUserTextBox").AsTextBox();
-        public TextBox InfoUserTextBox => FindFirst("InfoUserTextBox").AsTextBox();
+        public TextBox UserIdTextBox => FindFirstById("UserIdTextBox").AsTextBox();
+        public TextBox UserLastNameTextBox => FindFirstById("UserLastNameTextBox").AsTextBox();
+        public TextBox UserMiddleNameTextBox => FindFirstById("UserMiddleNameTextBox").AsTextBox();        
+        public TextBox UserFirstNameTextBox => FindFirstById("UserFirstNameTextBox").AsTextBox();
+        public TextBox AddressUserTextBox => FindFirstById("AddressUserTextBox").AsTextBox();
+        public TextBox PhoneUserTextBox => FindFirstById("PhoneUserTextBox").AsTextBox();
+        public TextBox InfoUserTextBox => FindFirstById("InfoUserTextBox").AsTextBox();
 
-        public CheckBox BirthDateUserCheckBox => FindFirst("BirthDateUserCheckBox").AsCheckBox();
-        public DateTimePicker UserBirthDateDatePicker => FindFirst("UserBirthDateDatePicker").AsDateTimePicker();
-        public ComboBox GenderUserComboBox => FindFirst("GenderUserComboBox").AsComboBox();
+        public CheckBox BirthDateUserCheckBox => FindFirstById("BirthDateUserCheckBox").AsCheckBox();
+        public DateTimePicker UserBirthDateDatePicker => FindFirstById("UserBirthDateDatePicker").AsDateTimePicker();
+        public ComboBox GenderUserComboBox => FindFirstById("GenderUserComboBox").AsComboBox();
 
-        public Calendar CalendarDate => FindFirst("CalendarDate").AsCalendar();
-        public Button PART_PreviousButton => FindFirst("PART_PreviousButton").AsButton();
-        public Button PART_HeaderButton => FindFirst("PART_HeaderButton").AsButton();
-        public Button PART_NextButton => FindFirst("PART_NextButton").AsButton();
+        public Calendar CalendarDate => FindFirstById("CalendarDate").AsCalendar();
+        public Button PART_PreviousButton => FindFirstById("PART_PreviousButton").AsButton();
+        public Button PART_HeaderButton => FindFirstById("PART_HeaderButton").AsButton();
+        public Button PART_NextButton => FindFirstById("PART_NextButton").AsButton();
         //Choose day Name in Button for Example - ("15 июня 2025 г.")
         public AutomationElement CalendarDayButton => FindFirstByClassName("CalendarDayButton"); 
         public AutomationElement[] CalendarDayButtons => FindAllByClassName("CalendarDayButton");
@@ -58,82 +58,82 @@ namespace UiAutoTests.Locators
         public AutomationElement CalendarButton => FindFirstByClassName("CalendarButton");
         public AutomationElement[] CalendarButtons => FindAllByClassName("CalendarButton");
 
-        public TextBox CalendarDateTextBox => FindFirst("CalendarDateTextBox").AsTextBox();
+        public TextBox CalendarDateTextBox => FindFirstById("CalendarDateTextBox").AsTextBox();
 
-        public RadioButton RadioButtonPassport => FindFirst("RadioButtonPassport").AsRadioButton();
-        public RadioButton RadioButtonDriverLicense => FindFirst("RadioButtonDriverLicense").AsRadioButton();
-        public RadioButton RadioButtonIdCard => FindFirst("RadioButtonIdCard").AsRadioButton();
+        public RadioButton RadioButtonPassport => FindFirstById("RadioButtonPassport").AsRadioButton();
+        public RadioButton RadioButtonDriverLicense => FindFirstById("RadioButtonDriverLicense").AsRadioButton();
+        public RadioButton RadioButtonIdCard => FindFirstById("RadioButtonIdCard").AsRadioButton();
 
-        public Label SliderLabel => FindFirst("SliderLabel").AsLabel();
-        public Slider SliderCount => FindFirst("SliderCount").AsSlider();
+        public Label SliderLabel => FindFirstById("SliderLabel").AsLabel();
+        public Slider SliderCount => FindFirstById("SliderCount").AsSlider();
 
-        public ProgressBar UserGenerationProgressBar => FindFirst("UserGenerationProgressBar").AsProgressBar();
+        public ProgressBar UserGenerationProgressBar => FindFirstById("UserGenerationProgressBar").AsProgressBar();
 
-        public DataGridView UsersCollectionDataGrid => FindFirst("UsersCollectionDataGrid").AsDataGridView();
+        public DataGridView UsersCollectionDataGrid => FindFirstById("UsersCollectionDataGrid").AsDataGridView();
 
-        public TextBox UpdateTextTextBox => FindFirst("UpdateTextTextBox").AsTextBox();
+        public TextBox UpdateTextTextBox => FindFirstById("UpdateTextTextBox").AsTextBox();
 
-        public Button CleanUpFieldsButton => FindFirst("CleanUpFieldsButton").AsButton();
-        public Button RegistrationUserButton => FindFirst("RegistrationUserButton").AsButton();
+        public Button CleanUpFieldsButton => FindFirstById("CleanUpFieldsButton").AsButton();
+        public Button RegistrationUserButton => FindFirstById("RegistrationUserButton").AsButton();
 
         // Main Menu
-        public Menu MainMenu => FindFirst("MainMenu").AsMenu();
+        public Menu MainMenu => FindFirstById("MainMenu").AsMenu();
 
         // Level 1 - Main Items
-        public MenuItem HomeMenuItem => FindFirst("HomeMenuItem").AsMenuItem();
-        public MenuItem CoursesMenuItem => FindFirst("CoursesMenuItem").AsMenuItem();
-        public MenuItem TestsMenuItem => FindFirst("TestsMenuItem").AsMenuItem();
-        public MenuItem ProgressMenuItem => FindFirst("ProgressMenuItem").AsMenuItem();
-        public MenuItem CommunityMenuItem => FindFirst("CommunityMenuItem").AsMenuItem();
-        public MenuItem SettingsMenuItem => FindFirst("SettingsMenuItem").AsMenuItem();
-        public MenuItem HelpMenuItem => FindFirst("HelpMenuItem").AsMenuItem();
+        public MenuItem HomeMenuItem => FindFirstById("HomeMenuItem").AsMenuItem();
+        public MenuItem CoursesMenuItem => FindFirstById("CoursesMenuItem").AsMenuItem();
+        public MenuItem TestsMenuItem => FindFirstById("TestsMenuItem").AsMenuItem();
+        public MenuItem ProgressMenuItem => FindFirstById("ProgressMenuItem").AsMenuItem();
+        public MenuItem CommunityMenuItem => FindFirstById("CommunityMenuItem").AsMenuItem();
+        public MenuItem SettingsMenuItem => FindFirstById("SettingsMenuItem").AsMenuItem();
+        public MenuItem HelpMenuItem => FindFirstById("HelpMenuItem").AsMenuItem();
 
         // Level 2 - Courses Submenu
-        public MenuItem ProgrammingMenuItem => FindFirst("ProgrammingMenuItem").AsMenuItem();
-        public MenuItem DataScienceMenuItem => FindFirst("DataScienceMenuItem").AsMenuItem();
-        public MenuItem DesignMenuItem => FindFirst("DesignMenuItem").AsMenuItem();
+        public MenuItem ProgrammingMenuItem => FindFirstById("ProgrammingMenuItem").AsMenuItem();
+        public MenuItem DataScienceMenuItem => FindFirstById("DataScienceMenuItem").AsMenuItem();
+        public MenuItem DesignMenuItem => FindFirstById("DesignMenuItem").AsMenuItem();
 
         // Level 2 - Tests & Exercises Submenu
-        public MenuItem CSharpTestMenuItem => FindFirst("C#TestMenuItem").AsMenuItem();
-        public MenuItem PythonTestMenuItem => FindFirst("PythonTestMenuItem").AsMenuItem();
-        public MenuItem PracticalTasksMenuItem => FindFirst("PracticalTasksMenuItem").AsMenuItem();
-        public MenuItem CodeChallengesMenuItem => FindFirst("CodeChallengesMenuItem").AsMenuItem();
+        public MenuItem CSharpTestMenuItem => FindFirstById("C#TestMenuItem").AsMenuItem();
+        public MenuItem PythonTestMenuItem => FindFirstById("PythonTestMenuItem").AsMenuItem();
+        public MenuItem PracticalTasksMenuItem => FindFirstById("PracticalTasksMenuItem").AsMenuItem();
+        public MenuItem CodeChallengesMenuItem => FindFirstById("CodeChallengesMenuItem").AsMenuItem();
 
         // Level 2 - Progress Submenu
-        public MenuItem AchievementsMenuItem => FindFirst("AchievementsMenuItem").AsMenuItem();
-        public MenuItem StatisticsMenuItem => FindFirst("StatisticsMenuItem").AsMenuItem();
-        public MenuItem CertificatesMenuItem => FindFirst("CertificatesMenuItem").AsMenuItem();
+        public MenuItem AchievementsMenuItem => FindFirstById("AchievementsMenuItem").AsMenuItem();
+        public MenuItem StatisticsMenuItem => FindFirstById("StatisticsMenuItem").AsMenuItem();
+        public MenuItem CertificatesMenuItem => FindFirstById("CertificatesMenuItem").AsMenuItem();
 
         // Level 2 - Community Submenu
-        public MenuItem ForumMenuItem => FindFirst("ForumMenuItem").AsMenuItem();
-        public MenuItem GroupMenuItem => FindFirst("GroupMenuItem").AsMenuItem();
-        public MenuItem MentorshipMenuItem => FindFirst("MentorshipMenuItem").AsMenuItem();
+        public MenuItem ForumMenuItem => FindFirstById("ForumMenuItem").AsMenuItem();
+        public MenuItem GroupMenuItem => FindFirstById("GroupMenuItem").AsMenuItem();
+        public MenuItem MentorshipMenuItem => FindFirstById("MentorshipMenuItem").AsMenuItem();
 
         // Level 2 - Settings Submenu
-        public MenuItem ProfileMenuItem => FindFirst("ProfileMenuItem").AsMenuItem();
-        public MenuItem NotificationsMenuItem => FindFirst("NotificationsMenuItem").AsMenuItem();
-        public MenuItem AppearanceMenuItem => FindFirst("AppearanceMenuItem").AsMenuItem();
-        public MenuItem SecurityMenuItem => FindFirst("SecurityMenuItem").AsMenuItem();
+        public MenuItem ProfileMenuItem => FindFirstById("ProfileMenuItem").AsMenuItem();
+        public MenuItem NotificationsMenuItem => FindFirstById("NotificationsMenuItem").AsMenuItem();
+        public MenuItem AppearanceMenuItem => FindFirstById("AppearanceMenuItem").AsMenuItem();
+        public MenuItem SecurityMenuItem => FindFirstById("SecurityMenuItem").AsMenuItem();
 
         // Level 2 - Help Submenu
-        public MenuItem FAQMenuItem => FindFirst("FAQMenuItem").AsMenuItem();
-        public MenuItem FeedbackMenuItem => FindFirst("FeedbackMenuItem").AsMenuItem();
-        public MenuItem AboutMenuItem => FindFirst("AboutMenuItem").AsMenuItem();
+        public MenuItem FAQMenuItem => FindFirstById("FAQMenuItem").AsMenuItem();
+        public MenuItem FeedbackMenuItem => FindFirstById("FeedbackMenuItem").AsMenuItem();
+        public MenuItem AboutMenuItem => FindFirstById("AboutMenuItem").AsMenuItem();
 
         // Level 3 - Programming Submenu
-        public MenuItem CSharpMenuItem => FindFirst("C#MenuItem").AsMenuItem();
-        public MenuItem PythonMenuItem => FindFirst("PythonMenuItem").AsMenuItem();
-        public MenuItem WebMenuItem => FindFirst("WebMenuItem").AsMenuItem();
-        public MenuItem MobileMenuItem => FindFirst("MobileMenuItem").AsMenuItem();
+        public MenuItem CSharpMenuItem => FindFirstById("C#MenuItem").AsMenuItem();
+        public MenuItem PythonMenuItem => FindFirstById("PythonMenuItem").AsMenuItem();
+        public MenuItem WebMenuItem => FindFirstById("WebMenuItem").AsMenuItem();
+        public MenuItem MobileMenuItem => FindFirstById("MobileMenuItem").AsMenuItem();
 
         // Level 3 - Data Science Submenu
-        public MenuItem MachineLearningMenuItem => FindFirst("MachineLearningMenuItem").AsMenuItem();
-        public MenuItem BigDataMenuItem => FindFirst("BigDataMenuItem").AsMenuItem();
-        public MenuItem DataVisualizationMenuItem => FindFirst("DataVisualizationMenuItem").AsMenuItem();
+        public MenuItem MachineLearningMenuItem => FindFirstById("MachineLearningMenuItem").AsMenuItem();
+        public MenuItem BigDataMenuItem => FindFirstById("BigDataMenuItem").AsMenuItem();
+        public MenuItem DataVisualizationMenuItem => FindFirstById("DataVisualizationMenuItem").AsMenuItem();
 
         // Level 3 - Design Submenu
-        public MenuItem UiMenuItem => FindFirst("UiMenuItem").AsMenuItem();
-        public MenuItem GraphicMenuItem => FindFirst("GraphicMenuItem").AsMenuItem();
-        public MenuItem TreeDMenuItem => FindFirst("3dMenuItem").AsMenuItem();
+        public MenuItem UiMenuItem => FindFirstById("UiMenuItem").AsMenuItem();
+        public MenuItem GraphicMenuItem => FindFirstById("GraphicMenuItem").AsMenuItem();
+        public MenuItem TreeDMenuItem => FindFirstById("3dMenuItem").AsMenuItem();
     }
 }
