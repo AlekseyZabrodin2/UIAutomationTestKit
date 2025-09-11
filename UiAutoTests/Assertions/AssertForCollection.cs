@@ -1,13 +1,8 @@
 ﻿using NLog;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UiAutoTests.Assertions
 {
-    public static class CollectionAssertions
+    public static class AssertForCollection
     {
         private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
