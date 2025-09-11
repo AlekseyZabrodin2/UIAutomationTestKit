@@ -21,16 +21,17 @@ namespace UiAutoTests.Tests.UIAutomationTests
         
 
         [Test]
-        public void Test01_CombiningIntoOneMethod()
+        public void Test01_Can_Navigate_To_CSharp_Course()
         {
             _mainWindowController = GetController<MainWindowController>();
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
-                        .SetValidDataInUserForm(1, 3)
-                        .AssertIsRegistrationButtonEnabled()
-                        .ClickRegistrationButton()
-                        .WaitUntilProgressBarIs(3);
+                        .ExpandMenuItemById("CoursesMenuItem")
+                        .ExpandMenuItemById("ProgrammingMenuItem")
+                        .ClickMenuItemById("C#MenuItem");
+
+                Thread.Sleep(3000);
             });
         }
 
