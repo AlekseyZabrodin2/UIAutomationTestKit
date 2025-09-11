@@ -61,7 +61,7 @@ namespace UiAutoTests.TestCasesData
                     Address = "Minsk",
                     Phone = "769879879",
                     Info = "Some text"
-                }).SetName("Test02-1: Valid first");
+                }).SetName("Test02-1: First test");
 
                 yield return new TestCaseData(new RegistrationCaseDto
                 {
@@ -72,7 +72,7 @@ namespace UiAutoTests.TestCasesData
                     Address = "Brest",
                     Phone = "564654321",
                     Info = "Just some text"
-                }).SetName("Test02-2: Valid next");
+                }).SetName("Test02-2: Next test");
             }
         }
 

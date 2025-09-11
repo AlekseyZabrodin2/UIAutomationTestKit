@@ -8,14 +8,10 @@ using UiAutoTests.TestCasesData;
 
 namespace UiAutoTests.Tests.UIAutomationTests
 {
-    public class TestsWithParameters
+    public class TestsWithParameters : InitializeBaseTest
     {
         private readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
         private ITestClient _testClient;
-        private IClientState _mainWindow;
-        public string _testName;
-        public string _testClass;
-        private LoggerHelper _loggerHelper = new();
         public HtmlReportService _reportService = new();
         private TestsInitializeService _initializeService = new();
         private MainWindowController _mainWindowController;
@@ -28,21 +24,21 @@ namespace UiAutoTests.Tests.UIAutomationTests
 
 
 
-        [SetUp]
-        public void Setup()
-        {
-            _testClass = GetType().Name;
-            _testName = _initializeService.GetTestMethodName();
+        //[SetUp]
+        //public void Setup()
+        //{
+        //    _testClass = GetType().Name;
+        //    _testName = _initializeService.GetTestMethodName();
 
-            if (_initializeService.IgnoreSetUpInTestWithParameters(
-                "Test02"))
-                return;
+        //    if (_initializeService.IgnoreSetUpInTestWithParameters(
+        //        "Test02"))
+        //        return;
 
-            _mainWindow = _initializeService.StartClientWithReportInitialization(_testName, _testClass, _reportService, _testClient);
+        //    _mainWindow = _initializeService.StartClientWithReportInitialization(_testName, _testClass, _reportService, _testClient);
 
-            _mainWindowController = _mainWindow as MainWindowController
-                ?? throw new InvalidCastException("Client state is not MainWindowController.");
-        }
+        //    _mainWindowController = _mainWindow as MainWindowController
+        //        ?? throw new InvalidCastException("Client state is not MainWindowController.");
+        //}
 
 
         // Способ параметризации: TestCaseSource (из статического класса)
@@ -52,6 +48,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
         [Test]
         public void Test01_Registration_WithDtoFromClass(RegistrationCaseDto registrDto)
         {
+            _mainWindowController = GetController<MainWindowController>();
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -125,6 +122,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
         [Test]
         public void Test03_WithParametersInTestCase(string id, string lastName, string middleName, string firstName)
         {
+            _mainWindowController = GetController<MainWindowController>();
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -151,6 +149,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
         [Test]
         public void Test04_ParametersFromClass(RegistrationCaseDto registrDto)
         {
+            _mainWindowController = GetController<MainWindowController>();
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -185,6 +184,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
         [Test]
         public void Test05_Registration_WithDtoFromJson(RegistrationCaseFromJson dataFromJson)
         {
+            _mainWindowController = GetController<MainWindowController>();
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -218,6 +218,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
         [Test]
         public void Test06_RegistrationSeveralUsers([Values(5)] int number)
         {
+            _mainWindowController = GetController<MainWindowController>();
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -239,6 +240,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
             [Values("Makaronavich", "Ivanavich")] string middleName,
             [Values("Firstov", "Secondovich")] string firstName)
         {
+            _mainWindowController = GetController<MainWindowController>();
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -269,6 +271,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
             [Values("Makaronavich", "Ivanavich")] string middleName,
             [Values("Firstov", "Secondovich")] string firstName)
         {
+            _mainWindowController = GetController<MainWindowController>();
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -299,6 +302,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
             [Values("Makaronavich", "Ivanavich")] string middleName,
             [Values("Firstov", "Secondovich")] string firstName)
         {
+            _mainWindowController = GetController<MainWindowController>();
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -325,6 +329,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
         [Test]
         public void Test10_TestWithCountRange([Range(1, 10, 2)] int number)
         {
+            _mainWindowController = GetController<MainWindowController>();
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -342,6 +347,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
         [Test]
         public void Test11_TestWithRandomCount([Random(2, 10, 3)] int number)
         {
+            _mainWindowController = GetController<MainWindowController>();
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -351,15 +357,5 @@ namespace UiAutoTests.Tests.UIAutomationTests
                         .WaitUntilProgressBarIs(number);
             });
         }
-
-
-
-        [TearDown]
-        public void AfterTest()
-        {
-            _mainWindowController?.EnsureClientStopped(_testClient);
-            _initializeService.DisposeClientAndReportResults(_testClient, _reportService);
-        }
-
     }
 }
