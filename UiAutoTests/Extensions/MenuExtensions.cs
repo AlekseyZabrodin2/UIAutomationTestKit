@@ -12,7 +12,26 @@ namespace UiAutoTests.Extensions
         private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
         /// <summary>
-        /// Кликает по пункту меню
+        /// Раскрываем меню и его пункты, кроме последнего во вложении
+        /// </summary>
+        /// <param name="timeoutMs">Таймаут ожидания в миллисекундах</param>
+        public static void ExpandMenuItem(this MenuItem automationElement, int timeoutMs = 5000)
+        {
+            _loggerHelper.LogEnteringTheMethod();
+            var menuItem = automationElement.EnsureMenuItem();
+
+            if (!menuItem.WaitUntilEnabled(timeoutMs))
+            {
+                throw new TimeoutException($"Пункт меню {menuItem.AutomationId} не стал активным за {timeoutMs}мс");
+            }
+
+            _logger.Info($"Expand menu item: {menuItem.Name}");
+            menuItem.Expand();
+            _logger.Info("Menu item Expanded");
+        }
+
+        /// <summary>
+        /// Кликает по последнему пункту меню во вложении
         /// </summary>
         /// <param name="timeoutMs">Таймаут ожидания в миллисекундах</param>
         public static void ClickMenuItem(this MenuItem automationElement, int timeoutMs = 5000)
@@ -25,9 +44,9 @@ namespace UiAutoTests.Extensions
                 throw new TimeoutException($"Пункт меню {menuItem.AutomationId} не стал активным за {timeoutMs}мс");
             }
 
-            _logger.Info($"Clicking menu item: {menuItem.Name}");
+            _logger.Info($"Expand menu item: {menuItem.Name}");
             menuItem.Click();
-            _logger.Info("Menu item clicked");
+            _logger.Info("Menu item Expanded");
         }
 
         /// <summary>
@@ -109,25 +128,6 @@ namespace UiAutoTests.Extensions
             
             _logger.Info($"[{menuItem.AutomationId}] Child menu items count - [{items.Count()}]");
             return items;
-        }
-
-        /// <summary>
-        /// Раскрывает меню, кликая по пункту
-        /// </summary>
-        /// <param name="timeoutMs">Таймаут ожидания в миллисекундах</param>
-        public static void OpenMenu(this MenuItem automationElement, int timeoutMs = 5000)
-        {
-            _loggerHelper.LogEnteringTheMethod();
-            var menuItem = automationElement.EnsureMenuItem();
-
-            if (!menuItem.WaitUntilEnabled(timeoutMs))
-            {
-                throw new TimeoutException($"Пункт меню {menuItem.AutomationId} не стал активным за {timeoutMs}мс");
-            }
-
-            _logger.Info($"Opening menu: {menuItem.Name}");
-            menuItem.Click();
-            _logger.Info("Menu opened");
         }
 
         /// <summary>
