@@ -13,7 +13,7 @@ namespace UiAutoTests.Controllers
         private LoggerHelper _loggerHelper = new();
         public HtmlReportService _reportService = new();
 
-
+        
 
         public void ExecuteTest(ITestClient testClient, string testName, Action testAction)
         {

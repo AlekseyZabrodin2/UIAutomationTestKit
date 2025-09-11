@@ -40,7 +40,7 @@ namespace UiAutoTests.Tests
             _reportService.ReplaceCssStyleDir();
         }
 
-        
+
 
         [OneTimeTearDown]
         public void AfterAllTests()
