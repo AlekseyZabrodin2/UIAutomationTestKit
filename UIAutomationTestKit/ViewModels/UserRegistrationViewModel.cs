@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows;
 using UIAutomationTestKit.Model;
 using UIAutomationTestKit.Models;
 
@@ -103,10 +104,10 @@ namespace UIAutomationTestKit.ViewModels
         public partial int ProgressBarValue { get; set; }
 
         [ObservableProperty]
-        public partial bool IsCalendarOpen {  get; set; }
+        public partial bool IsCalendarOpen { get; set; }
 
         [ObservableProperty]
-        public partial Documents SelectedDocument {  get; set; }
+        public partial Documents SelectedDocument { get; set; }
 
 
         public UserRegistrationViewModel()
@@ -183,6 +184,15 @@ namespace UIAutomationTestKit.ViewModels
             IsCalendarOpen = true;
         }
 
+        [RelayCommand]
+        private void CSharpMenuItemOpen()
+        {
+            MessageBox.Show("There must be some important information about programming courses here!!!",
+                "Information",
+                MessageBoxButton.OK,
+                MessageBoxImage.Information);
+        }
+
         private void CanRegistratUser()
         {
             IsBusy =
@@ -221,7 +231,7 @@ namespace UIAutomationTestKit.ViewModels
                 ProgressBarValue = i + 1;
 
                 await Task.Delay(1000);
-            }            
+            }
         }
 
         private void ResetData()
