@@ -320,6 +320,8 @@ namespace UiAutoTests.Helpers
 
         public void EnsureClientStopped(ITestClient testClient, string clientName = "default")
         {
+            _loggerHelper.LogEnteringTheMethod();
+
             try
             {
                 if (testClient == null)
@@ -348,6 +350,28 @@ namespace UiAutoTests.Helpers
                 _logger.Warn(ex, $"Failed to stop client '{clientName}' safely");
             }
         }
+
+        public void ExpandMenuItemById(string menuItemName)
+        {
+            _loggerHelper.LogEnteringTheMethod();
+
+            var elements = _mainWindowLocators.FindAllById(menuItemName);
+            var menuItem = elements.FirstOrDefault(p => p.AutomationId == menuItemName).AsMenuItem();
+
+            menuItem.ExpandMenuItem();
+        }
+
+        public void ClickMenuItemById(string menuItemName)
+        {
+            _loggerHelper.LogEnteringTheMethod();
+
+            var elements = _mainWindowLocators.FindAllById(menuItemName);
+            var menuItem = elements.FirstOrDefault(p => p.AutomationId == menuItemName).AsMenuItem();
+
+            menuItem.ClickMenuItem();
+        }
+
+
 
     }
 }
