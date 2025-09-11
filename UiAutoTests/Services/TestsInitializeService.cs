@@ -1,4 +1,5 @@
 ﻿using NLog;
+using System.Diagnostics;
 using UiAutoTests.Core;
 using UiAutoTests.Helpers;
 
@@ -85,12 +86,31 @@ namespace UiAutoTests.Services
         {
             _loggerHelper.LogEnteringTheMethod();
 
-            testClient.Kill();
+            StopTestClient(testClient);
             reportCore.GetTestsStatus();
 
             _logger.Trace("\r\n=========================== Finish TestCase ===========================\r\n");
         }
 
+        private void StopTestClient(ITestClient testClient)
+        {
+            _loggerHelper.LogEnteringTheMethod();
 
+            var nameTestClient = ClientConfigurationHelper.TestClientProperties.TestClientPath;
+            var processes = Process.GetProcessesByName(Path.GetFileNameWithoutExtension(nameTestClient));
+            foreach (var process in processes)
+            {
+                try
+                {
+                    process.Kill();
+                    process.WaitForExit();
+                }
+                catch (Exception ex)
+                {
+                    _logger.Error(ex, "Can`t stop process {processId}", process.Id);
+                }
+                _logger.Info("WebHost stoped");
+            }
+        }
     }
 }
