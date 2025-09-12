@@ -66,5 +66,13 @@ namespace UiAutoTests.ControllerAssertions
             AssertForMenu.SubmenuItemsCount(menuItem, expectedCount, message);
             return controller;
         }
+
+        public static MainWindowController AssertThatElementTextMatches(this MainWindowController controller, string expectedText, string message = null)
+        {
+            var elementText = controller.GetElementText();
+
+            AssertForString.Matches(elementText, expectedText, message);
+            return controller;
+        }
     }
 }
