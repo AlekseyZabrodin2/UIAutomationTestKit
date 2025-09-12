@@ -18,7 +18,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
             _testClient = new AutomationTestClient(ClientConfigurationHelper.TestClientProperties.TestClientPath);
         }
 
-        
+
 
         [Test]
         public void Test01_CanNavigateToCSharpCourse()
@@ -30,7 +30,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
                     .ExpandMenuItemById("CoursesMenuItem")
                     .ExpandMenuItemById("ProgrammingMenuItem")
                     .ClickMenuItemById("C#MenuItem")
-                    .Pause(3000);
+                    .Pause(1500);
             });
         }
 
@@ -41,8 +41,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
-                    .AssertMainMenuItemsCountIs(7)
-                    .Pause(3000);
+                    .AssertMainMenuItemsCountIs(7);
             });
         }
 
