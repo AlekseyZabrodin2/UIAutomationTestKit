@@ -5,7 +5,7 @@ using UiAutoTests.Helpers;
 
 namespace UiAutoTests.Assertions
 {
-    public static class ProgressBarAssertions
+    public static class AssertForProgressBar
     {
         private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
         private static readonly LoggerHelper _loggerHelper = new();

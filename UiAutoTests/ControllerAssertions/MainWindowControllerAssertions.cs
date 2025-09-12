@@ -52,5 +52,19 @@ namespace UiAutoTests.ControllerAssertions
             AssertHelpers.AreNotEqual(notExpected, actual, message);
             return controller;
         }
+
+        public static MainWindowController AssertMainMenuItemsCountIs(this MainWindowController controller, int expectedCount, string message = null)
+        {
+            var menu = controller.GetMainMenu();
+            AssertForMenu.MainMenuItemsCount(menu, expectedCount, message);
+            return controller;
+        }
+
+        public static MainWindowController AssertSubItemsCountIs(this MainWindowController controller, string subItem, int expectedCount, string message = null)
+        {
+            var menuItem = controller.GetMenuItemById(subItem);
+            AssertForMenu.SubmenuItemsCount(menuItem, expectedCount, message);
+            return controller;
+        }
     }
 }

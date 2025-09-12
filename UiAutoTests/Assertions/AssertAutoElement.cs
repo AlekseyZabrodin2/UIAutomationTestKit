@@ -1,15 +1,10 @@
 ﻿using FlaUI.Core.AutomationElements;
 using FlaUI.Core.Definitions;
 using NLog;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UiAutoTests.Assertions
 {
-    public static class AutomationElementAssertions
+    public static class AssertAutoElement
     {
         private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 

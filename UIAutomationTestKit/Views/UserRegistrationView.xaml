@@ -68,7 +68,10 @@
                         FontWeight="DemiBold"
                         Header="Courses">
                         <MenuItem AutomationProperties.AutomationId="ProgrammingMenuItem" Header="Programming">
-                            <MenuItem AutomationProperties.AutomationId="C#MenuItem" Header="C# for Beginners" />
+                            <MenuItem
+                                AutomationProperties.AutomationId="C#MenuItem"
+                                Command="{Binding CSharpMenuItemOpenCommand}"
+                                Header="C# for Beginners" />
                             <MenuItem AutomationProperties.AutomationId="PythonMenuItem" Header="Python Advanced" />
                             <MenuItem AutomationProperties.AutomationId="WebMenuItem" Header="Web Development" />
                             <MenuItem AutomationProperties.AutomationId="MobileMenuItem" Header="Mobile Apps" />

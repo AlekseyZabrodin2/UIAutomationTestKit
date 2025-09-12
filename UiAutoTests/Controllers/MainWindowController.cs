@@ -267,5 +267,41 @@ namespace UiAutoTests.Controllers
         {            
             return _mainWindowHelper.GetRowCountInDataGrid();
         }
+
+        public MainWindowController ExpandMenuItemById(string menuItemName)
+        {
+            _mainWindowHelper.ExpandMenuItemById(menuItemName);
+            return this;
+        }
+
+        public MainWindowController ClickMenuItemById(string menuItemName)
+        {
+            _mainWindowHelper.ClickMenuItemById(menuItemName);
+            return this;
+        }
+
+        public Menu GetMainMenu()
+        {
+            return _mainWindowHelper.GetMainMenu();
+        }
+
+        public MenuItem GetMenuItemById(string menuItemName)
+        {
+            return _mainWindowHelper.GetMenuItemById(menuItemName);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }

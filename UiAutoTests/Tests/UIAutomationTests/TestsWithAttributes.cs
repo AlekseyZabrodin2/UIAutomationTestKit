@@ -1,10 +1,9 @@
-﻿using System.Globalization;
+﻿using NUnit.Framework.Internal;
 using UiAutoTests.Clients;
 using UiAutoTests.ControllerAssertions;
 using UiAutoTests.Controllers;
 using UiAutoTests.Core;
 using UiAutoTests.Helpers;
-using UiAutoTests.Services;
 
 namespace UiAutoTests.Tests.UIAutomationTests
 {
@@ -156,7 +155,8 @@ namespace UiAutoTests.Tests.UIAutomationTests
                         .SetValidDataInUserForm(1, 1)
                         .AssertIsRegistrationButtonEnabled()
                         .ClickRegistrationButton()
-                        .WaitUntilProgressBarIs(3);
+                        .WaitUntilProgressBarIs(3)
+                        .AssertIsRegistrationButtonEnabled();
             });
         }
 
@@ -174,7 +174,8 @@ namespace UiAutoTests.Tests.UIAutomationTests
                         .SetValidDataInUserForm(1, 1)
                         .AssertIsRegistrationButtonEnabled()
                         .ClickRegistrationButton()
-                        .WaitProgressBarWithToken(3, cancellationToken); // ждем три Users, но так как не дождемся, тест завершится по отмене (cancellationToken)
+                        .WaitProgressBarWithToken(3, cancellationToken) // ждем три Users, но так как не дождемся, тест завершится по отмене (cancellationToken)
+                        .AssertIsRegistrationButtonEnabled();
             });
         }
 
