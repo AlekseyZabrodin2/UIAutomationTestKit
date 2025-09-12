@@ -290,9 +290,27 @@ namespace UiAutoTests.Controllers
             return _mainWindowHelper.GetMenuItemById(menuItemName);
         }
 
+        public MainWindowController FindMessageBox()
+        {
+            _mainWindowHelper.FindMessageBox();
+            return this;
+        }
 
+        public MainWindowController GetMessageBoxText()
+        {
+            _mainWindowHelper.GetMessageBoxText();
+            return this;
+        }
 
+        public AutomationElement FindMessageBoxElement()
+        {
+            return  _mainWindowHelper.FindMessageBox();
+        }
 
+        public string GetElementText()
+        {
+            return _mainWindowHelper.GetMessageBoxText();
+        }
 
 
 
