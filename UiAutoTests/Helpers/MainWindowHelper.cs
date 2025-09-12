@@ -371,6 +371,22 @@ namespace UiAutoTests.Helpers
             menuItem.ClickMenuItem();
         }
 
+        public Menu GetMainMenu()
+        {
+            _loggerHelper.LogEnteringTheMethod();
+
+            return _mainWindowLocators.MainMenu;
+        }
+
+        public MenuItem GetMenuItemById(string menuItemName)
+        {
+            _loggerHelper.LogEnteringTheMethod();
+
+            var element = _mainWindowLocators.FindAllById(menuItemName);
+            var menuItem = element.FirstOrDefault(p => p.AutomationId == menuItemName).AsMenuItem();
+
+            return menuItem;
+        }
 
 
     }

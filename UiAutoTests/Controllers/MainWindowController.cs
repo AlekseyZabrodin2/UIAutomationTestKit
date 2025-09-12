@@ -280,8 +280,15 @@ namespace UiAutoTests.Controllers
             return this;
         }
 
+        public Menu GetMainMenu()
+        {
+            return _mainWindowHelper.GetMainMenu();
+        }
 
-
+        public MenuItem GetMenuItemById(string menuItemName)
+        {
+            return _mainWindowHelper.GetMenuItemById(menuItemName);
+        }
 
 
 
