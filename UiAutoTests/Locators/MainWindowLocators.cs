@@ -135,5 +135,7 @@ namespace UiAutoTests.Locators
         public MenuItem UiMenuItem => FindFirstById("UiMenuItem").AsMenuItem();
         public MenuItem GraphicMenuItem => FindFirstById("GraphicMenuItem").AsMenuItem();
         public MenuItem TreeDMenuItem => FindFirstById("3dMenuItem").AsMenuItem();
+
+        public AutomationElement MessageBox => FindFirstByClassName("#32770");  // Стандартный класс MessageBox в Windows
     }
 }

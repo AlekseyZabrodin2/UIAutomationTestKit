@@ -23,24 +23,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
         }
 
 
-
-        //[SetUp]
-        //public void Setup()
-        //{
-        //    _testClass = GetType().Name;
-        //    _testName = _initializeService.GetTestMethodName();
-
-        //    if (_initializeService.IgnoreSetUpInTestWithParameters(
-        //        "Test02"))
-        //        return;
-
-        //    _mainWindow = _initializeService.StartClientWithReportInitialization(_testName, _testClass, _reportService, _testClient);
-
-        //    _mainWindowController = _mainWindow as MainWindowController
-        //        ?? throw new InvalidCastException("Client state is not MainWindowController.");
-        //}
-
-
+        
         // Способ параметризации: TestCaseSource (из статического класса)
         // Источник: Статическое свойство ValidRegistrationFieldCases в классе MainWindowTestCases
         // Формат данных: Возвращает IEnumerable<RegistrationCaseDto> - готовые DTO-объекты

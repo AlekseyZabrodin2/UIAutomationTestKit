@@ -87,12 +87,12 @@ namespace UiAutoTests.Assertions
         }
 
         /// <summary>
-        /// Проверяет, что элемент содержит указанный текст
+        /// Проверяет, что элемент TextBox содержит указанный текст
         /// </summary>
         /// <param name="element">Проверяемый элемент</param>
         /// <param name="expectedText">Ожидаемый текст</param>
         /// <param name="message">Сообщение об ошибке (опционально)</param>
-        public static void ContainsText(AutomationElement element, string expectedText, string message = null)
+        public static void TextBoxContainsText(AutomationElement element, string expectedText, string message = null)
         {
             try
             {
@@ -164,6 +164,27 @@ namespace UiAutoTests.Assertions
             catch (AssertionException ex)
             {
                 _logger.Error($"[Assert FAIL] {message ?? $"В комбобоксе {element.Properties.AutomationId} выбран неверный элемент"}: {ex.Message}");
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Проверяет, что в AutomationElement.Name содержит искомый текст
+        /// </summary>
+        /// <param name="element">Проверяемый элемент</param>
+        /// <param name="expectedItem">Ожидаемый элемент</param>
+        /// <param name="message">Сообщение об ошибке (опционально)</param>
+        public static void ContainsText(AutomationElement element, string expectedText, string message = null)
+        {
+            try
+            {
+                var actualText = element.Name ?? string.Empty;
+                Assert.That(actualText, Does.Contain(expectedText), message);
+                _logger.Info($"[Assert PASS] {message ?? $"Элемент {element.Properties.AutomationId} содержит текст '{expectedText}'"}");
+            }
+            catch (AssertionException ex)
+            {
+                _logger.Error($"[Assert FAIL] {message ?? $"Элемент {element.Properties.AutomationId} не содержит текст '{expectedText}'"}: {ex.Message}");
                 throw;
             }
         }

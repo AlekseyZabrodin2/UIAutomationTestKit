@@ -62,9 +62,60 @@ namespace UiAutoTests.Tests.UIAutomationTests
             });
         }
 
+        /// Если контекстное меняю может раскрываться то используем метод [Expand]
+        /// если больше нет подменю, к последнему используем [Click]
+        [TestCase("CoursesMenuItem", "ProgrammingMenuItem", "C#MenuItem")]
+        [TestCase("CoursesMenuItem", "DataScienceMenuItem", "MachineLearningMenuItem")]
+        [TestCase("TestsMenuItem", "C#TestMenuItem", "")]        
+        [Test, Category("Menu"), Category("Parameterized")]
+        public void Test04_MenuNavigationTest(string mainItem, string subItem, string subSubItem)
+        {
+            _mainWindowController = GetController<MainWindowController>();
+            _mainWindowController.ExecuteTest(_testClient, _testName, () =>
+            {
+                _mainWindowController
+                    .ExpandMenuItemById(mainItem)
+                    .Pause(1500);
 
+                if (!string.IsNullOrEmpty(subItem))
+                {
+                    _mainWindowController
+                        .ExpandMenuItemById(subItem)
+                        .Pause(1500);
 
+                    if (!string.IsNullOrEmpty(subSubItem))
+                    {
+                        _mainWindowController
+                            .ClickMenuItemById(subSubItem)
+                            .Pause(1500);
+                    }
+                }
 
+                // Assert something ...
+            });
+        }
+
+        [Test]
+        public void Test05_OpenMessageBoxFromMenuItem()
+        {
+            _mainWindowController = GetController<MainWindowController>();
+            _mainWindowController.ExecuteTest(_testClient, _testName, () =>
+            {
+                var menuItem = "CoursesMenuItem";
+                var subItem = "ProgrammingMenuItem";
+                var subSubItem = "C#MenuItem";
+                var expectedText = "There must be some important information";
+
+                _mainWindowController
+                    .ExpandMenuItemById(menuItem)
+                    .ExpandMenuItemById(subItem)
+                    .ClickMenuItemById(subSubItem)
+                    .Pause(1500)
+                    .FindMessageBox()
+                    .GetMessageBoxText()
+                    .AssertThatElementTextMatches(expectedText);
+            });
+        }
 
 
 

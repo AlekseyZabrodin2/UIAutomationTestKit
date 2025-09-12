@@ -1,5 +1,6 @@
 ﻿using FlaUI.Core.AutomationElements;
 using FlaUI.Core.Conditions;
+using FlaUI.Core.Definitions;
 using NLog;
 using System.ComponentModel;
 using UiAutoTests.Core;
@@ -388,6 +389,23 @@ namespace UiAutoTests.Helpers
             return menuItem;
         }
 
+        public AutomationElement FindMessageBox()
+        {
+            _loggerHelper.LogEnteringTheMethod();
+
+            return _mainWindowLocators.MessageBox;
+        }
+
+        public string GetMessageBoxText()
+        {
+            _loggerHelper.LogEnteringTheMethod();
+
+            var messageBox = FindMessageBox();
+            var text = messageBox.FindFirstDescendant(cf => cf.ByControlType(ControlType.Text).And(cf.ByClassName("Static")));
+            _logger.Debug($"Text from MessageBox is - [{text?.Name}]");
+
+            return text.Name;
+        }
 
     }
 }
