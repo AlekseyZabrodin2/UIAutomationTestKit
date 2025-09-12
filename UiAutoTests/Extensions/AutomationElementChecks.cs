@@ -52,6 +52,15 @@ namespace UiAutoTests.Extensions
             return menuItem;
         }
 
+        public static Menu EnsureMenu(this AutomationElement automationElement)
+        {
+            var menu = automationElement.AsMenu();
+            if (menu == null || menu.ControlType != ControlType.Menu)
+                throw new ArgumentException("Element is not a Menu.");
+
+            return menu;
+        }
+
         public static DataGridView EnsureDataGridView(this AutomationElement automationElement)
         {
             var dataGrid = automationElement.AsDataGridView();
