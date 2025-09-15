@@ -435,6 +435,32 @@ namespace UiAutoTests.Helpers
             }
         }
 
+
+        /// <summary>
+        /// Находит и возвращает окно "About" на рабочем столе Windows.
+        /// 
+        /// ПОЧЕМУ ИМЕННО ТАКОЙ ПОДХОД:
+        /// 1. About окно - ЭТО НЕ ДОЧЕРНИЙ ЭЛЕМЕНТ главного окна приложения, 
+        ///    а ОТДЕЛЬНОЕ НЕЗАВИСИМОЕ ОКНО верхнего уровня на рабочем столе.
+        ///    Поэтому поиск должен вестись не в пределах главного окна (_window),
+        ///    а на всем рабочем столе (desktop).
+        /// 
+        /// 2. Используем FindFirstChild(c => condition) вместо FindAllChildren() 
+        ///    для ЭФФЕКТИВНОСТИ - метод остановится на первом же найденном совпадении,
+        ///    не перебирая все элементы рабочего стола.
+        /// 
+        /// 3. Комбинируем условия через .And() для ТОЧНОСТИ ПОИСКА:
+        ///    - ByControlType(ControlType.Window) - ищем именно окна, а не другие элементы
+        ///    - ByAutomationId("AboutAppView") - находим конкретное окно по уникальному ID
+        ///    
+        /// 4. Используем null-conditional оператор (?.) для БЕЗОПАСНОСТИ -
+        ///    если окно не найдено, возвращаем null вместо исключения.
+        /// 
+        /// 5. Получаем desktop через automation.GetDesktop() - это КОРНЕВОЙ ЭЛЕМЕНТ,
+        ///    содержащий все открытые окна Windows.
+        /// </summary>
+        /// <param name="automation">Экземпляр UIA3Automation для доступа к automation tree</param>
+        /// <returns>Найденное окно About или null если окно не найдено</returns>
         public Window GetAboutAppWindow(UIA3Automation automation)
         {
             _loggerHelper.LogEnteringTheMethod();
