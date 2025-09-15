@@ -152,7 +152,10 @@
                         Header="Help">
                         <MenuItem AutomationProperties.AutomationId="FAQMenuItem" Header="FAQ" />
                         <MenuItem AutomationProperties.AutomationId="FeedbackMenuItem" Header="Feedback" />
-                        <MenuItem AutomationProperties.AutomationId="AboutMenuItem" Header="About" />
+                        <MenuItem
+                            AutomationProperties.AutomationId="AboutMenuItem"
+                            Command="{Binding AboutAppWindowOpenCommand}"
+                            Header="About" />
                     </MenuItem>
                 </Menu>
             </StackPanel>

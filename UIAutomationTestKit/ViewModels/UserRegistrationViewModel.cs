@@ -8,11 +8,14 @@ using System.ComponentModel;
 using System.Windows;
 using UIAutomationTestKit.Model;
 using UIAutomationTestKit.Models;
+using UIAutomationTestKit.Views;
 
 namespace UIAutomationTestKit.ViewModels
 {
     public partial class UserRegistrationViewModel : ObservableObject
     {
+
+        private AboutAppView _aboutAppView;
 
         [ObservableProperty]
         public partial string UpdateText { get; set; }
@@ -191,6 +194,20 @@ namespace UIAutomationTestKit.ViewModels
                 "Information",
                 MessageBoxButton.OK,
                 MessageBoxImage.Information);
+        }
+
+        [RelayCommand]
+        private void AboutAppWindowOpen()
+        {
+            _aboutAppView = new();
+            _aboutAppView.DataContext = this;
+            _aboutAppView.Show();
+        }
+
+        [RelayCommand]
+        private void AboutAppWindowClose()
+        {
+            _aboutAppView.Close();
         }
 
         private void CanRegistratUser()
