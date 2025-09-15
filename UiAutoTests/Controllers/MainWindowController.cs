@@ -1,5 +1,7 @@
 ﻿using FlaUI.Core.AutomationElements;
 using FlaUI.Core.Conditions;
+using FlaUI.Core.Definitions;
+using FlaUI.UIA3;
 using NLog;
 using UiAutoTests.Core;
 using UiAutoTests.Helpers;
@@ -312,9 +314,25 @@ namespace UiAutoTests.Controllers
             return _mainWindowHelper.GetMessageBoxText();
         }
 
+        public MainWindowController OpenAboutAppWindow()
+        {
+            _mainWindowHelper.OpenAboutAppWindow();
+            return this;
+        }
 
+        public MainWindowController CloseAboutAppWindow()
+        {
+            _mainWindowHelper.CloseAboutAppWindow();
+            return this;
+        }
 
-
+        public Window GetAboutAppWindow()
+        {
+            using (var automation = new UIA3Automation())
+            {
+                return _mainWindowHelper.GetAboutAppWindow(automation);
+            }
+        }
 
 
 

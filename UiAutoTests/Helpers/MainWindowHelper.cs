@@ -1,6 +1,7 @@
 ﻿using FlaUI.Core.AutomationElements;
 using FlaUI.Core.Conditions;
 using FlaUI.Core.Definitions;
+using FlaUI.UIA3;
 using NLog;
 using System.ComponentModel;
 using UiAutoTests.Core;
@@ -405,6 +406,43 @@ namespace UiAutoTests.Helpers
             _logger.Debug($"Text from MessageBox is - [{text?.Name}]");
 
             return text.Name;
+        }
+
+        public void OpenAboutAppWindow()
+        {
+            _loggerHelper.LogEnteringTheMethod();
+
+            ExpandMenuItemById("HelpMenuItem");
+            ClickMenuItemById("AboutMenuItem");
+        }
+
+        public void CloseAboutAppWindow()
+        {
+            _loggerHelper.LogEnteringTheMethod();
+
+            using (var automation = new UIA3Automation())
+            {
+                var aboutWindow = GetAboutAppWindow(automation);
+                if (aboutWindow == null)
+                {
+                    _logger.Warn("Cannot close [About window] - not found");
+                    return;
+                }
+
+                var aboutWindowLocators = new AboutAppWindowLocators(aboutWindow, _conditionFactory);
+                var okButton = aboutWindowLocators.AboutAppOkButton;
+                okButton.Invoke();
+            }
+        }
+
+        public Window GetAboutAppWindow(UIA3Automation automation)
+        {
+            _loggerHelper.LogEnteringTheMethod();
+
+            var desktop = automation.GetDesktop();
+            var aboutWindow = desktop.FindFirstChild(cf => cf.ByControlType(ControlType.Window).And(cf.ByAutomationId("AboutAppView")));
+
+            return aboutWindow?.AsWindow();
         }
 
     }
