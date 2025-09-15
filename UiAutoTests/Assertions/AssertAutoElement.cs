@@ -207,5 +207,24 @@ namespace UiAutoTests.Assertions
                 throw;
             }
         }
+
+        /// <summary>
+        /// Проверяет, что элемент не равен Null
+        /// </summary>
+        /// <param name="element">Проверяемый элемент</param>
+        /// <param name="message">Сообщение об ошибке (опционально)</param>
+        public static void IsNotNull(AutomationElement element, string message = null)
+        {
+            try
+            {
+                Assert.That(element, Is.Not.Null, message);
+                _logger.Info($"[Assert PASS] {message ?? $"Element [{element.Properties.AutomationId}] != NULL"}");
+            }
+            catch (AssertionException ex)
+            {
+                _logger.Error($"[Assert FAIL] {message ?? $"Element is NULL"}: {ex.Message}");
+                throw;
+            }
+        }
     }
 }
