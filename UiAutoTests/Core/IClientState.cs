@@ -10,6 +10,8 @@ namespace UiAutoTests.Core
 
         Window GetMainWindow();
 
+        IClientState ToNextState();
+
         bool IsState(Window window);
 
     }

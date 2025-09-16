@@ -1,8 +1,8 @@
 ﻿using FlaUI.Core.AutomationElements;
 using FlaUI.Core.Conditions;
-using FlaUI.Core.Definitions;
 using FlaUI.UIA3;
 using NLog;
+using Polly;
 using UiAutoTests.Core;
 using UiAutoTests.Helpers;
 using UiAutoTests.Locators;
@@ -17,6 +17,9 @@ namespace UiAutoTests.Controllers
         private LoggerHelper _loggerHelper = new();
         private static MainWindowHelper _mainWindowHelper;
         private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
+
+        private TimeSpan _nextStateDelay = TimeSpan.FromSeconds(1);
+        private const int _nextStateRetry = 30;
 
         public string Name { get; } = "MainWindowState";
 
@@ -43,7 +46,7 @@ namespace UiAutoTests.Controllers
                 state = this;
                 while (!state.Name.Equals(stateName))
                 {
-                    state = this;
+                    state = state.ToNextState();
                 }
 
             }, cancellationTokenSource.Token);
@@ -61,6 +64,33 @@ namespace UiAutoTests.Controllers
         {
             _loggerHelper.LogEnteringTheMethod();
             return _window;
+        }
+
+        public IClientState ToNextState()
+        {
+            _loggerHelper.LogEnteringTheMethod();
+
+            IClientState aboutAppState = null;
+
+            OpenAboutAppWindow();
+
+            var policy = Policy.Handle<Exception>()
+                .WaitAndRetry(_nextStateRetry, retryAttempt => _nextStateDelay);
+
+            policy.Execute(() =>
+            {
+                using (var automation = new UIA3Automation())
+                {
+                    var aboutWindow = _mainWindowHelper.GetAboutAppWindow(automation);
+                    aboutAppState = new AboutAppWindowController(aboutWindow, _conditionFactory);
+                    if (!aboutAppState.IsState(aboutWindow))
+                    {
+                        throw new Exception("Can not follow to the AboutAppWindow state");
+                    }
+                }                
+            });
+
+            return aboutAppState;
         }
 
         public bool IsState(Window window)
