@@ -1,6 +1,7 @@
 ﻿using FlaUI.Core.AutomationElements;
 using FlaUI.Core.Conditions;
 using FlaUI.Core.Definitions;
+using FlaUI.UIA3;
 using NLog;
 using System.ComponentModel;
 using UiAutoTests.Core;
@@ -405,6 +406,69 @@ namespace UiAutoTests.Helpers
             _logger.Debug($"Text from MessageBox is - [{text?.Name}]");
 
             return text.Name;
+        }
+
+        public void OpenAboutAppWindow()
+        {
+            _loggerHelper.LogEnteringTheMethod();
+
+            ExpandMenuItemById("HelpMenuItem");
+            ClickMenuItemById("AboutMenuItem");
+        }
+
+        public void CloseAboutAppWindow()
+        {
+            _loggerHelper.LogEnteringTheMethod();
+
+            using (var automation = new UIA3Automation())
+            {
+                var aboutWindow = GetAboutAppWindow(automation);
+                if (aboutWindow == null)
+                {
+                    _logger.Warn("Cannot close [About window] - not found");
+                    return;
+                }
+
+                var aboutWindowLocators = new AboutAppWindowLocators(aboutWindow, _conditionFactory);
+                var okButton = aboutWindowLocators.AboutAppOkButton;
+                okButton.Invoke();
+            }
+        }
+
+
+        /// <summary>
+        /// Находит и возвращает окно "About" на рабочем столе Windows.
+        /// 
+        /// ПОЧЕМУ ИМЕННО ТАКОЙ ПОДХОД:
+        /// 1. About окно - ЭТО НЕ ДОЧЕРНИЙ ЭЛЕМЕНТ главного окна приложения, 
+        ///    а ОТДЕЛЬНОЕ НЕЗАВИСИМОЕ ОКНО верхнего уровня на рабочем столе.
+        ///    Поэтому поиск должен вестись не в пределах главного окна (_window),
+        ///    а на всем рабочем столе (desktop).
+        /// 
+        /// 2. Используем FindFirstChild(c => condition) вместо FindAllChildren() 
+        ///    для ЭФФЕКТИВНОСТИ - метод остановится на первом же найденном совпадении,
+        ///    не перебирая все элементы рабочего стола.
+        /// 
+        /// 3. Комбинируем условия через .And() для ТОЧНОСТИ ПОИСКА:
+        ///    - ByControlType(ControlType.Window) - ищем именно окна, а не другие элементы
+        ///    - ByAutomationId("AboutAppView") - находим конкретное окно по уникальному ID
+        ///    
+        /// 4. Используем null-conditional оператор (?.) для БЕЗОПАСНОСТИ -
+        ///    если окно не найдено, возвращаем null вместо исключения.
+        /// 
+        /// 5. Получаем desktop через automation.GetDesktop() - это КОРНЕВОЙ ЭЛЕМЕНТ,
+        ///    содержащий все открытые окна Windows.
+        /// </summary>
+        /// <param name="automation">Экземпляр UIA3Automation для доступа к automation tree</param>
+        /// <returns>Найденное окно About или null если окно не найдено</returns>
+        public Window GetAboutAppWindow(UIA3Automation automation)
+        {
+            _loggerHelper.LogEnteringTheMethod();
+
+            var desktop = automation.GetDesktop();
+            var aboutWindow = desktop.FindFirstChild(cf => cf.ByControlType(ControlType.Window).And(cf.ByAutomationId("AboutAppView")));
+
+            return aboutWindow?.AsWindow();
         }
 
     }

@@ -74,5 +74,21 @@ namespace UiAutoTests.ControllerAssertions
             AssertForString.Matches(elementText, expectedText, message);
             return controller;
         }
+
+        public static MainWindowController AssertThatAppWindowIsNull(this MainWindowController controller, string message = null)
+        {
+            var element = controller.GetAboutAppWindow();
+
+            AssertAutoElement.IsNull(element, message);
+            return controller;
+        }
+
+        public static MainWindowController AssertThatAppWindowIsNotNull(this MainWindowController controller, string message = null)
+        {
+            var element = controller.GetAboutAppWindow();
+
+            AssertAutoElement.IsNotNull(element, message);
+            return controller;
+        }
     }
 }

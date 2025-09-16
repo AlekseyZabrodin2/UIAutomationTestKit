@@ -1,4 +1,5 @@
-﻿using UiAutoTests.Clients;
+﻿using NLog;
+using UiAutoTests.Clients;
 using UiAutoTests.Core;
 using UiAutoTests.Helpers;
 using UiAutoTests.Services;
@@ -14,6 +15,12 @@ namespace UiAutoTests.Tests
         protected string _testClass; 
         private HtmlReportService _reportService = new();
         private TestsInitializeService _initializeService = new();
+        private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
+
+        public const string Main = "MainWindowState";
+        public const string AboutApp = "AboutAppWindowState";
+
+
 
         public InitializeBaseTest()
         {
@@ -44,13 +51,21 @@ namespace UiAutoTests.Tests
 
 
 
-        protected T GetController<T>() where T : class, IClientState
+        protected async Task<T> GetControllerState<T>(string nameState) where T : class, IClientState
         {
+            IClientState mainWindow = _mainWindow;
+
             if (_mainWindow == null)
                 throw new InvalidOperationException("MainWindow is not initialized");
 
-            return _mainWindow as T
-                ?? throw new InvalidCastException($"Expected {typeof(T).Name}, but got {_mainWindow.GetType().Name}");
+            if (_mainWindow.Name != nameState)
+            {
+                mainWindow = await _mainWindow.GoToStateAsync(nameState, TimeSpan.FromSeconds(5));
+                _logger.Info($"State is - [{mainWindow.Name}]");
+            }
+
+            return mainWindow as T
+                ?? throw new InvalidCastException($"Expected {mainWindow.Name}, but got {_mainWindow.Name}");
         }
 
 

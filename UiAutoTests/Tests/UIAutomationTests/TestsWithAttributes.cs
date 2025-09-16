@@ -24,9 +24,9 @@ namespace UiAutoTests.Tests.UIAutomationTests
         [Test]
         [Category("Smoke")]
         [Category("UI")]
-        public void Test01_TestWithCategory()
+        public async Task Test01_TestWithCategory()
         {
-            _mainWindowController = GetController<MainWindowController>();
+            _mainWindowController = await GetControllerState<MainWindowController>(Main);
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 var inputText = "test Id";
@@ -44,9 +44,9 @@ namespace UiAutoTests.Tests.UIAutomationTests
         // Атрибут: Ignore - тест пропускается с указанием причины
         [Test]
         [Ignore("Требуется доработка логина на стороне API. TODO: JIRA-123")]
-        public void Test02_IgnoredTest()
+        public async Task Test02_IgnoredTest()
         {
-            _mainWindowController = GetController<MainWindowController>();
+            _mainWindowController = await GetControllerState<MainWindowController>(Main);
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -60,9 +60,9 @@ namespace UiAutoTests.Tests.UIAutomationTests
         // Атрибут: Explicit - не запускается в общем прогоне всех тестов
         // Особенность: Явное указание что тест должен запускаться только вручную
         [Test, Explicit]
-        public void Test03_ManualTest()
+        public async Task Test03_ManualTest()
         {
-            _mainWindowController = GetController<MainWindowController>();
+            _mainWindowController = await GetControllerState<MainWindowController>(Main);
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -75,9 +75,9 @@ namespace UiAutoTests.Tests.UIAutomationTests
 
         // Атрибут: Order - управление порядком выполнения
         [Test, Order(1)]
-        public void Test04_FirstSequentialTest()
+        public async Task Test04_FirstSequentialTest()
         {
-            _mainWindowController = GetController<MainWindowController>();
+            _mainWindowController = await GetControllerState<MainWindowController>(Main);
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -90,9 +90,9 @@ namespace UiAutoTests.Tests.UIAutomationTests
 
         // Атрибут: Order - управление порядком выполнения
         [Test, Order(2)]
-        public void Test05_SecondSequentialTest()
+        public async Task Test05_SecondSequentialTest()
         {
-            _mainWindowController = GetController<MainWindowController>();
+            _mainWindowController = await GetControllerState<MainWindowController>(Main);
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -106,9 +106,9 @@ namespace UiAutoTests.Tests.UIAutomationTests
         // Атрибут: Retry - борется с ложными падениями из-за временных проблем
         // Особенность: Автоматически перезапускает упавший тест
         [Test, Retry(3)]
-        public void Test06_RetryTest()
+        public async Task Test06_RetryTest()
         {
-            _mainWindowController = GetController<MainWindowController>();
+            _mainWindowController = await GetControllerState<MainWindowController>(Main);
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 var inputText = "test Id";
@@ -126,9 +126,9 @@ namespace UiAutoTests.Tests.UIAutomationTests
 
         // Атрибут: Repeat - многократный запуск одного теста
         [Test, Repeat(2)]
-        public void Test07_StabilityTest()
+        public async Task Test07_StabilityTest()
         {
-            _mainWindowController = GetController<MainWindowController>();
+            _mainWindowController = await GetControllerState<MainWindowController>(Main);
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -146,9 +146,9 @@ namespace UiAutoTests.Tests.UIAutomationTests
         // Ресурсы не освобождаются: Соединения, файлы, дескрипторы могут остаться висеть
         // Придеться чистить вручную в следующем [SetUp] блоке, потому что даже в [TearDown] не зайдет
         [Test, Timeout(15000)]
-        public void Test08_PerformanceTest()
+        public async Task Test08_PerformanceTest()
         {
-            _mainWindowController = GetController<MainWindowController>();
+            _mainWindowController = await GetControllerState<MainWindowController>(Main);
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -162,11 +162,11 @@ namespace UiAutoTests.Tests.UIAutomationTests
 
         // Альтернатива Timeout - тест будет ждать отведенное время , но завершится корректно
         [Test, CancelAfter(15000)]
-        public void Test09_TestAlternativeTimeOut()
+        public async Task Test09_TestAlternativeTimeOut()
         {
             CancellationToken cancellationToken = TestContext.CurrentContext.CancellationToken;
 
-            _mainWindowController = GetController<MainWindowController>();
+            _mainWindowController = await GetControllerState<MainWindowController>(Main);
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 cancellationToken.ThrowIfCancellationRequested();
@@ -182,9 +182,9 @@ namespace UiAutoTests.Tests.UIAutomationTests
         // Атрибут: MaxTime - тест ДОЛЖЕН выполниться за отведенное время,
         // Иначе даже при успехе будет - Failed из-за превышения максимального времени.
         [Test, MaxTime(10000)]
-        public void Test10_TestWithMaxTimeAttribute()
+        public async Task Test10_TestWithMaxTimeAttribute()
         {
-            _mainWindowController = GetController<MainWindowController>();
+            _mainWindowController = await GetControllerState<MainWindowController>(Main);
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -197,9 +197,9 @@ namespace UiAutoTests.Tests.UIAutomationTests
 
         // Атрибут: Author - метаданные для отчетов и организации работы команды
         [Test, Author("Alice Smith")]
-        public void Test11_AuthoredTest()
+        public async Task Test11_AuthoredTest()
         {
-            _mainWindowController = GetController<MainWindowController>();
+            _mainWindowController = await GetControllerState<MainWindowController>(Main);
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -212,9 +212,9 @@ namespace UiAutoTests.Tests.UIAutomationTests
 
         // Атрибут: Description - добавляет контекст для читателей отчетов
         [Test, Description("Информация необходимая для пояснения особенностей теста")]
-        public void Test12_TestWithDescription()
+        public async Task Test12_TestWithDescription()
         {
-            _mainWindowController = GetController<MainWindowController>();
+            _mainWindowController = await GetControllerState<MainWindowController>(Main);
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -229,9 +229,9 @@ namespace UiAutoTests.Tests.UIAutomationTests
         // Очень полезно для кросс-платформенных проектов.
         [Test]
         [Platform("Win")]
-        public void Test13_WindowsSpecificTest()
+        public async Task Test13_WindowsSpecificTest()
         {
-            _mainWindowController = GetController<MainWindowController>();
+            _mainWindowController = await GetControllerState<MainWindowController>(Main);
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -244,9 +244,9 @@ namespace UiAutoTests.Tests.UIAutomationTests
 
         [Test]
         [Platform("Linux")]
-        public void Test14_LinuxSpecificTest()
+        public async Task Test14_LinuxSpecificTest()
         {
-            _mainWindowController = GetController<MainWindowController>();
+            _mainWindowController = await GetControllerState<MainWindowController>(Main);
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -260,9 +260,9 @@ namespace UiAutoTests.Tests.UIAutomationTests
         // Везде, кроме Linux и Unix
         [Test]
         [Platform(Exclude = "Linux,Unix")]
-        public void Test15_NotOnLinuxTest()
+        public async Task Test15_NotOnLinuxTest()
         {
-            _mainWindowController = GetController<MainWindowController>();
+            _mainWindowController = await GetControllerState<MainWindowController>(Main);
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
