@@ -21,7 +21,8 @@ namespace UiAutoTests.Locators
              ?? throw new ElementNotAvailableException($"Element with AutomationId - [{automationId}] not found");
 
 
-        public Window AboutAppWindow => FindFirstById("AboutAppView").AsWindow();
+        public Window AboutAppView => FindFirstById("AboutAppView").AsWindow();
+        public Label AboutAppWindowTitle => FindFirstById("AboutAppWindowTitle").AsLabel();
         public Button AboutAppOkButton => FindFirstById("AboutAppOkButton").AsButton();
 
     }

@@ -28,10 +28,11 @@
             Margin="25">
 
             <StackPanel>
-                <TextBlock
+                <Label
+                    AutomationProperties.AutomationId="AboutAppWindowTitle"
+                    Content="About"
                     FontSize="18"
-                    FontWeight="DemiBold"
-                    Text="About" />
+                    FontWeight="DemiBold" />
                 <TextBlock
                     Margin="0,5"
                     FontWeight="DemiBold"
