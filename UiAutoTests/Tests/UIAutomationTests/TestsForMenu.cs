@@ -21,9 +21,9 @@ namespace UiAutoTests.Tests.UIAutomationTests
 
 
         [Test]
-        public void Test01_CanNavigateToCSharpCourse()
+        public async Task Test01_CanNavigateToCSharpCourse()
         {
-            _mainWindowController = GetController<MainWindowController>();
+            _mainWindowController = await GetControllerState<MainWindowController>(Main);
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -35,9 +35,9 @@ namespace UiAutoTests.Tests.UIAutomationTests
         }
 
         [Test]
-        public void Test02_ShouldContainMainItems()
+        public async Task Test02_ShouldContainMainItems()
         {
-            _mainWindowController = GetController<MainWindowController>();
+            _mainWindowController = await GetControllerState<MainWindowController>(Main);
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -46,9 +46,9 @@ namespace UiAutoTests.Tests.UIAutomationTests
         }
 
         [Test]
-        public void Test03_ShouldContainSubitemsCount()
+        public async Task Test03_ShouldContainSubitemsCount()
         {
-            _mainWindowController = GetController<MainWindowController>();
+            _mainWindowController = await GetControllerState<MainWindowController>(Main);
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 var menuItem = "CoursesMenuItem";
@@ -68,9 +68,9 @@ namespace UiAutoTests.Tests.UIAutomationTests
         [TestCase("CoursesMenuItem", "DataScienceMenuItem", "MachineLearningMenuItem")]
         [TestCase("TestsMenuItem", "C#TestMenuItem", "")]        
         [Test, Category("Menu"), Category("Parameterized")]
-        public void Test04_MenuNavigationTest(string mainItem, string subItem, string subSubItem)
+        public async Task Test04_MenuNavigationTest(string mainItem, string subItem, string subSubItem)
         {
-            _mainWindowController = GetController<MainWindowController>();
+            _mainWindowController = await GetControllerState<MainWindowController>(Main);
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -96,9 +96,9 @@ namespace UiAutoTests.Tests.UIAutomationTests
         }
 
         [Test]
-        public void Test05_OpenMessageBoxFromMenuItem()
+        public async Task Test05_OpenMessageBoxFromMenuItem()
         {
-            _mainWindowController = GetController<MainWindowController>();
+            _mainWindowController = await GetControllerState<MainWindowController>(Main);
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 var menuItem = "CoursesMenuItem";
@@ -117,7 +117,40 @@ namespace UiAutoTests.Tests.UIAutomationTests
             });
         }
 
+        [Test]
+        public async Task Test06_FindAboutAppWindow()
+        {
+            _mainWindowController = await GetControllerState<MainWindowController>(Main);
+            _mainWindowController.ExecuteTest(_testClient, _testName, () =>
+            {
+                _mainWindowController
+                    .OpenAboutAppWindow()
+                    .Pause(1500)
+                    .AssertThatAppWindowIsNotNull()
+                    .CloseAboutAppWindow()
+                    .Pause(1500)
+                    .AssertThatAppWindowIsNull();
+            });
+        }
 
+        [Test]
+        public async Task Test07_AboutWindowMultipleOpenClose()
+        {
+            _mainWindowController = await GetControllerState<MainWindowController>(Main);
+            _mainWindowController.ExecuteTest(_testClient, _testName, () =>
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    _mainWindowController
+                        .OpenAboutAppWindow()
+                        .Pause(1500)
+                        .AssertThatAppWindowIsNotNull()
+                        .CloseAboutAppWindow()
+                        .Pause(1500)
+                        .AssertThatAppWindowIsNull();
+                }                
+            });
+        }
 
     }
 }

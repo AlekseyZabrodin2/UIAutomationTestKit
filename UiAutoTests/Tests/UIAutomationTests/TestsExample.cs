@@ -68,13 +68,13 @@ namespace UiAutoTests.Tests.UIAutomationTests
         }
 
         [Test]
-        public void Test02_After()
+        public async Task Test02_After()
         {
             try
             {
                 var inputText = "test Id";
 
-                _mainWindowController = GetController<MainWindowController>();
+                _mainWindowController = await GetControllerState<MainWindowController>(Main);
                 _mainWindowController
                     .SetUserId(inputText)
                     .Pause(500)
@@ -98,9 +98,9 @@ namespace UiAutoTests.Tests.UIAutomationTests
         }
 
         [Test]
-        public void Test03_AfterCreatingBaseController()
+        public async Task Test03_AfterCreatingBaseController()
         {
-            _mainWindowController = GetController<MainWindowController>();
+            _mainWindowController = await GetControllerState<MainWindowController>(Main);
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 var inputText = "test Id";
@@ -126,7 +126,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
             var mainWindowState = mainWindow.IsState(mainWindow.GetMainWindow());
             Assert.That(mainWindowState, Is.True, "Wrong state");
 
-            var mainState = await mainWindow.GoToStateAsync("MainWindowState", TimeSpan.FromSeconds(30));
+            var mainState = await mainWindow.GoToStateAsync(Main, TimeSpan.FromSeconds(30));
             _logger.Info("Test Client started");
 
             _reportService.InitializeTests(_testName, _testClass);
@@ -149,9 +149,9 @@ namespace UiAutoTests.Tests.UIAutomationTests
         }
 
         [Test]
-        public void Test05_RegistrationWithLongWay()
+        public async Task Test05_RegistrationWithLongWay()
         {
-            _mainWindowController = GetController<MainWindowController>();
+            _mainWindowController = await GetControllerState<MainWindowController>(Main);
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -180,9 +180,9 @@ namespace UiAutoTests.Tests.UIAutomationTests
         }
 
         [Test]
-        public void Test06_CombiningIntoOneMethod()
+        public async Task Test06_CombiningIntoOneMethod()
         {
-            _mainWindowController = GetController<MainWindowController>();
+            _mainWindowController = await GetControllerState<MainWindowController>(Main);
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController

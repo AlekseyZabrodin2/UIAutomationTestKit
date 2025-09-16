@@ -29,9 +29,9 @@ namespace UiAutoTests.Tests.UIAutomationTests
         // Формат данных: Возвращает IEnumerable<RegistrationCaseDto> - готовые DTO-объекты
         [TestCaseSource(typeof(MainWindowTestCases), nameof(MainWindowTestCases.ValidRegistrationFieldCases))]
         [Test]
-        public void Test01_Registration_WithDtoFromClass(RegistrationCaseDto registrDto)
+        public async Task Test01_Registration_WithDtoFromClass(RegistrationCaseDto registrDto)
         {
-            _mainWindowController = GetController<MainWindowController>();
+            _mainWindowController = await GetControllerState<MainWindowController>(Main);
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -65,7 +65,7 @@ namespace UiAutoTests.Tests.UIAutomationTests
             var mainWindowState = mainWindow.IsState(mainWindow.GetMainWindow());
             Assert.That(mainWindowState, Is.True, "Wrong state");
 
-            var mainState = await mainWindow.GoToStateAsync("MainWindowState", TimeSpan.FromSeconds(30));
+            var mainState = await mainWindow.GoToStateAsync(Main, TimeSpan.FromSeconds(30));
             _logger.Info("Test Client started");
 
             _reportService.InitializeTests(_testName, _testClass);
@@ -103,9 +103,9 @@ namespace UiAutoTests.Tests.UIAutomationTests
         [TestCase("003", "Williams", "Anne", "Emily")]
         [TestCase("004", "", "Marie", "Sophia")]
         [Test]
-        public void Test03_WithParametersInTestCase(string id, string lastName, string middleName, string firstName)
+        public async Task Test03_WithParametersInTestCase(string id, string lastName, string middleName, string firstName)
         {
-            _mainWindowController = GetController<MainWindowController>();
+            _mainWindowController = await GetControllerState<MainWindowController>(Main);
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -130,9 +130,9 @@ namespace UiAutoTests.Tests.UIAutomationTests
         // Использование: End-to-end тестирование комплексных сценариев с подготовленными данными
         [TestCaseSource(typeof(MainWindowTestCases), nameof(MainWindowTestCases.ValidRegistrationCases))]
         [Test]
-        public void Test04_ParametersFromClass(RegistrationCaseDto registrDto)
+        public async Task Test04_ParametersFromClass(RegistrationCaseDto registrDto)
         {
-            _mainWindowController = GetController<MainWindowController>();
+            _mainWindowController = await GetControllerState<MainWindowController>(Main);
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -165,9 +165,9 @@ namespace UiAutoTests.Tests.UIAutomationTests
         // Использование: Для данных, которые часто меняются или управляются не-разработчиками
         [TestCaseSource(typeof(MainWindowTestCases), nameof(MainWindowTestCases.ValidRegistrationCasesFromJson))]
         [Test]
-        public void Test05_Registration_WithDtoFromJson(RegistrationCaseFromJson dataFromJson)
+        public async Task Test05_Registration_WithDtoFromJson(RegistrationCaseFromJson dataFromJson)
         {
-            _mainWindowController = GetController<MainWindowController>();
+            _mainWindowController = await GetControllerState<MainWindowController>(Main);
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -199,9 +199,9 @@ namespace UiAutoTests.Tests.UIAutomationTests
         // Особенность: Тестирование массовой регистрации пользователей
         // Использование: Когда нужно протестировать поведение системы с разным количеством однотипных объектов
         [Test]
-        public void Test06_RegistrationSeveralUsers([Values(5)] int number)
+        public async Task Test06_RegistrationSeveralUsers([Values(5)] int number)
         {
-            _mainWindowController = GetController<MainWindowController>();
+            _mainWindowController = await GetControllerState<MainWindowController>(Main);
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -217,13 +217,13 @@ namespace UiAutoTests.Tests.UIAutomationTests
         // Результат: 3×3×2×2 = 36 комбинаций (полный перебор)
         // Использование: Для exhaustive testing когда нужно проверить ВСЕ возможные комбинации
         [Test, Explicit]        
-        public void Test07_TestWithCombinationValues(
+        public async Task Test07_TestWithCombinationValues(
             [Values("1", "18", "32")] string id,
             [Values("John", "Mon", "Don")] string lastName,
             [Values("Makaronavich", "Ivanavich")] string middleName,
             [Values("Firstov", "Secondovich")] string firstName)
         {
-            _mainWindowController = GetController<MainWindowController>();
+            _mainWindowController = await GetControllerState<MainWindowController>(Main);
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -248,13 +248,13 @@ namespace UiAutoTests.Tests.UIAutomationTests
         // Результат: 3 теста (по длине самого длинного массива)
         // Использование: Когда нужно проверить конкретные заранее известные комбинации
         [Test, Sequential]
-        public void Test08_TestWithSequentialCombinationValues(
+        public async Task Test08_TestWithSequentialCombinationValues(
             [Values("1", "18", "32")] string id,
             [Values("John", "Mon", "Don")] string lastName,
             [Values("Makaronavich", "Ivanavich")] string middleName,
             [Values("Firstov", "Secondovich")] string firstName)
         {
-            _mainWindowController = GetController<MainWindowController>();
+            _mainWindowController = await GetControllerState<MainWindowController>(Main);
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -279,13 +279,13 @@ namespace UiAutoTests.Tests.UIAutomationTests
         // Результат: ~8-12 тестов вместо 36 (экономия времени при сохранении coverage)
         // Использование: Для выявления ошибок взаимодействия параметров при экономии времени выполнения
         [Test, Pairwise]
-        public void Test09_TestWithPairwiseCombinationValues(
+        public async Task Test09_TestWithPairwiseCombinationValues(
             [Values("1", "18", "32")] string id,
             [Values("John", "Mon", "Don")] string lastName,
             [Values("Makaronavich", "Ivanavich")] string middleName,
             [Values("Firstov", "Secondovich")] string firstName)
         {
-            _mainWindowController = GetController<MainWindowController>();
+            _mainWindowController = await GetControllerState<MainWindowController>(Main);
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -310,9 +310,9 @@ namespace UiAutoTests.Tests.UIAutomationTests
         // Результат: 5 тестов (1, 3, 5, 7, 9)
         // Использование: Для тестирования с числовыми параметрами, где важно проверить разные точки диапазона
         [Test]
-        public void Test10_TestWithCountRange([Range(1, 10, 2)] int number)
+        public async Task Test10_TestWithCountRange([Range(1, 10, 2)] int number)
         {
-            _mainWindowController = GetController<MainWindowController>();
+            _mainWindowController = await GetControllerState<MainWindowController>(Main);
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
@@ -328,9 +328,9 @@ namespace UiAutoTests.Tests.UIAutomationTests
         // Результат: 3 теста со случайными значениями от 2 до 10
         // Использование: Для fuzz-тестирования и проверки устойчивости системы к разным входным данным
         [Test]
-        public void Test11_TestWithRandomCount([Random(2, 10, 3)] int number)
+        public async Task Test11_TestWithRandomCount([Random(2, 10, 3)] int number)
         {
-            _mainWindowController = GetController<MainWindowController>();
+            _mainWindowController = await GetControllerState<MainWindowController>(Main);
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController

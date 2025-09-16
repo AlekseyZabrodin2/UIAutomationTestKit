@@ -24,9 +24,9 @@ namespace UiAutoTests.Tests.UIAutomationTests
 
 
         [Test]
-        public void Test01_RegistrationSeveralUsersNextVariant([Values(10)] int number)
+        public async Task Test01_RegistrationSeveralUsersNextVariant([Values(10)] int number)
         {
-            _mainWindowController = GetController<MainWindowController>();
+            _mainWindowController = await GetControllerState<MainWindowController>(Main);
             _mainWindowController.ExecuteTest(_testClient, _testName, () =>
             {
                 _mainWindowController
