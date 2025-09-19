@@ -1,5 +1,4 @@
 ﻿using NLog;
-using System;
 using System.Runtime.CompilerServices;
 using UiAutoTests.Core;
 using UiAutoTests.Services;
@@ -10,6 +9,7 @@ namespace UiAutoTests.Helpers
     {
 
         private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
+        private ScreenshotHelper _screenshotHelper = new();
 
 
         public void LogEnteringTheMethod([CallerMemberName] string methodName = "")
@@ -35,6 +35,7 @@ namespace UiAutoTests.Helpers
             _logger.Trace("\r\n=========================== Test Result ===========================");
 
             _logger.Error(exception, $"{testName} Failed");
+            //_screenshotHelper.TakeScreenshot(testName);
             reportService.LogStatusFail(exception, testName + " Failed");
         }
     }
